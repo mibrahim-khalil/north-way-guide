@@ -434,7 +434,7 @@ async function checkRoadOpen(roadKey, dateObj) {
 /* ML */
 
 async function predictPlanML(payload) {
-  const base = process.env.ML_SERVICE_URL || "http://127.0.0.1:8002";
+  const base = process.env.ML_SERVICE_URL || "http://127.0.0.1:8000";
   const r = await fetch(`${base}/predict`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -446,7 +446,7 @@ async function predictPlanML(payload) {
     throw new Error(`ML service error (${r.status}): ${t}`);
   }
 
-  return r.json(); // { planId }
+  return r.json();
 }
 
 /* itinerary templates */
