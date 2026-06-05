@@ -1,0 +1,37 @@
+.toastWrap{
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  z-index: 99999;
+  width: min(520px, calc(100% - 24px));
+}
+
+.toastCard{
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(15,23,42,0.12);
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 20px 60px rgba(15,23,42,0.14);
+}
+
+.toastMsg{
+  font-weight: 1000;
+  color: var(--heading);
+  font-size: 13px;
+}
+
+.toastClose{
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  border: 1px solid rgba(15,23,42,0.10);
+  background: rgba(15,23,42,0.05);
+  cursor:pointer;
+  font-weight: 900;
+}

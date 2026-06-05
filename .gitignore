@@ -1,0 +1,20 @@
+# dependencies
+**/node_modules/
+
+# env files
+backend/.env
+.env
+
+# build outputs
+**/dist/
+**/build/
+
+# python cache + virtual env
+**/__pycache__/
+*.pyc
+**/.venv/
+**/venv/
+
+# uploads (generated / sensitive)
+backend/uploads/
+backend/private_uploads/

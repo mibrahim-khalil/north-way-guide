@@ -1,0 +1,59 @@
+.poOverlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(15,23,42,0.45);
+  z-index: 99998;
+}
+
+.poModal{
+  position: fixed;
+  left: 50%;
+  top: 8%;
+  transform: translateX(-50%);
+  width: min(760px, calc(100% - 24px));
+  background: rgba(255,255,255,0.96);
+  border: 1px solid rgba(15,23,42,0.10);
+  border-radius: 18px;
+  z-index: 99999;
+  box-shadow: 0 30px 80px rgba(15,23,42,0.18);
+  padding: 14px;
+  max-height: 84vh;
+  overflow: auto;
+}
+
+.poTop{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 10px;
+}
+.poTitle{ font-weight: 1000; color: var(--heading); font-size: 16px; }
+.poSub{ color: var(--muted); font-size: 12px; margin-top: 2px; }
+
+.poClose{
+  width: 40px; height: 40px;
+  border-radius: 12px;
+  border: 1px solid rgba(15,23,42,0.10);
+  background: rgba(15,23,42,0.05);
+  cursor:pointer;
+}
+
+.poForm{ margin-top: 12px; }
+
+.poGrid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.poActions{
+  margin-top: 12px;
+  display:flex;
+  gap: 10px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 700px){
+  .poGrid{ grid-template-columns: 1fr; }
+}

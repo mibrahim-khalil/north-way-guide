@@ -1,0 +1,203 @@
+/* Base color used across your UI in admin; matches your purple vibe */
+:root{
+  --rpPrimary: #6d28d9;
+}
+
+.rpCard {
+  margin-top: 12px;
+}
+
+.rpHeadRow{
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.rpTitle {
+  margin: 0;
+  font-weight: 900;
+}
+
+.rpGrid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 800px) {
+  .rpGrid2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.rpField label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 900;
+  color: rgba(15, 23, 42, 0.75);
+}
+
+.rpControl {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(15, 23, 42, 0.16);
+  background: rgba(255, 255, 255, 0.85);
+  outline: none;
+  font-size: 14px;
+}
+
+.rpControl:focus {
+  border-color: rgba(109, 40, 217, 0.55);
+  box-shadow: 0 0 0 4px rgba(109, 40, 217, 0.12);
+}
+
+.rpTextarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.rpAlertErr {
+  background: rgba(239, 68, 68, 0.12);
+  color: #7f1d1d;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  font-weight: 800;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.rpAlertOk {
+  background: rgba(16, 185, 129, 0.14);
+  color: #065f46;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(16, 185, 129, 0.22);
+  font-weight: 800;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+/* THEME BUTTONS */
+.rpBtn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(15, 23, 42, 0.14);
+  background: rgba(255, 255, 255, 0.75);
+  color: rgba(15, 23, 42, 0.92);
+  font-weight: 1000;
+  cursor: pointer;
+  transition: transform .05s ease, background .15s ease, border-color .15s ease;
+}
+
+.rpBtn:hover{
+  background: rgba(109, 40, 217, 0.06);
+  border-color: rgba(109, 40, 217, 0.22);
+}
+
+.rpBtn:active{
+  transform: translateY(1px);
+}
+
+.rpBtn:disabled{
+  opacity: .65;
+  cursor: not-allowed;
+}
+
+.rpBtnPrimary{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(109, 40, 217, 0.25);
+  background: linear-gradient(135deg, rgba(109,40,217,0.98), rgba(79,70,229,0.98));
+  color: white;
+  font-weight: 1100;
+  cursor: pointer;
+  transition: transform .05s ease, filter .15s ease;
+}
+
+.rpBtnPrimary:hover{
+  filter: brightness(1.04);
+}
+
+.rpBtnPrimary:active{
+  transform: translateY(1px);
+}
+
+.rpBtnPrimary:disabled{
+  opacity: .65;
+  cursor: not-allowed;
+}
+
+/* Upload */
+.rpUploadRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.rpUploadInput {
+  display: none;
+}
+
+.rpUploadBtn {
+  display: none;
+}
+
+.rpUploadHint {
+  font-size: 12px;
+  font-weight: 800;
+  color: rgba(15, 23, 42, 0.65);
+}
+
+/* Preview */
+.rpPreviewGrid {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.rpPreviewItem {
+  position: relative;
+}
+
+.rpPreviewItem img {
+  width: 130px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.rpRemoveBtn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: crimson;
+  color: #fff;
+  border: 0;
+  border-radius: 10px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-weight: 1000;
+  font-size: 12px;
+}
+
+.rpActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}

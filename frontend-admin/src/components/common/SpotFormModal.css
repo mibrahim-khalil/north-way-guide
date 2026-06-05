@@ -1,0 +1,117 @@
+.smOverlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(15,23,42,0.35);
+  z-index: 9998;
+}
+
+.smModal{
+  position: fixed;
+  left: 50%;
+  top: 10%;
+  transform: translateX(-50%);
+  width: min(860px, calc(100% - 24px));
+  max-height: 84vh;
+  overflow: auto;
+  z-index: 9999;
+
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(15,23,42,0.10);
+  border-radius: 18px;
+  box-shadow: 0 30px 90px rgba(15,23,42,0.16);
+  backdrop-filter: blur(18px);
+  padding: 14px;
+}
+
+.smTop{
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+  gap: 10px;
+}
+
+.smTitle{
+  font-weight: 1000;
+  color: var(--heading);
+  font-size: 16px;
+}
+.smSub{
+  color: var(--muted);
+  font-weight: 800;
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+.smClose{
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid rgba(15,23,42,0.10);
+  background: rgba(15,23,42,0.05);
+  cursor:pointer;
+  font-weight: 900;
+}
+
+.smForm{ margin-top: 12px; display:grid; gap: 14px; }
+
+.smGrid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.smInput{
+  width: 100%;
+  padding: 12px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(15,23,42,0.12);
+  background: rgba(255,255,255,0.85);
+  color: var(--heading);
+  outline: none;
+  font-weight: 700;
+}
+.smInput:focus{
+  border-color: rgba(109,40,217,0.28);
+  box-shadow: 0 0 0 4px rgba(109,40,217,0.12);
+  background: #fff;
+}
+
+.smHint{
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.smActions{
+  display:flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 850px){
+  .smGrid{ grid-template-columns: 1fr; }
+}
+
+
+
+.smInput[type="file"]{
+  padding: 10px 12px;
+  font-weight: 800;
+}
+
+.smInput::file-selector-button{
+  margin-right: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(15,23,42,0.14);
+  background: rgba(15,23,42,0.06);
+  color: var(--heading);
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.smInput::file-selector-button:hover{
+  background: rgba(15,23,42,0.10);
+}

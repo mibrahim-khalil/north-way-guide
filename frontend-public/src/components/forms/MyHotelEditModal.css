@@ -1,0 +1,139 @@
+.mhOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .45);
+  z-index: 9998;
+}
+
+.mhModal {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(920px, calc(100vw - 24px));
+  max-height: calc(100vh - 24px);
+  overflow: auto;
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .35);
+  z-index: 9999;
+}
+
+.mhTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.mhTitle {
+  font-weight: 1000;
+  font-size: 18px;
+}
+
+.mhSub {
+  font-size: 12px;
+  opacity: .7;
+}
+
+.mhClose {
+  border: 0;
+  background: transparent;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.mhForm {
+  display: grid;
+  gap: 12px;
+}
+
+.mhGrid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.mhGrid>div[style*="grid-column"] {
+  grid-column: 1 / -1;
+}
+
+.mhInput {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(15, 23, 42, .15);
+}
+
+.mhHint {
+  font-size: 12px;
+  opacity: .7;
+  margin-top: 6px;
+}
+
+.mhActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.mhRoomGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.mhRoomList {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.mhRoomRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+}
+
+.mhModal .aBtn {
+  appearance: none;
+  border: 1px solid rgba(15, 23, 42, .14);
+  background: rgba(255, 255, 255, .85);
+  color: var(--heading);
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: transform .05s ease, filter .15s ease, background .15s ease;
+}
+
+.mhModal .aBtn:hover {
+  filter: brightness(0.98);
+}
+
+.mhModal .aBtn:active {
+  transform: translateY(1px);
+}
+
+.mhModal .aBtn.primary {
+  background: rgba(15, 23, 42, .92);
+  border-color: rgba(15, 23, 42, .92);
+  color: #fff;
+}
+
+.mhModal .aBtn.danger {
+  background: #ef4444;
+  border-color: #ef4444;
+  color: #fff;
+}
+
+.mhFileName {
+  font-size: 12px;
+  font-weight: 800;
+  color: rgba(100, 116, 139, 0.95);
+}

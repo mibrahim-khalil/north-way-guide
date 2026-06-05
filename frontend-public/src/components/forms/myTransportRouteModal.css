@@ -1,0 +1,76 @@
+.mtWrap{
+  position: fixed;
+  inset: 0;
+  z-index: 20000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+}
+
+.mtOverlay{
+  position: absolute;
+  inset: 0;
+  background: rgba(15,23,42,0.60);
+}
+
+.mtPanel{
+  position: relative;
+  width: min(820px, 100%);
+  max-height: calc(100vh - 28px);
+  overflow: auto;
+}
+
+.mtHeader{
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(15,23,42,0.08);
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(10px);
+
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.mtTitle{
+  font-weight: 1000;
+  font-size: 18px;
+  color: var(--heading);
+}
+
+.mtSub{
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--muted);
+}
+
+.mtBox{
+  border: 1px solid rgba(15,23,42,0.08);
+  background: rgba(248,250,252,0.75);
+  border-radius: 16px;
+  padding: 12px;
+}
+
+.mtBoxTitle{
+  font-weight: 1000;
+  color: var(--heading);
+  margin-bottom: 10px;
+}
+
+.mtDetails{
+  border: 1px solid rgba(15,23,42,0.08);
+  border-radius: 16px;
+  background: rgba(255,255,255,0.55);
+  padding: 10px 12px;
+}
+
+.mtSummary{
+  cursor: pointer;
+  font-weight: 1000;
+  color: var(--heading);
+}

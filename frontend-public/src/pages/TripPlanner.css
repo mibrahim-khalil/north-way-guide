@@ -1,0 +1,725 @@
+.tpPage{
+  display: grid;
+  gap: 16px;
+}
+
+/* FORM */
+.tpForm .input{
+  width: 100%;
+  min-width: 0;
+}
+.tpForm select.input{
+  text-overflow: ellipsis;
+}
+
+.tpForm{
+  display: grid;
+  gap: 12px;
+  align-items: start;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-areas:
+    "budget days travelers date"
+    "startLoc mode circuit transport"
+    "scope scope road road"
+    "actions actions actions actions"
+    "note note note note";
+}
+
+.tpField{
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tpLabelRow{
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.tpMeta{
+  font-size: 12px;
+  opacity: .75;
+  white-space: nowrap;
+}
+
+/* areas */
+.tpBudget{ grid-area: budget; }
+.tpDays{ grid-area: days; }
+.tpTravelers{ grid-area: travelers; }
+.tpDate{ grid-area: date; }
+.tpStartLoc{ grid-area: startLoc; }
+.tpMode{ grid-area: mode; }
+.tpCircuit{ grid-area: circuit; }
+.tpTransport{ grid-area: transport; }
+.tpScope{ grid-area: scope; }
+.tpRoad{ grid-area: road; }
+
+.tpActions{
+  grid-area: actions;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.tpNote{
+  grid-area: note;
+  margin: 0;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1100px){
+  .tpForm{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "budget days"
+      "travelers date"
+      "startLoc startLoc"
+      "mode transport"
+      "circuit circuit"
+      "scope scope"
+      "road road"
+      "actions actions"
+      "note note";
+  }
+}
+
+@media (max-width: 640px){
+  .tpForm{
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "budget"
+      "days"
+      "travelers"
+      "date"
+      "startLoc"
+      "mode"
+      "transport"
+      "circuit"
+      "scope"
+      "road"
+      "actions"
+      "note";
+  }
+}
+
+/* DAY NAV */
+.tpDayNav{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.tpDayNavBtns{
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex: 1;
+  min-width: 240px;
+
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 4px;
+  scroll-behavior: smooth;
+}
+
+.tpDayNavBtns::-webkit-scrollbar{
+  height: 8px;
+}
+.tpDayNavBtns::-webkit-scrollbar-thumb{
+  background: rgba(15,23,42,0.18);
+  border-radius: 999px;
+}
+.tpDayNavBtns::-webkit-scrollbar-track{
+  background: transparent;
+}
+
+.tpDayBtn{
+  border: 1px solid rgba(15,23,42,0.12);
+  background: rgba(255,255,255,0.92);
+  border-radius: 12px;
+  padding: 8px 10px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 900;
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+
+.tpDayBtn.active{
+  background: rgba(59,130,246,0.12);
+  border-color: rgba(59,130,246,0.35);
+  font-weight: 1000;
+}
+
+/* DAY HEADER */
+.tpDayHeader{
+  width: 100%;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.tpDayHeaderRow{
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* HOTEL */
+.tpHotelRow{
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 14px;
+  border: 1px solid rgba(15,23,42,0.08);
+  align-items: center;
+  flex-wrap: wrap;
+  background: rgba(255,255,255,0.55);
+}
+
+.tpHotelImg{
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 1px solid rgba(15,23,42,0.08);
+}
+
+.tpHotelImgFallback{
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: rgba(15,23,42,0.06);
+  border: 1px solid rgba(15,23,42,0.08);
+}
+
+/* SPOTS (styles ready for next step) */
+.tpSpotRow{
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 14px;
+  border: 1px solid rgba(15,23,42,0.08);
+  align-items: center;
+  flex-wrap: wrap;
+  background: rgba(255,255,255,0.55);
+}
+.tpSpotImg{
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 1px solid rgba(15,23,42,0.08);
+}
+.tpSpotImgFallback{
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: rgba(15,23,42,0.06);
+  border: 1px solid rgba(15,23,42,0.08);
+}
+.tpSpotLinks{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+  font-weight: 900;
+  font-size: 12px;
+}
+.tpSpotLinks a{
+  text-decoration: underline;
+}
+
+/* ===== CRAZY SUMMARY UI ===== */
+.tpSummaryWrap{
+  border-radius: 16px;
+  border: 1px solid rgba(15,23,42,0.10);
+  background: linear-gradient(135deg, rgba(255,255,255,0.72), rgba(255,255,255,0.52));
+  box-shadow: 0 16px 45px rgba(15,23,42,0.06);
+  overflow: hidden;
+}
+
+.tpSummaryHead{
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(15,23,42,0.08);
+  background: rgba(255,255,255,0.55);
+}
+
+.tpSummaryTitle{
+  font-weight: 1100;
+  font-size: 13px;
+  color: rgba(15,23,42,0.82);
+}
+
+.tpSummaryBody{
+  padding: 14px;
+}
+
+.tpKpiGrid{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+@media (max-width: 900px){
+  .tpKpiGrid{ grid-template-columns: 1fr; }
+}
+
+.tpKpi{
+  border-radius: 14px;
+  border: 1px solid rgba(15,23,42,0.10);
+  background: rgba(255,255,255,0.65);
+  padding: 12px;
+}
+.tpKpiLabel{
+  font-size: 12px;
+  font-weight: 1000;
+  opacity: 0.72;
+}
+.tpKpiValue{
+  margin-top: 6px;
+  font-size: 18px;
+  font-weight: 1200;
+  color: var(--heading);
+  letter-spacing: 0.2px;
+}
+.tpKpiSub{
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 900;
+  color: var(--muted);
+}
+
+.tpPill{
+  display:inline-flex;
+  align-items:center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 1100;
+  border: 1px solid rgba(15,23,42,0.10);
+  white-space: nowrap;
+}
+.tpPill.ok{ background: rgba(16,185,129,0.14); color: #065f46; border-color: rgba(16,185,129,0.22); }
+.tpPill.bad{ background: rgba(239,68,68,0.12); color: #7f1d1d; border-color: rgba(239,68,68,0.22); }
+.tpPill.info{ background: rgba(59,130,246,0.12); color: #1e3a8a; border-color: rgba(59,130,246,0.22); }
+.tpPill.warn{ background: rgba(245,158,11,0.14); color: #7c2d12; border-color: rgba(245,158,11,0.25); }
+
+.tpBarWrap{
+  margin-top: 12px;
+  border-radius: 999px;
+  background: rgba(15,23,42,0.08);
+  height: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(15,23,42,0.10);
+}
+.tpBarFill{
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(109,40,217,0.95), rgba(59,130,246,0.95));
+  transition: width 300ms ease;
+}
+.tpBarFill.over{
+  background: linear-gradient(135deg, rgba(239,68,68,0.95), rgba(245,158,11,0.95));
+}
+
+.tpMetaRow{
+  margin-top: 10px;
+  display:flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.tpChips{
+  display:flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tpChip{
+  display:inline-flex;
+  align-items:center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 1000;
+  border: 1px solid rgba(15,23,42,0.10);
+  background: rgba(255,255,255,0.65);
+  color: rgba(15,23,42,0.85);
+}
+
+.tpWarnBox{
+  margin-top: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(245,158,11,0.22);
+  background: rgba(245,158,11,0.12);
+  padding: 10px 12px;
+}
+.tpWarnTitle{
+  font-weight: 1100;
+  font-size: 12px;
+  color: rgba(124,45,18,0.95);
+  margin-bottom: 6px;
+}
+.tpWarnItem{
+  font-size: 12px;
+  font-weight: 900;
+  color: rgba(124,45,18,0.92);
+  line-height: 1.55;
+}
+
+.tpDetailsBox{
+  margin-top: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(15,23,42,0.10);
+  background: rgba(255,255,255,0.60);
+  padding: 12px;
+}
+/* ===== Details Meta (Better UI) ===== */
+.tpDetailsBox{
+  margin-top: 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(15,23,42,0.10);
+  background: linear-gradient(135deg, rgba(255,255,255,0.70), rgba(255,255,255,0.50));
+  box-shadow: 0 12px 40px rgba(15,23,42,0.06);
+  padding: 12px;
+}
+
+.tpMetaGrid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+@media (max-width: 900px){
+  .tpMetaGrid{ grid-template-columns: 1fr; }
+}
+
+.tpMetaChip{
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(15,23,42,0.10);
+  background: rgba(255,255,255,0.65);
+}
+
+.tpMetaKey{
+  font-size: 12px;
+  font-weight: 1100;
+  color: rgba(15,23,42,0.65);
+  white-space: nowrap;
+}
+
+.tpMetaVal{
+  font-size: 12px;
+  font-weight: 1000;
+  color: rgba(15,23,42,0.92);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* =========================
+   DAY CARD (Better like Summary)
+   ========================= */
+
+.tpDaysGrid{
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.tpDayCard{
+  border: 1px solid rgba(15,23,42,0.16) !important; /* darker so visible */
+  background: linear-gradient(135deg, rgba(255,255,255,0.78), rgba(255,255,255,0.58)) !important;
+  box-shadow: 0 16px 45px rgba(15,23,42,0.08) !important;
+}
+
+.tpDayHeader{
+  width: 100%;
+  border: 1px solid rgba(15,23,42,0.10);
+  background: rgba(255,255,255,0.55);
+  border-radius: 16px;
+  padding: 12px 12px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.tpDayHeader:hover{
+  background: rgba(255,255,255,0.65);
+}
+
+.tpDayHeaderTop{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.tpDayTitle{
+  font-weight: 1100;
+  font-size: 14px;
+  color: var(--heading);
+}
+
+.tpDayBadge{
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-weight: 1000;
+  font-size: 12px;
+  background: rgba(59,130,246,0.12);
+  border: 1px solid rgba(59,130,246,0.25);
+  color: #1e3a8a;
+}
+
+.tpDayChips{
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tpDayChip{
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(15,23,42,0.10);
+  background: rgba(255,255,255,0.60);
+  font-size: 12px;
+  font-weight: 1000;
+  color: rgba(15,23,42,0.88);
+}
+
+.tpDaySections{
+  margin-top: 12px;
+  display: grid;
+  gap: 10px;
+}
+
+.tpDaySection{
+  border-radius: 16px;
+  border: 1px solid rgba(15,23,42,0.10);
+  background: rgba(255,255,255,0.60);
+  padding: 12px;
+}
+
+.tpDaySectionTitle{
+  font-weight: 1100;
+  font-size: 13px;
+  color: rgba(15,23,42,0.85);
+  margin-bottom: 8px;
+}
+
+.tpDayLine{
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* =========================
+   Day Card - Clean Accordion Header
+   ========================= */
+
+.tpDayCard{
+  border: 1px solid rgba(15,23,42,0.16) !important;
+  background: linear-gradient(135deg, rgba(255,255,255,0.78), rgba(255,255,255,0.58)) !important;
+  box-shadow: 0 16px 45px rgba(15,23,42,0.08) !important;
+  position: relative;
+}
+
+/* subtle left accent to make it feel premium */
+.tpDayCard::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 14px;
+  bottom: 14px;
+  width: 6px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(139,92,246,0.85), rgba(59,130,246,0.75));
+  opacity: 0.55;
+}
+
+.tpDayCard.active::before{
+  opacity: 0.95;
+}
+
+.tpDayHeaderBtn{
+  width: 100%;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.tpDayHeadBar{
+  border: 1px solid rgba(15,23,42,0.10);
+  background: rgba(255,255,255,0.55);
+  border-radius: 16px;
+  padding: 12px 14px;
+}
+
+.tpDayHeadBar:hover{
+  background: rgba(255,255,255,0.65);
+}
+
+.tpDayHeadRow{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.tpDayLeft{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.tpDayNum{
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-weight: 1200;
+  background: rgba(139,92,246,0.12);
+  border: 1px solid rgba(139,92,246,0.28);
+  color: rgba(30,64,175,0.95);
+  flex: 0 0 auto;
+}
+
+.tpDayText{
+  min-width: 0;
+}
+
+.tpDayTitleLine{
+  font-weight: 1100;
+  font-size: 14px;
+  color: var(--heading);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tpDaySubLine{
+  margin-top: 4px;
+  font-size: 12.5px;
+  font-weight: 900;              /* ✅ bolder */
+  color: rgba(15,23,42,0.72); 
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tpDayRight{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+
+.tpDayBadge{
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-weight: 1000;
+  font-size: 12px;
+  background: rgba(59,130,246,0.12);
+  border: 1px solid rgba(59,130,246,0.25);
+  color: #1e3a8a;
+}
+
+.tpDayCostPill{
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 1200; 
+  font-weight: 1100;
+  font-size: 12px;
+  border: 1px solid rgba(15,23,42,0.10);
+  background: rgba(255,255,255,0.65);
+  color: rgba(15,23,42,0.90);
+}
+
+.tpDayChevron{
+  font-size: 14px;
+  opacity: 0.8;
+  transform: rotate(0deg);
+  transition: transform 160ms ease;
+}
+
+.tpDayChevron.open{
+  transform: rotate(180deg);
+}
+
+/* Reuse your sections style; keep spacing tighter */
+.tpDaySections{
+  margin-top: 12px;
+  display: grid;
+  gap: 10px;
+}
+.tpDaySection{
+  border-radius: 16px;
+  border: 1px solid rgba(15,23,42,0.10);
+  background: rgba(255,255,255,0.60);
+  padding: 12px;
+}
+.tpDaySectionTitle{
+  font-weight: 1100;
+  font-size: 13px;
+  color: rgba(15,23,42,0.85);
+  margin-bottom: 8px;
+}
+.tpDayLine{
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* Icons inside the day sub line */
+.tpSubLineRow{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.tpModeIcon{
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  opacity: 0.92;
+}
+
+.tpSubSep{
+  opacity: 0.55;
+}

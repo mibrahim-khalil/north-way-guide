@@ -1,0 +1,77 @@
+.hbOverlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(15,23,42,0.45);
+  z-index: 99998;
+}
+
+.hbModal{
+  position: fixed;
+  left: 50%;
+  top: 8%;
+  transform: translateX(-50%);
+  width: min(760px, calc(100% - 24px));
+  background: rgba(255,255,255,0.96);
+  border: 1px solid rgba(15,23,42,0.10);
+  border-radius: 18px;
+  z-index: 99999;
+  box-shadow: 0 30px 80px rgba(15,23,42,0.18);
+  padding: 14px;
+  max-height: 84vh;
+  overflow: auto;
+}
+
+.hbTop{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 10px;
+}
+
+.hbTitle{
+  font-weight: 1000;
+  color: var(--heading);
+  font-size: 16px;
+}
+.hbSub{ color: var(--muted); font-size: 12px; margin-top: 2px; }
+
+.hbClose{
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid rgba(15,23,42,0.10);
+  background: rgba(15,23,42,0.05);
+  cursor:pointer;
+}
+
+.hbForm{ margin-top: 12px; }
+
+.hbGrid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.hbSummary{
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(15,23,42,0.08);
+  background: rgba(15,23,42,0.03);
+  display:flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.hbActions{
+  margin-top: 12px;
+  display:flex;
+  gap: 10px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 700px){
+  .hbGrid{ grid-template-columns: 1fr; }
+}

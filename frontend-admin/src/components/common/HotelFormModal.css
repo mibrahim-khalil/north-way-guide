@@ -1,0 +1,163 @@
+.hmOverlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(15,23,42,0.35);
+  z-index: 9998;
+}
+
+.hmModal{
+  position: fixed;
+  left: 50%;
+  top: 6%;
+  transform: translateX(-50%);
+  width: min(980px, calc(100% - 24px));
+  max-height: 88vh;
+  overflow: auto;
+  z-index: 9999;
+
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(15,23,42,0.10);
+  border-radius: 18px;
+  box-shadow: 0 30px 90px rgba(15,23,42,0.16);
+  backdrop-filter: blur(18px);
+  padding: 14px;
+}
+
+.hmTop{
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+  gap: 10px;
+}
+
+.hmTitle{
+  font-weight: 1000;
+  color: var(--heading);
+  font-size: 16px;
+}
+.hmSub{
+  color: var(--muted);
+  font-weight: 800;
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+.hmClose{
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid rgba(15,23,42,0.10);
+  background: rgba(15,23,42,0.05);
+  cursor:pointer;
+  font-weight: 900;
+}
+
+.hmForm{
+  margin-top: 12px;
+  display:grid;
+  gap: 14px;
+}
+
+.hmGrid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.hmInput{
+  width: 100%;
+  padding: 12px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(15,23,42,0.12);
+  background: rgba(255,255,255,0.85);
+  color: var(--heading);
+  outline: none;
+  font-weight: 700;
+}
+.hmInput:focus{
+  border-color: rgba(109,40,217,0.28);
+  box-shadow: 0 0 0 4px rgba(109,40,217,0.12);
+  background: #fff;
+}
+
+.hmHint{
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.hmRooms{
+  border: 1px solid rgba(15,23,42,0.10);
+  background: rgba(255,255,255,0.65);
+  border-radius: 18px;
+  padding: 12px;
+}
+
+.hmRoomsTop{
+  display:flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.hmRoomsTitle{
+  font-weight: 1000;
+  color: var(--heading);
+}
+.hmRoomsHint{
+  color: var(--muted);
+  font-weight: 800;
+  font-size: 12px;
+}
+
+.hmRoomAdd{
+  display:grid;
+  grid-template-columns: 1.1fr 1.4fr .9fr .7fr auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.hmRoomList{
+  margin-top: 12px;
+  display:grid;
+  gap: 10px;
+}
+
+.hmRoomItem{
+  display:flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(15,23,42,0.10);
+  background: rgba(255,255,255,0.70);
+}
+
+.hmRoomName{
+  font-weight: 1000;
+  color: var(--heading);
+}
+.hmRoomMeta{
+  color: var(--muted);
+  font-weight: 800;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.hmActions{
+  display:flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 900px){
+  .hmGrid{ grid-template-columns: 1fr; }
+  .hmRoomAdd{ grid-template-columns: 1fr; }
+}

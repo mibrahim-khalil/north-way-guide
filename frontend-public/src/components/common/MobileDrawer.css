@@ -1,0 +1,197 @@
+.mdOverlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(15,23,42,0.55);
+  z-index: 99998;
+}
+
+.mdDrawer{
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  width: min(360px, 92vw);
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  z-index: 99999;
+  border-left: 1px solid rgba(15,23,42,0.10);
+  padding: 14px;
+  display:flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.mdTop{
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+  gap: 10px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(15,23,42,0.08);
+}
+
+.mdBrand{ display:flex; gap: 10px; align-items:center; }
+.mdMark{
+  width: 32px; height: 32px;
+  border-radius: 12px;
+  background: linear-gradient(110deg, #d6f5e1 0%, #eaddf3 45%, #dcecfc 100%);
+  border: 1px solid rgba(15,23,42,0.08);
+}
+.mdTitle{ font-weight: 1000; color: var(--heading); }
+.mdSub{ font-weight: 900; font-size: 11px; color: #6d28d9; letter-spacing: 1px; }
+
+.mdClose{
+  width: 38px; height: 38px;
+  border-radius: 12px;
+  border: 1px solid rgba(15,23,42,0.10);
+  background: rgba(15,23,42,0.05);
+  cursor:pointer;
+}
+
+.mdSearch{
+  margin-top: 12px;
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(15,23,42,0.10);
+  background: rgba(255,255,255,0.92);
+}
+
+.mdSearchIcon{
+  width: 28px; height: 28px;
+  border-radius: 999px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: rgba(109,40,217,0.10);
+  color: #6d28d9;
+  font-weight: 1000;
+}
+
+.mdSearchInput{
+  border: 0;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  font-weight: 700;
+  color: var(--heading);
+}
+.mdSearchBtn{
+  border: 0;
+  cursor:pointer;
+  padding: 9px 12px;
+  border-radius: 999px;
+  font-weight: 900;
+  background: #0f172a;
+  color: white;
+}
+
+.mdNav{
+  margin-top: 14px;
+  display:flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mdLink{
+  padding: 12px;
+  border-radius: 14px;
+  font-weight: 900;
+  color: var(--muted);
+  background: rgba(15,23,42,0.04);
+  border: 1px solid rgba(15,23,42,0.06);
+}
+.mdLink.active{
+  color: var(--heading);
+  background: rgba(109,40,217,0.10);
+  border-color: rgba(109,40,217,0.14);
+}
+
+.mdActions{
+  margin-top: auto;
+  display:grid;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(15,23,42,0.08);
+}
+
+.mdLogo{
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  padding: 6px;
+  border-radius: 12px;
+  background: rgba(15,23,42,0.10);  
+  border: 1px solid rgba(15,23,42,0.12);
+}
+
+.mdCartLink{
+  margin-top: 12px;
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 14px;
+  font-weight: 1000;
+  color: var(--heading);
+  background: rgba(109,40,217,0.08);
+  border: 1px solid rgba(109,40,217,0.12);
+}
+
+.mdCartCount{
+  min-width: 26px;
+  height: 26px;
+  padding: 0 8px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius: 999px;
+  background: rgba(109,40,217,0.12);
+  border: 1px solid rgba(109,40,217,0.16);
+  color: #6d28d9;
+  font-size: 12px;
+  font-weight: 1000;
+}
+.mdUserBlock{
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(15,23,42,0.08);
+}
+
+.mdUserTitle{
+  font-weight: 1000;
+  color: var(--heading);
+  font-size: 12px;
+  letter-spacing: .6px;
+  text-transform: uppercase;
+  opacity: .75;
+  margin-bottom: 10px;
+}
+
+.mdUserLinks{
+  display:grid;
+  gap: 8px;
+}
+
+.mdUserLink{
+  text-align: left;
+  padding: 12px;
+  border-radius: 14px;
+  font-weight: 900;
+  color: var(--heading);
+  background: rgba(255,255,255,0.75);
+  border: 1px solid rgba(15,23,42,0.08);
+}
+
+.mdUserLink:hover{
+  background: rgba(255,255,255,0.92);
+  border-color: rgba(109,40,217,0.16);
+}
+
+.mdUserLink.danger{
+  color: #b91c1c;
+  background: rgba(239,68,68,0.10);
+  border-color: rgba(239,68,68,0.18);
+}
