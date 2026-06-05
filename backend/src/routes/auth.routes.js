@@ -9,19 +9,35 @@ import { sendOtpEmail, sendPasswordResetEmail } from "../utils/mailer.js";
 
 const router = Router();
 
+// IMPORTANT: for Vercel(frontend) -> Render(backend) cross-site cookies
+const isProd = process.env.NODE_ENV === "production";
+
 const cookieOptions = {
   httpOnly: true,
-  sameSite: "lax",
-  secure: false,
+  sameSite: isProd ? "none" : "lax",
+  secure: isProd, // MUST be true in production (https)
+  path: "/",
   maxAge: 7 * 24 * 60 * 60 * 1000,
 };
 
+// clearCookie must match sameSite/secure/path, but no need for maxAge
+const clearCookieOptions = {
+  httpOnly: true,
+  sameSite: isProd ? "none" : "lax",
+  secure: isProd,
+  path: "/",
+};
+
 function signToken(user) {
-  return jwt.sign({ userId: user._id.toString(), role: user.role }, process.env.JWT_SECRET, { expiresIn: "7d" });
+  return jwt.sign(
+    { userId: user._id.toString(), role: user.role },
+    process.env.JWT_SECRET,
+    { expiresIn: "7d" }
+  );
 }
 
 function makeOtpCode() {
-  return String(Math.floor(100000 + Math.random() * 900000)); // 6 digitss
+  return String(Math.floor(100000 + Math.random() * 900000)); // 6 digits
 }
 
 async function deliverOtp({ email, code, context }) {
@@ -32,7 +48,6 @@ async function deliverOtp({ email, code, context }) {
   await sendOtpEmail({ to: email, code });
 }
 
-
 function normalizeEmail(v) {
   return String(v || "").trim().toLowerCase();
 }
@@ -42,7 +57,7 @@ function isValidEmail(v) {
 }
 
 function normalizePhone(v) {
-  return String(v || "").replace(/\D/g, ""); 
+  return String(v || "").replace(/\D/g, "");
 }
 
 function isValidPhone11(v) {
@@ -55,7 +70,6 @@ router.post("/forgot-password", async (req, res) => {
     if (!email) return res.status(400).json({ message: "Email is required" });
 
     const user = await User.findOne({ email });
-
     if (!user) return res.json({ ok: true });
 
     const token = crypto.randomBytes(32).toString("hex");
@@ -77,7 +91,7 @@ router.post("/forgot-password", async (req, res) => {
   }
 });
 
-//reset password
+// reset password
 router.post("/reset-password", async (req, res) => {
   try {
     const email = normalizeEmail(req.body?.email);
@@ -109,7 +123,7 @@ router.post("/reset-password", async (req, res) => {
   }
 });
 
-//register
+// register
 router.post("/register", async (req, res) => {
   try {
     const name = String(req.body?.name || "").trim();
@@ -129,12 +143,10 @@ router.post("/register", async (req, res) => {
       return res.status(400).json({ message: "Phone must be exactly 11 digits" });
     }
 
-    //  buyer/seller account option
     if (!["AVAILER", "SELLER"].includes(accountType)) {
       return res.status(400).json({ message: "Invalid accountType" });
     }
 
-    //  Unique email and no
     const existsEmail = await User.findOne({ email });
     if (existsEmail) return res.status(409).json({ message: "Email already registered" });
 
@@ -153,7 +165,7 @@ router.post("/register", async (req, res) => {
       phone,
       passwordHash,
       role: "USER",
-      accountType, 
+      accountType,
       isEmailVerified: false,
       emailOtpHash,
       emailOtpExpiresAt,
@@ -304,10 +316,9 @@ router.post("/login", async (req, res) => {
 
 // logout
 router.post("/logout", (req, res) => {
-  res.clearCookie("token");
+  res.clearCookie("token", clearCookieOptions);
   res.json({ ok: true });
 });
-
 
 router.get("/me", async (req, res) => {
   try {
