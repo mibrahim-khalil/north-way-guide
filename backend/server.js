@@ -160,7 +160,7 @@ mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("MongoDB connected");
-    app.listen(PORT, () => console.log(`API running: http://localhost:${PORT}`));
+    app.listen(PORT, "0.0.0.0", () => console.log(`API running on port ${PORT}`));
   })
   .catch((err) => {
     console.error("MongoDB connection error:", err.message);
