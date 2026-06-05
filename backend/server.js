@@ -1,8 +1,8 @@
 import dotenv from "dotenv";
-dotenv.config(); 
+dotenv.config();
 
 import dns from "dns";
-dns.setDefaultResultOrder("ipv4first"); 
+dns.setDefaultResultOrder("ipv4first");
 
 import express from "express";
 import cors from "cors";
@@ -73,9 +73,14 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
+const allowedOrigins = [
+  process.env.PUBLIC_ORIGIN,
+  process.env.ADMIN_ORIGIN,
+].filter(Boolean);
+
 app.use(
   cors({
-    origin: [process.env.PUBLIC_ORIGIN, process.env.ADMIN_ORIGIN],
+    origin: allowedOrigins.length ? allowedOrigins : true,
     credentials: true,
   })
 );
@@ -128,12 +133,12 @@ app.use("/api/admin/reviews", adminReviewsRoutes);
 app.use("/api/bookings", hotelBookingsRoutes);
 
 app.use("/api/my/bookings/hotel", myHotelBookingsRoutes);
-app.use("/api/my/bookings/guide", myGuideBookingsRoutes); 
+app.use("/api/my/bookings/guide", myGuideBookingsRoutes);
 
 app.use("/api/admin/hotel-bookings", adminHotelBookingsRoutes);
 
 app.use("/api/my/hotel-bookings", myHotelBookingsOwnerRoutes);
-app.use("/api/my/guide-bookings", myGuideBookingsOwnerRoutes); 
+app.use("/api/my/guide-bookings", myGuideBookingsOwnerRoutes);
 
 app.use("/api/payments", paymentsRoutes);
 app.use("/api/admin/payments", adminPaymentsRoutes);
