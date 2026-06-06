@@ -4,14 +4,13 @@ export default function requireAuth(req, res, next) {
   const authHeader = req.headers.authorization || "";
   const bearer = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : null;
 
-  // accept token from Bearer OR cookie
   const token = bearer || req.cookies?.token;
 
   if (!token) return res.status(401).json({ message: "Not authenticated" });
 
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
-    req.auth = payload; // { userId, role }
+    req.auth = payload;
     next();
   } catch {
     return res.status(401).json({ message: "Invalid/expired token" });
