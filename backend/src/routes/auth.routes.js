@@ -20,7 +20,7 @@ const cookieOptions = {
   maxAge: 7 * 24 * 60 * 60 * 1000,
 };
 
-// clearCookie must match sameSite/secure/path, but no need for maxAge
+// clearCookie must match sameSite/secure/path
 const clearCookieOptions = {
   httpOnly: true,
   sameSite: isProd ? "none" : "lax",
@@ -199,10 +199,12 @@ router.post("/verify-email", async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) return res.status(404).json({ message: "User not found" });
 
+    // already verified -> just sign in
     if (user.isEmailVerified) {
       const token = signToken(user);
       res.cookie("token", token, cookieOptions);
       return res.json({
+        token,
         user: {
           id: user._id,
           name: user.name,
@@ -234,6 +236,7 @@ router.post("/verify-email", async (req, res) => {
     res.cookie("token", token, cookieOptions);
 
     return res.json({
+      token,
       user: {
         id: user._id,
         name: user.name,
@@ -299,6 +302,7 @@ router.post("/login", async (req, res) => {
     res.cookie("token", token, cookieOptions);
 
     return res.json({
+      token,
       user: {
         id: user._id,
         name: user.name,
@@ -320,9 +324,13 @@ router.post("/logout", (req, res) => {
   res.json({ ok: true });
 });
 
+// me (supports cookie OR Bearer token)
 router.get("/me", async (req, res) => {
   try {
-    const token = req.cookies?.token;
+    const authHeader = req.headers.authorization || "";
+    const bearer = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : null;
+
+    const token = bearer || req.cookies?.token;
     if (!token) return res.status(401).json({ message: "Not authenticated" });
 
     const payload = jwt.verify(token, process.env.JWT_SECRET);
