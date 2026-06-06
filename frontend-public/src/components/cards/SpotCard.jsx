@@ -1,20 +1,6 @@
 import { Link } from "react-router-dom";
 import { useMemo, useState } from "react";
-import { api } from "../../utils/api";
-
-function resolveMediaUrl(url) {
-  if (!url) return "";
-  if (url.startsWith("http://") || url.startsWith("https://")) return url;
-
-  const base = api?.defaults?.baseURL || "";
-  const origin = base.replace(/\/api\/?$/, "");
-
-  if (url.startsWith("/uploads/")) return `${origin}${url}`;
-  if (url.startsWith("uploads/")) return `${origin}/${url}`;
-  if (url.startsWith("../images/")) return url.replace("../images/", "/images/");
-
-  return url;
-}
+import { toFileUrl } from "../../utils/toFileUrl";
 
 export default function SpotCard({ spot }) {
   const id = spot?.id || spot?._id;
@@ -28,7 +14,7 @@ export default function SpotCard({ spot }) {
     ratingCount > 0 && ratingAvg > 0 ? `${ratingAvg.toFixed(1)} (${ratingCount})` : "New";
 
   const rawImage = spot?.image || (Array.isArray(spot?.images) && spot.images[0]) || "";
-  const image = useMemo(() => resolveMediaUrl(rawImage), [rawImage]);
+  const image = useMemo(() => toFileUrl(rawImage), [rawImage]);
   const [imgOk, setImgOk] = useState(true);
 
   const frame = { width: "100%", height: 170 };
@@ -63,7 +49,6 @@ export default function SpotCard({ spot }) {
           }}
         />
 
-        {/* ✅ overlay chips (high contrast) */}
         <div
           style={{
             position: "absolute",
@@ -75,7 +60,6 @@ export default function SpotCard({ spot }) {
             zIndex: 5,
           }}
         >
-          {/* Rating chip */}
           <span
             style={{
               display: "inline-flex",
@@ -87,7 +71,7 @@ export default function SpotCard({ spot }) {
               fontSize: 12,
               background: "rgba(2,6,23,0.72)",
               border: "1px solid rgba(245,158,11,0.55)",
-              color: "rgb(253,230,138)", // amber text
+              color: "rgb(253,230,138)",
               boxShadow: "0 10px 22px rgba(2,6,23,0.22)",
               whiteSpace: "nowrap",
             }}
@@ -96,7 +80,6 @@ export default function SpotCard({ spot }) {
             ★ {ratingText}
           </span>
 
-          {/* Tag chip */}
           <span
             style={{
               display: "inline-flex",
