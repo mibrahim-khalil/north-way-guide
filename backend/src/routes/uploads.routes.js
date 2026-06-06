@@ -1,30 +1,27 @@
 import { Router } from "express";
 import multer from "multer";
-import path from "path";
-import fs from "fs";
-import { fileURLToPath } from "url";
+import { v2 as cloudinary } from "cloudinary";
 import requireAuth from "../middleware/requireAuth.js";
 import requireVerifiedEmail from "../middleware/requireVerifiedEmail.js";
 
 const router = Router();
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const uploadDir = path.join(__dirname, "../../uploads");
-
-if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, uploadDir),
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname || "").toLowerCase();
-    cb(null, `img_${Date.now()}${ext || ".jpg"}`);
-  },
+// Cloudinary config (reads from Render env vars)
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+// Use memory storage (no saving to disk)
 const upload = multer({
-  storage,
+  storage: multer.memoryStorage(),
   limits: { fileSize: 3 * 1024 * 1024 }, // 3MB
+  fileFilter: (req, file, cb) => {
+    const ok = ["image/jpeg", "image/png", "image/webp", "image/avif"].includes(file.mimetype);
+    if (!ok) return cb(new Error("Only image files are allowed (jpg, png, webp, avif)"));
+    cb(null, true);
+  },
 });
 
 router.post(
@@ -33,12 +30,27 @@ router.post(
   requireVerifiedEmail,
   upload.single("file"),
   async (req, res) => {
-    if (!req.file) return res.status(400).json({ message: "No file uploaded" });
+    try {
+      if (!req.file) return res.status(400).json({ message: "No file uploaded" });
 
-    const base = `${req.protocol}://${req.get("host")}`;
-    const url = `${base}/uploads/${req.file.filename}`;
+      // convert buffer -> base64 data uri
+      const base64 = req.file.buffer.toString("base64");
+      const dataUri = `data:${req.file.mimetype};base64,${base64}`;
 
-    res.json({ url });
+      const result = await cloudinary.uploader.upload(dataUri, {
+        folder: "north-way-guide/uploads",
+        resource_type: "image",
+      });
+
+      // return Cloudinary URL
+      return res.json({
+        url: result.secure_url,
+        publicId: result.public_id, // optional (useful for delete later)
+      });
+    } catch (err) {
+      console.error("CLOUDINARY UPLOAD ERROR:", err);
+      return res.status(500).json({ message: "Image upload failed" });
+    }
   }
 );
 
