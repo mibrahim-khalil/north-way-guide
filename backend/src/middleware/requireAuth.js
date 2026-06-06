@@ -1,7 +1,12 @@
 import jwt from "jsonwebtoken";
 
 export default function requireAuth(req, res, next) {
-  const token = req.cookies?.token;
+  const authHeader = req.headers.authorization || "";
+  const bearer = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : null;
+
+  // accept token from Bearer OR cookie
+  const token = bearer || req.cookies?.token;
+
   if (!token) return res.status(401).json({ message: "Not authenticated" });
 
   try {
