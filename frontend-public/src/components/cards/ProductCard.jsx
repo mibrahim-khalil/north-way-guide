@@ -3,21 +3,7 @@ import { useMemo, useState } from "react";
 import { useCart } from "../../context/CartContext";
 import { useToast } from "../../context/ToastContext";
 import { requireLogin } from "../../utils/requireLogin";
-import { api } from "../../utils/api";
-
-function resolveMediaUrl(url) {
-  if (!url) return "";
-  if (url.startsWith("http://") || url.startsWith("https://")) return url;
-
-  const base = api?.defaults?.baseURL || "";
-  const origin = base.replace(/\/api\/?$/, "");
-
-  if (url.startsWith("/uploads/")) return `${origin}${url}`;
-  if (url.startsWith("uploads/")) return `${origin}/${url}`;
-  if (url.startsWith("../images/")) return url.replace("../images/", "/images/");
-
-  return url;
-}
+import { toFileUrl } from "../../utils/toFileUrl";
 
 export default function ProductCard({ product }) {
   const { addToCart } = useCart();
@@ -26,33 +12,22 @@ export default function ProductCard({ product }) {
   const location = useLocation();
   const [imgOk, setImgOk] = useState(true);
 
-  const rawImage =
-    product?.image ||
-    (Array.isArray(product?.images) && product.images[0]) ||
-    "";
-
-  const image = useMemo(() => resolveMediaUrl(rawImage), [rawImage]);
+  const rawImage = product?.image || (Array.isArray(product?.images) && product.images[0]) || "";
+  const image = useMemo(() => toFileUrl(rawImage), [rawImage]);
 
   const handleAdd = async () => {
-    const ok = await requireLogin(
-      navigate,
-      toast,
-      "Please login to add items to cart",
-      location.pathname
-    );
+    const ok = await requireLogin(navigate, toast, "Please login to add items to cart", location.pathname);
     if (!ok) return;
 
     addToCart(product, 1);
-    toast(`${product.name} added to cart`);
+    toast(`${product?.name} added to cart`);
   };
 
   const ratingAvg = Number(product?.ratingAvg ?? product?.rating ?? 0);
   const ratingCount = Number(product?.ratingCount ?? 0);
 
   const ratingText =
-    ratingCount > 0 && ratingAvg > 0
-      ? `${ratingAvg.toFixed(1)} (${ratingCount})`
-      : "New";
+    ratingCount > 0 && ratingAvg > 0 ? `${ratingAvg.toFixed(1)} (${ratingCount})` : "New";
 
   const tag = product?.category || "Product";
 
@@ -65,12 +40,7 @@ export default function ProductCard({ product }) {
           <img
             src={image}
             alt={product?.name}
-            style={{
-              ...frame,
-              objectFit: "cover",
-              objectPosition: "center",
-              display: "block",
-            }}
+            style={{ ...frame, objectFit: "cover", objectPosition: "center", display: "block" }}
             onError={() => setImgOk(false)}
           />
         ) : (
@@ -83,7 +53,6 @@ export default function ProductCard({ product }) {
           />
         )}
 
-        {/* ✅ Same Gradient as SpotCard */}
         <div
           style={{
             position: "absolute",
@@ -93,7 +62,6 @@ export default function ProductCard({ product }) {
           }}
         />
 
-        {/* ✅ Overlay Chips (SAME AS SPOT CARD) */}
         <div
           style={{
             position: "absolute",
@@ -105,7 +73,6 @@ export default function ProductCard({ product }) {
             zIndex: 5,
           }}
         >
-          {/* ⭐ Rating Chip */}
           <span
             style={{
               display: "inline-flex",
@@ -130,7 +97,6 @@ export default function ProductCard({ product }) {
             ★ {ratingText}
           </span>
 
-          {/* 🏷 Category Tag Chip */}
           <span
             style={{
               display: "inline-flex",
@@ -153,31 +119,19 @@ export default function ProductCard({ product }) {
       </div>
 
       <div className="cardBody">
-        <div style={{ fontWeight: 1100, color: "var(--heading)" }}>
-          {product?.name}
-        </div>
+        <div style={{ fontWeight: 1100, color: "var(--heading)" }}>{product?.name}</div>
 
         <p className="p" style={{ marginTop: 8, fontSize: 13 }}>
           Price:{" "}
-          <b>
-            PKR {Number(product?.price || 0).toLocaleString("en-PK")}
-          </b>
+          <b>PKR {Number(product?.price || 0).toLocaleString("en-PK")}</b>
         </p>
 
         <div style={{ display: "flex", gap: 10, marginTop: 12 }}>
-          <button
-            className="btn primary"
-            style={{ flex: 1 }}
-            onClick={handleAdd}
-          >
+          <button className="btn primary" style={{ flex: 1 }} onClick={handleAdd}>
             Add to Cart
           </button>
 
-          <Link
-            className="btn ghost"
-            style={{ flex: 1 }}
-            to={`/local-products/${product?.id}`}
-          >
+          <Link className="btn ghost" style={{ flex: 1 }} to={`/local-products/${product?.id || product?._id}`}>
             More Info
           </Link>
         </div>

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { toFileUrl } from "../../utils/toFileUrl";
 
 export default function GuideListItem({ guide }) {
   if (!guide) return null;
@@ -9,21 +10,19 @@ export default function GuideListItem({ guide }) {
   const ratingCount = Number(guide?.ratingCount ?? 0);
 
   const ratingText =
-    ratingCount > 0 && ratingAvg > 0
-      ? `${ratingAvg.toFixed(1)} (${ratingCount})`
-      : "New";
+    ratingCount > 0 && ratingAvg > 0 ? `${ratingAvg.toFixed(1)} (${ratingCount})` : "New";
 
-  const image =
-    guide?.image ||
-    (Array.isArray(guide?.images) && guide.images[0]) ||
-    "/images/home1.png";
+  const rawImage =
+    guide?.image || (Array.isArray(guide?.images) && guide.images[0]) || "/images/home1.png";
+
+  const image = toFileUrl(rawImage);
 
   return (
     <div className="card listCard">
       <div className="listCardImage">
         <img
           src={image}
-          alt={guide.name}
+          alt={guide?.name}
           onError={(e) => (e.currentTarget.src = "/images/home1.png")}
         />
 
@@ -46,19 +45,17 @@ export default function GuideListItem({ guide }) {
       </div>
 
       <div className="listCardContent">
-        <div style={{ fontWeight: 1100, fontSize: 18 }}>
-          {guide.name}
-        </div>
+        <div style={{ fontWeight: 1100, fontSize: 18 }}>{guide?.name}</div>
 
         <p className="p">
-          Area: <b>{guide.area}</b>
+          Area: <b>{guide?.area}</b>
         </p>
 
         <p className="p">
-          Rate: <b>{guide.rate}</b>
+          Rate: <b>{guide?.rate}</b>
         </p>
 
-        {guide.specialization && (
+        {guide?.specialization && (
           <p className="p" style={{ fontSize: 12 }}>
             <b>Specialties:</b> {guide.specialization}
           </p>

@@ -1,20 +1,6 @@
 import { Link } from "react-router-dom";
 import { useMemo, useState } from "react";
-import { api } from "../../utils/api";
-
-function resolveMediaUrl(url) {
-  if (!url) return "";
-  if (url.startsWith("http://") || url.startsWith("https://")) return url;
-
-  const base = api?.defaults?.baseURL || "";
-  const origin = base.replace(/\/api\/?$/, "");
-
-  if (url.startsWith("/uploads/")) return `${origin}${url}`;
-  if (url.startsWith("uploads/")) return `${origin}/${url}`;
-  if (url.startsWith("../images/")) return url.replace("../images/", "/images/");
-
-  return url;
-}
+import { toFileUrl } from "../../utils/toFileUrl";
 
 function formatDate(d) {
   const x = new Date(d);
@@ -56,7 +42,7 @@ export default function EventCard({ event, nowMs }) {
   const location = event?.location || "—";
 
   const rawImage = event?.image || "";
-  const image = useMemo(() => resolveMediaUrl(rawImage), [rawImage]);
+  const image = useMemo(() => toFileUrl(rawImage), [rawImage]);
   const [imgOk, setImgOk] = useState(true);
 
   const frame = { width: "100%", height: 170 };
@@ -94,7 +80,6 @@ export default function EventCard({ event, nowMs }) {
           }}
         />
 
-        {/* ✅ Only ONE chip (countdown) */}
         {chip ? (
           <div
             style={{
@@ -117,7 +102,7 @@ export default function EventCard({ event, nowMs }) {
                 fontWeight: 1100,
                 fontSize: 12,
                 background: "rgba(2,6,23,0.72)",
-                border: "1px solid rgba(245,158,11,0.55)", // same accent as SpotCard
+                border: "1px solid rgba(245,158,11,0.55)",
                 color: "rgb(253,230,138)",
                 boxShadow: "0 10px 22px rgba(2,6,23,0.22)",
                 whiteSpace: "nowrap",
@@ -142,18 +127,14 @@ export default function EventCard({ event, nowMs }) {
         </p>
 
         <div style={{ display: "flex", gap: 10, marginTop: 12, flexWrap: "wrap" }}>
-          <Link
-            className="btn primary"
-            style={{ flex: 1, justifyContent: "center", textAlign: "center" }}
-            to={`/events/${id}`}
-          >
+          <Link className="btn primary" style={{ flex: 1, justifyContent: "center" }} to={`/events/${id}`}>
             More Info
           </Link>
 
           {event?.mapUrl ? (
             <a
               className="btn ghost"
-              style={{ flex: 1, justifyContent: "center", textAlign: "center" }}
+              style={{ flex: 1, justifyContent: "center" }}
               href={event.mapUrl}
               target="_blank"
               rel="noreferrer"
@@ -161,18 +142,7 @@ export default function EventCard({ event, nowMs }) {
               Map
             </a>
           ) : (
-            <button
-              className="btn ghost"
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                textAlign: "center",
-                opacity: 0.55,
-                cursor: "not-allowed",
-              }}
-              type="button"
-              disabled
-            >
+            <button className="btn ghost" style={{ flex: 1, opacity: 0.55 }} type="button" disabled>
               Map
             </button>
           )}

@@ -1,25 +1,27 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import HotelBookingModal from "../forms/HotelBookingModal";
+import { toFileUrl } from "../../utils/toFileUrl";
 
 export default function HotelListItem({ hotel }) {
   const [open, setOpen] = useState(false);
 
-  const id = hotel.id || hotel._id;
+  const id = hotel?.id || hotel?._id;
 
   const ratingAvg = Number(hotel?.ratingAvg ?? 0);
   const ratingCount = Number(hotel?.ratingCount ?? 0);
 
   const ratingText =
-    ratingCount > 0 && ratingAvg > 0
-      ? `${ratingAvg.toFixed(1)} (${ratingCount})`
-      : "New";
+    ratingCount > 0 && ratingAvg > 0 ? `${ratingAvg.toFixed(1)} (${ratingCount})` : "New";
+
+  const rawImage = hotel?.image || (Array.isArray(hotel?.images) && hotel.images[0]) || "";
+  const image = toFileUrl(rawImage);
 
   return (
     <>
       <div className="card listCard">
         <div className="listCardImage">
-          <img src={hotel.image} alt={hotel.name} />
+          <img src={image} alt={hotel?.name} onError={(e) => (e.currentTarget.src = "/images/home1.png")} />
 
           <div
             style={{
@@ -40,12 +42,10 @@ export default function HotelListItem({ hotel }) {
         </div>
 
         <div className="listCardContent">
-          <div style={{ fontWeight: 1100, fontSize: 18 }}>
-            {hotel.name}
-          </div>
+          <div style={{ fontWeight: 1100, fontSize: 18 }}>{hotel?.name}</div>
 
           <p className="p">
-            {hotel.city} • From PKR {hotel.priceFrom}/night
+            {hotel?.city} • From PKR {hotel?.priceFrom}/night
           </p>
 
           <div className="listCardActions">

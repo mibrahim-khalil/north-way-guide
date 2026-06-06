@@ -1,14 +1,10 @@
 import { Link } from "react-router-dom";
+import { toFileUrl } from "../../utils/toFileUrl";
 
 export default function GuideCard({ guide }) {
   if (!guide) return null;
 
-  const ratingAvg =
-    guide?.ratingAvg ??
-    guide?.averageRating ??
-    guide?.rating ??
-    0;
-
+  const ratingAvg = guide?.ratingAvg ?? guide?.averageRating ?? guide?.rating ?? 0;
   const ratingCount = guide?.ratingCount ?? 0;
 
   const ratingText =
@@ -20,17 +16,23 @@ export default function GuideCard({ guide }) {
 
   const frame = { width: "100%", height: 170 };
 
+  const id = guide?.id || guide?._id;
+
+  const rawImage =
+    guide?.image || (Array.isArray(guide?.images) && guide.images[0]) || "/images/home1.png";
+
+  const image = toFileUrl(rawImage);
+
   return (
     <div className="card" style={{ overflow: "hidden" }}>
       <div style={{ position: "relative" }}>
         <img
-          src={guide.image || "/images/home1.png"}
-          alt={guide.name}
+          src={image}
+          alt={guide?.name}
           style={{ ...frame, objectFit: "cover" }}
           onError={(e) => (e.currentTarget.src = "/images/home1.png")}
         />
 
-        {/* Gradient */}
         <div
           style={{
             position: "absolute",
@@ -40,7 +42,6 @@ export default function GuideCard({ guide }) {
           }}
         />
 
-        {/* Rating Chip */}
         <div style={{ position: "absolute", top: 10, left: 10 }}>
           <span
             style={{
@@ -59,24 +60,18 @@ export default function GuideCard({ guide }) {
       </div>
 
       <div className="cardBody">
-        <div style={{ fontWeight: 1100, color: "var(--heading)" }}>
-          {guide.name}
-        </div>
+        <div style={{ fontWeight: 1100, color: "var(--heading)" }}>{guide?.name}</div>
 
         <p className="p" style={{ marginTop: 8, fontSize: 13 }}>
-          Area: <b>{guide.area}</b>
+          Area: <b>{guide?.area}</b>
         </p>
 
         <p className="p" style={{ fontSize: 13 }}>
-          Rate: <b>{guide.rate}</b>
+          Rate: <b>{guide?.rate}</b>
         </p>
 
         <div style={{ marginTop: 12 }}>
-          <Link
-            className="btn primary"
-            style={{ width: "100%" }}
-            to={`/guides/${guide.id}`}
-          >
+          <Link className="btn primary" style={{ width: "100%" }} to={`/guides/${id}`}>
             View Profile
           </Link>
         </div>
