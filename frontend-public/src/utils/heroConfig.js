@@ -16,8 +16,7 @@ export const heroByRoute = (path) => {
   ];
 
   const hotelImgs = [
-    "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=2000&q=60",
-    "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=2000&q=60",
+    "https://images.pexels.com/photos/6348640/pexels-photo-6348640.jpeg",
   ];
 
   const spotsImgs = [
