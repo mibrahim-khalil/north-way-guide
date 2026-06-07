@@ -5,14 +5,9 @@ export const heroByRoute = (path) => {
     ctaSecondary: { label: "Explore Spots", to: "/tourist-spots" },
   };
 
-const homeImgs = [
-  "/images/home1.png",
-  "/images/home2.png",
-  "/images/home3.png",
-  "/images/home4.png",
-  "/images/home5.png",
-  "/images/image.jpg",
-];
+  const homeImgs = [
+    "https://images.pexels.com/photos/35302567/pexels-photo-35302567.jpeg",
+  ];
 
   const tripImgs = [
     "https://unsplash.com/photos/woman-on-a-cliff-overlooking-the-mountains-and-a-valley-G47UwbJ_Utw",
