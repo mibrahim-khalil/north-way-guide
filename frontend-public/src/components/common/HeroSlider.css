@@ -1,110 +1,109 @@
 .hero{
-position: relative;
-padding: 46px 0 18px;
+  position: relative;
+  min-height: 520px;
+  padding: 56px 0 40px;
+  overflow: hidden;
 }
 
 .heroBg{
-position:absolute;
-inset:0;
-background-size: cover;
-background-position:center;
-opacity: 1; 
+  position:absolute;
+  inset:0;
+  background-size: cover;
+  background-position:center;
+  transform: scale(1.02);
 }
 
 .heroOverlay{
-position:absolute;
-inset:0;
-background: transparent;
+  position:absolute;
+  inset:0;
+  /* scrim for text readability */
+  background: linear-gradient(90deg,
+    rgba(0,0,0,0.70) 0%,
+    rgba(0,0,0,0.40) 45%,
+    rgba(0,0,0,0.10) 100%);
 }
 
 .heroInner{
-position:relative;
-z-index: 2;
-display:grid;
-grid-template-columns: 1.15fr .85fr;
-gap: 20px;
-align-items: center;
+  position:relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: end;
 }
 
 .heroLeft{
-padding: 10px 0;
+  max-width: 760px;
 }
 
 .heroBadges{
-display:flex;
-gap: 10px;
-flex-wrap: wrap;
-margin-bottom: 14px;
+  display:flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+/* Make badges work on dark hero */
+.hero .badge{
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.90);
+}
+
+.heroTitle{
+  color: #fff;
+  margin: 0;
+}
+
+.heroSubtitle{
+  margin: 10px 0 0;
+  color: rgba(255,255,255,0.85);
+  max-width: 60ch;
+  line-height: 1.5;
 }
 
 .heroCtas{
-display:flex;
-gap: 12px;
-flex-wrap: wrap;
-margin-top: 18px;
+  display:flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+/* Quick access chips under hero */
+.heroQuick{
+  margin-top: 18px;
+  display:flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.chip{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  height: 40px;
+  padding: 0 14px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255,255,255,0.28);
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+  font-weight: 600;
 }
 
 .dots{
-display:flex;
-gap: 8px;
-margin-top: 16px;
+  display:flex;
+  gap: 8px;
+  margin-top: 18px;
 }
 .dot{
-width: 10px;
-height: 10px;
-border-radius: 999px;
-border: 0;
-background: rgba(15,23,42,0.20);
-cursor:pointer;
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  border: 0;
+  background: rgba(255,255,255,0.35);
+  cursor:pointer;
 }
-.dot.active{
-background: rgba(15,23,42,0.75);
-}
+.dot.active{ background: rgba(255,255,255,0.90); }
 
-.glassCard{
-background: rgba(255,255,255,0.72);
-border: 1px solid rgba(255,255,255,0.65);
-backdrop-filter: blur(18px);
--webkit-backdrop-filter: blur(18px);
-border-radius: 22px;
-padding: 18px;
-box-shadow: 0 22px 60px rgba(15,23,42,0.10);
-}
-.glassTitle{
-font-weight: 1000;
-color: var(--heading);
-margin-bottom: 12px;
-}
-.glassGrid{
-display:grid;
-grid-template-columns: 1fr;
-gap: 10px;
-}
-.glassItem{
-padding: 12px;
-border-radius: 16px;
-border: 1px solid rgba(15,23,42,0.08);
-background: rgba(255,255,255,0.75);
-color: var(--heading);
-font-weight: 900;
-text-align:center;
-transition: .15s ease;
-}
-.glassItem:hover{
-transform: translateY(-1px);
-border-color: rgba(109,40,217,0.22);
-box-shadow: 0 12px 28px rgba(109,40,217,0.10);
-}
-
-@media (max-width: 900px){
-.heroInner{
-grid-template-columns: 1fr;
-gap: 14px;
-}
-.heroLeft{
-padding: 0;
-}
-.heroRight{
-display: none;
-}
+@media (max-width: 600px){
+  .hero{ min-height: 460px; padding: 40px 0 28px; }
 }
