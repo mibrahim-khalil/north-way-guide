@@ -238,3 +238,119 @@ label{
   .listCard{ grid-template-columns: 1fr; }
   .listCardImage{ height: 200px; }
 }
+
+.nkCard{
+  display:flex;
+  flex-direction:column;
+}
+
+/* Square image stage (Nike-like) */
+.nkMedia{
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: var(--soft);
+  overflow: hidden;
+}
+
+.nkImg{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.nkImgPlaceholder{
+  width:100%;
+  height:100%;
+  background: var(--soft);
+}
+
+/* Chips that float on image */
+.nkChipRow{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  z-index: 2;
+}
+
+.nkChip{
+  display:inline-flex;
+  align-items:center;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+.nkChip--onImage{
+  background: rgba(255,255,255,0.92);
+  color: var(--ink);
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+/* Single chip on image (used by EventCard / GuideCard / HotelCard) */
+.nkMedia > .nkChip{
+  position:absolute;
+  top:10px;
+  left:10px;
+  z-index:2;
+}
+
+/* Body content */
+.nkBody{
+  padding: 14px 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nkTitle{
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ink);
+  line-height: 1.3;
+}
+.nkTitle--lg{
+  font-size: 18px;
+}
+
+.nkMeta{
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+.nkMeta--sm{
+  font-size: 12px;
+}
+
+.nkPrice{
+  margin-top: 2px;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.nkActions{
+  display:flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+/* Make CTA buttons in cards stretch nicely */
+.nkActions .btn{
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* listCard image overlay support */
+.listCardImage{
+  position: relative;
+}
