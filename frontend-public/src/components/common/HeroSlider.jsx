@@ -31,14 +31,18 @@ export default function HeroSlider({
 
       <div className="container heroInner">
         <div className="heroLeft">
-          <div className="heroBadges">
-            {badges.map((b) => (
-              <span className="badge" key={b}>{b}</span>
-            ))}
-          </div>
+          {!!badges.length && (
+            <div className="heroBadges">
+              {badges.map((b) => (
+                <span className="badge" key={b}>
+                  {b}
+                </span>
+              ))}
+            </div>
+          )}
 
-          <h1 className="h1">{title}</h1>
-          <p className="p">{subtitle}</p>
+          <h1 className="display-campaign heroTitle">{title}</h1>
+          <p className="heroSubtitle">{subtitle}</p>
 
           <div className="heroCtas">
             {ctaPrimary?.to && (
@@ -47,10 +51,26 @@ export default function HeroSlider({
               </Link>
             )}
             {ctaSecondary?.to && (
-              <Link className="btn" to={ctaSecondary.to}>
+              <Link className="btn ghost" to={ctaSecondary.to}>
                 {ctaSecondary.label}
               </Link>
             )}
+          </div>
+
+          {/* replaces the glass card: Nike-like quick chips */}
+          <div className="heroQuick">
+            <Link to="/trip-planner" className="chip">
+              AI Trip Planner
+            </Link>
+            <Link to="/hotels" className="chip">
+              Find Hotels
+            </Link>
+            <Link to="/tourist-spots" className="chip">
+              Tourist Spots
+            </Link>
+            <Link to="/transport" className="chip">
+              Transport Compare
+            </Link>
           </div>
 
           {safeImages.length > 1 && (
@@ -65,20 +85,6 @@ export default function HeroSlider({
               ))}
             </div>
           )}
-        </div>
-
-        <div className="heroRight">
-          <div className="glassCard">
-            <div className="glassTitle">Quick Access</div>
-            <div className="glassGrid">
-              <Link to="/trip-planner" className="glassItem">AI Trip Planner</Link>
-              <Link to="/hotels" className="glassItem">Find Hotels</Link>
-              <Link to="/tourist-spots" className="glassItem">Tourist Spots</Link>
-              <Link to="/transport" className="glassItem">Transport & Fare Comparison</Link>
-            </div>
-            <hr className="sep" />
-
-          </div>
         </div>
       </div>
     </section>
