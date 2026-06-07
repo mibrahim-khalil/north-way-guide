@@ -7,6 +7,7 @@ export const heroByRoute = (path) => {
 
   const homeImgs = [
     "https://images.pexels.com/photos/35302567/pexels-photo-35302567.jpeg",
+    "https://images.pexels.com/photos/35302563/pexels-photo-35302563.jpeg",
   ];
 
   const tripImgs = [
