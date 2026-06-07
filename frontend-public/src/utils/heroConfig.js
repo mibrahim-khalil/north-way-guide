@@ -26,8 +26,7 @@ export const heroByRoute = (path) => {
   ];
 
   const transportImgs = [
-    "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=2000&q=60",
-    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=2000&q=60",
+    "https://images.pexels.com/photos/1031008/pexels-photo-1031008.jpeg",
   ];
 
   const productImgs = [
