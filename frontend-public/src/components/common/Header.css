@@ -23,29 +23,28 @@
   flex: 0 0 auto;
 }
 
-/* Your logo is white; give it a black stage (optional but looks premium) */
 .brandLogo{
-  width: 38px;
-  height: 38px;
+  width: 28px;
+  height: 28px;
   object-fit: contain;
-  border-radius: 10px;
-  background: var(--ink);
-  padding: 6px;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  display: block;
 }
 
-.brandTextCol{ display:flex; flex-direction: column; line-height: 1.05; }
+.brandTextCol{
+  display:flex;
+  align-items:center;
+  line-height: 1;
+}
+
 .brandText{
   font-weight: 700;
   font-size: 12px;
-  letter-spacing: 1.2px;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
   color: var(--ink);
-}
-.brandSub{
-  margin-top: 4px;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 1.2px;
-  color: var(--muted);
 }
 
 .rightGroup{
@@ -56,13 +55,13 @@
   flex: 0 0 auto;
 }
 
-/* Nike-like nav: clean text + underline active */
 .nav{
   display:flex;
   align-items:center;
   gap: 18px;
   white-space: nowrap;
 }
+
 .nav a{
   font-size: 13px;
   font-weight: 600;
@@ -70,13 +69,17 @@
   padding: 8px 0;
   border-bottom: 2px solid transparent;
 }
+
 .nav a.active{
   border-bottom-color: var(--ink);
 }
 
-.actions{ display:flex; gap: 10px; align-items:center; }
+.actions{
+  display:flex;
+  gap: 10px;
+  align-items:center;
+}
 
-/* icon buttons */
 .headerIconBtn{
   height: 40px;
   width: 40px;
@@ -90,10 +93,15 @@
   justify-content: center;
   padding: 0;
 }
-.headerIconBtn:hover{ background: #ededed; }
-.headerIconSvg{ width: 20px; height: 20px; display:block; }
 
-/* cart pill */
+.headerIconBtn:hover{ background: #ededed; }
+
+.headerIconSvg{
+  width: 20px;
+  height: 20px;
+  display:block;
+}
+
 .cartBtn{
   display:inline-flex;
   align-items:center;
@@ -106,6 +114,7 @@
   font-weight: 600;
   color: var(--ink);
 }
+
 .cartCount{
   min-width: 20px;
   height: 20px;
@@ -120,7 +129,6 @@
   font-weight: 700;
 }
 
-/* hamburger */
 .hamburger{
   display: none;
   width: 44px;
@@ -133,12 +141,14 @@
   justify-content: center;
   padding: 0;
 }
+
 .hamburgerInner{
   width: 20px;
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
+
 .hamburgerInner span{
   display:block;
   width: 100%;
