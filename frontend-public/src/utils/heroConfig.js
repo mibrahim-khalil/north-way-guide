@@ -8,16 +8,26 @@ export const heroByRoute = (path) => {
   const homeImgs = [
     "https://images.pexels.com/photos/35302567/pexels-photo-35302567.jpeg",
     "https://images.pexels.com/photos/35302563/pexels-photo-35302563.jpeg",
+    "https://images.pexels.com/photos/15916727/pexels-photo-15916727.jpeg",
+    "https://images.pexels.com/photos/35302567/pexels-photo-35302567.jpeg",
+    "https://images.pexels.com/photos/19442073/pexels-photo-19442073.jpeg",
   ];
 
   const tripImgs = [
-    "https://unsplash.com/photos/woman-on-a-cliff-overlooking-the-mountains-and-a-valley-G47UwbJ_Utw",
-    "/images/skardu.png",
-    "https://images.unsplash.com/photo-1646514323663-f5b6595763ff?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGdpbGdpdCUyMGJhbHRpc3RhbnxlbnwwfHwwfHx8MA%3D%3D",
+    "https://images.pexels.com/photos/20567552/pexels-photo-20567552.jpeg",
+    "https://images.pexels.com/photos/14696300/pexels-photo-14696300.jpeg",
+    "https://images.pexels.com/photos/13562249/pexels-photo-13562249.jpeg",
+    "https://images.pexels.com/photos/713058/pexels-photo-713058.jpeg",
+    "https://images.pexels.com/photos/19442078/pexels-photo-19442078.jpeg",
   ];
 
   const hotelImgs = [
     "https://images.pexels.com/photos/6348640/pexels-photo-6348640.jpeg",
+    "https://images.pexels.com/photos/19442074/pexels-photo-19442074.jpeg",
+    "https://images.pexels.com/photos/13567192/pexels-photo-13567192.jpeg",
+    "https://images.pexels.com/photos/35302567/pexels-photo-35302567.jpeg",
+    "https://images.pexels.com/photos/6348640/pexels-photo-6348640.jpeg",
+
   ];
 
   const spotsImgs = [
@@ -32,11 +42,13 @@ export const heroByRoute = (path) => {
     "https://images.pexels.com/photos/1031008/pexels-photo-1031008.jpeg",
     "https://images.pexels.com/photos/17324034/pexels-photo-17324034.jpeg",
     "https://images.pexels.com/photos/11655564/pexels-photo-11655564.jpeg",
+    "https://images.pexels.com/photos/14351862/pexels-photo-14351862.jpeg",
   ];
 
   const productImgs = [
-    "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=2000&q=60",
-    "https://images.unsplash.com/photo-1621939514649-280e2a0bda3f?auto=format&fit=crop&w=2000&q=60",
+    "https://images.pexels.com/photos/11135641/pexels-photo-11135641.jpeg",
+    "https://images.pexels.com/photos/36870365/pexels-photo-36870365.jpeg",
+    "https://images.pexels.com/photos/33803616/pexels-photo-33803616.jpeg",
   ];
 
   const aboutImgs = [
