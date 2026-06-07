@@ -11,11 +11,13 @@ export const heroByRoute = (path) => {
     "https://images.pexels.com/photos/15916727/pexels-photo-15916727.jpeg",
     "https://images.pexels.com/photos/35302567/pexels-photo-35302567.jpeg",
     "https://images.pexels.com/photos/19442073/pexels-photo-19442073.jpeg",
+    "https://images.pexels.com/photos/15556462/pexels-photo-15556462.jpeg",
+    "https://images.pexels.com/photos/19442074/pexels-photo-19442074.jpeg",
   ];
 
   const tripImgs = [
     "https://images.pexels.com/photos/20567552/pexels-photo-20567552.jpeg",
-    "https://images.pexels.com/photos/14696300/pexels-photo-14696300.jpeg",
+    "https://images.pexels.com/photos/35302567/pexels-photo-35302567.jpeg",
     "https://images.pexels.com/photos/13562249/pexels-photo-13562249.jpeg",
     "https://images.pexels.com/photos/713058/pexels-photo-713058.jpeg",
     "https://images.pexels.com/photos/19442078/pexels-photo-19442078.jpeg",
@@ -26,8 +28,6 @@ export const heroByRoute = (path) => {
     "https://images.pexels.com/photos/19442074/pexels-photo-19442074.jpeg",
     "https://images.pexels.com/photos/13567192/pexels-photo-13567192.jpeg",
     "https://images.pexels.com/photos/35302567/pexels-photo-35302567.jpeg",
-    "https://images.pexels.com/photos/6348640/pexels-photo-6348640.jpeg",
-
   ];
 
   const spotsImgs = [
@@ -42,7 +42,6 @@ export const heroByRoute = (path) => {
     "https://images.pexels.com/photos/1031008/pexels-photo-1031008.jpeg",
     "https://images.pexels.com/photos/17324034/pexels-photo-17324034.jpeg",
     "https://images.pexels.com/photos/11655564/pexels-photo-11655564.jpeg",
-    "https://images.pexels.com/photos/14351862/pexels-photo-14351862.jpeg",
   ];
 
   const productImgs = [
