@@ -1,0 +1,128 @@
+.nwHome{
+  display: grid;
+  gap: 40px;
+}
+
+.nwIntro{
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.nwIntroTitle{
+  margin: 0 0 6px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.nwIntroSub{
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+  font-size: 13px;
+}
+
+.nwSection{
+  display: grid;
+  gap: 12px;
+}
+
+/* Header: title left, view-all right */
+.nwSectionHead{
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.nwSectionTitle{
+  margin: 0 0 6px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.nwSectionSub{
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* Cards row: Grid on desktop, Horizontal swipe on mobile (Nike-like) */
+.nwCards{
+  display: grid;
+  gap: var(--s-2);
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 1000px){
+  .nwCards{ grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px){
+  .nwCards{
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 82%;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scroll-snap-type: x mandatory;
+  }
+  .nwCards > *{ scroll-snap-align: start; }
+}
+
+/* Empty state */
+.nwEmpty{
+  padding: 18px 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* Skeletons */
+.nwSkeletonCard{
+  border-color: var(--hairline);
+}
+
+.nwSkeletonMedia{
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  background: linear-gradient(90deg, #efefef 0%, #f7f7f7 50%, #efefef 100%);
+  background-size: 200% 100%;
+  animation: nwShimmer 1.1s linear infinite;
+}
+
+.nwSkeletonBody{
+  padding: 14px 16px 18px;
+  display: grid;
+  gap: 10px;
+}
+
+.nwSkLine{
+  height: 10px;
+  border-radius: 9999px;
+  background: #efefef;
+}
+
+.nwSkLine.w70{ width: 70%; }
+.nwSkLine.w55{ width: 55%; }
+.nwSkLine.w45{ width: 45%; }
+
+.nwSkBtns{
+  margin-top: 6px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.nwSkBtn{
+  height: 40px;
+  border-radius: 9999px;
+  background: #efefef;
+}
+
+@keyframes nwShimmer{
+  0%{ background-position: 0% 0%; }
+  100%{ background-position: 200% 0%; }
+}
