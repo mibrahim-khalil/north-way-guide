@@ -20,57 +20,23 @@ export default function ProductListItem({ product }) {
     <>
       <div className="card listCard">
         <div className="listCardImage">
-          <img src={image} alt={product?.name} onError={(e) => (e.currentTarget.src = "/images/home1.png")} />
-
-          <div
-            style={{
-              position: "absolute",
-              top: 10,
-              left: 10,
-              display: "flex",
-              gap: 8,
-              zIndex: 5,
-            }}
-          >
-            <span
-              style={{
-                padding: "6px 10px",
-                borderRadius: 999,
-                fontWeight: 1100,
-                fontSize: 12,
-                background: "rgba(2,6,23,0.72)",
-                border: "1px solid rgba(245,158,11,0.55)",
-                color: "rgb(253,230,138)",
-              }}
-            >
-              ★ {ratingText}
-            </span>
-
-            <span
-              style={{
-                padding: "6px 10px",
-                borderRadius: 999,
-                fontWeight: 1100,
-                fontSize: 12,
-                background: "rgba(2,6,23,0.72)",
-                border: "1px solid rgba(255,255,255,0.25)",
-                color: "white",
-              }}
-            >
-              {tag}
-            </span>
+          <img
+            src={image}
+            alt={product?.name}
+            onError={(e) => (e.currentTarget.src = "/images/home1.png")}
+          />
+          <div className="nkChipRow">
+            <span className="nkChip nkChip--onImage">{tag}</span>
+            <span className="nkChip nkChip--onImage">★ {ratingText}</span>
           </div>
         </div>
 
         <div className="listCardContent">
-          <div style={{ fontWeight: 1100, fontSize: 18 }}>{product?.name}</div>
-
-          <p className="p">PKR {product?.price}</p>
+          <div className="nkTitle nkTitle--lg">{product?.name}</div>
+          <div className="nkPrice">PKR {product?.price}</div>
 
           <div className="listCardActions">
-            <button className="btn primary" onClick={() => setOpen(true)}>
-              Order Now
-            </button>
+            <button className="btn primary" onClick={() => setOpen(true)}>Order Now</button>
             <Link className="btn ghost" to={`/local-products/${product?.id || product?._id}`}>
               More Info
             </Link>
