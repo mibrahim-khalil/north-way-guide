@@ -10,20 +10,19 @@ export default function Footer() {
   const goReport = (e) => {
     e.preventDefault();
     const next = "/support?report=1";
-
-    // if auth state still loading, just go support and let Support guard handle redirect
     if (loading) return navigate(next);
-
     if (!user) return navigate(`/login?next=${encodeURIComponent(next)}`);
     return navigate(next);
   };
 
   return (
     <footer className="nwFooter">
-      <div className="nwFooterInner">
+      <div className="container nwFooterInner">
         <div className="footerTop">
           <div className="footerBrand">
-            <img src={logo} alt="North Way Guide Logo" className="footerLogoImg" />
+            <div className="footerLogoStage">
+              <img src={logo} alt="North Way Guide Logo" className="footerLogoImg" />
+            </div>
             <div>
               <div className="footerTitle">North Way Guide</div>
               <div className="footerSub">A tourism platform for Gilgit-Baltistan</div>
@@ -44,8 +43,6 @@ export default function Footer() {
               <Link to="/trip-planner">Trip Planner</Link>
               <Link to="/about">About</Link>
               <Link to="/terms">Terms & Conditions</Link>
-
-              {/* NEW */}
               <a href="/support?report=1" onClick={goReport}>
                 Report Complaint / Suggestion
               </a>
