@@ -11,12 +11,17 @@ export default function MainLayout() {
   return (
     <>
       <Header />
+
+      {/* Hero stays full-bleed editorial */}
       <HeroSlider {...hero} />
-      <main className="section">
+
+      {/* Main content: clean white canvas + consistent spacing */}
+      <main className="nwMain">
         <div className="container">
           <Outlet />
         </div>
       </main>
+
       <Footer />
     </>
   );
