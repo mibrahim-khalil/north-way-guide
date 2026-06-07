@@ -4,9 +4,9 @@
   width: 100%;
   position: relative;
   overflow: hidden;
-  border-radius: 18px 18px 0 0;
-  background: rgba(15,23,42,0.06);
-  border-bottom: 1px solid rgba(15,23,42,0.08);
+  border-radius: 0;
+  background: var(--soft);
+  border-bottom: 1px solid var(--hairline);
 }
 
 .igHeroImg{
@@ -15,6 +15,7 @@
   display: block;
   object-position: center;
   cursor: pointer;
+  border-radius: 0;
 }
 
 .igViewFull{
@@ -25,25 +26,25 @@
 
   padding: 8px 12px;
   border-radius: 999px;
-  font-weight: 1000;
+  font-weight: 700;
   font-size: 12px;
 
-  background: rgba(15,23,42,0.70);
+  background: rgba(17,17,17,0.72);
   color: #fff;
   border: 1px solid rgba(255,255,255,0.20);
   backdrop-filter: blur(8px);
   cursor: pointer;
 }
 
-.igViewFull:hover{ background: rgba(15,23,42,0.85); }
+.igViewFull:hover{ background: rgba(17,17,17,0.85); }
 
 .igThumbRow{
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
   padding: 10px 12px;
-  background: rgba(255,255,255,0.65);
-  border-bottom: 1px solid rgba(15,23,42,0.08);
+  background: var(--canvas);
+  border-bottom: 1px solid var(--hairline);
 }
 
 .igThumbBtn{
@@ -51,7 +52,7 @@
   padding: 0;
   background: transparent;
   cursor: pointer;
-  border-radius: 12px;
+  border-radius: 0;
   outline: none;
 }
 
@@ -59,16 +60,14 @@
   width: 70px;
   height: 52px;
   object-fit: cover;
-  border-radius: 12px;
-  border: 2px solid rgba(15,23,42,0.10);
+  border-radius: 0;
+  border: 1px solid var(--hairline);
   display: block;
 }
 
 .igThumbBtn.on img{
-  border-color: rgba(59,130,246,0.70);
+  border-color: var(--ink);
 }
-
-/* ---------- Lightbox Modal ---------- */
 
 .igLbOverlay{
   position: fixed;
@@ -86,7 +85,7 @@
   height: min(740px, 86vh);
   background: rgba(255,255,255,0.06);
   border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 18px;
+  border-radius: 12px;
   overflow: hidden;
   backdrop-filter: blur(10px);
 }
@@ -94,7 +93,7 @@
 .igLbImg{
   width: 100%;
   height: 100%;
-  object-fit: contain; /* ✅ in popup show full image without crop */
+  object-fit: contain;
   object-position: center;
   display: block;
   background: rgba(0,0,0,0.20);
@@ -113,7 +112,7 @@
   background: rgba(2,6,23,0.55);
   color: #fff;
   cursor: pointer;
-  font-weight: 1000;
+  font-weight: 700;
 }
 
 .igLbClose:hover{ background: rgba(2,6,23,0.75); }
@@ -132,7 +131,7 @@
   color: #fff;
   cursor: pointer;
   font-size: 24px;
-  font-weight: 1000;
+  font-weight: 700;
 }
 
 .igLbNav:hover{ background: rgba(2,6,23,0.75); }
@@ -148,7 +147,7 @@
 
   padding: 6px 10px;
   border-radius: 999px;
-  font-weight: 900;
+  font-weight: 700;
   font-size: 12px;
 
   background: rgba(2,6,23,0.55);
