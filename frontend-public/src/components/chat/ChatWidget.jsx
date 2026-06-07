@@ -110,9 +110,7 @@ function CardGrid({ cards = [] }) {
             </div>
 
             {c.subtitle ? (
-              <div style={{ fontSize: 11, color: "#64748b", marginTop: 2 }}>
-                {c.subtitle}
-              </div>
+              <div style={{ fontSize: 11, color: "#64748b", marginTop: 2 }}>{c.subtitle}</div>
             ) : null}
 
             {c.meta ? (
@@ -141,14 +139,13 @@ export default function ChatWidget() {
   const historyRef = useRef(null);
 
   const NAVY = "var(--heading, #0b1324)";
-  const HEADER_GRADIENT =
-    "linear-gradient(135deg, #0b1324 0%, #0f1a32 55%, #1a2a4a 100%)";
+  const HEADER_GRADIENT = "linear-gradient(135deg, #0b1324 0%, #0f1a32 55%, #1a2a4a 100%)";
 
   const normalizeMessages = (arr) =>
     (arr || []).map((m) => ({
       ...m,
       time: m.time || formatTime(m.createdAt),
-      cards: m.cards || [], // old messages usually won't have cards
+      cards: m.cards || [],
     }));
 
   const fetchSessions = async () => {
@@ -186,33 +183,29 @@ export default function ChatWidget() {
     const text = input.trim();
     const now = new Date();
 
-    const userMessage = {
-      role: "user",
-      content: text,
-      createdAt: now,
-      time: formatTime(now),
-      cards: [],
-    };
-
-    setMessages((prev) => [...prev, userMessage]);
+    setMessages((prev) => [
+      ...prev,
+      { role: "user", content: text, createdAt: now, time: formatTime(now), cards: [] },
+    ]);
     setInput("");
     setLoading(true);
 
     try {
       const res = await api.post("/chat", { message: text, sessionId });
-
       setSessionId(res.data?.sessionId);
 
       const botNow = new Date();
-      const botMessage = {
-        role: "assistant",
-        content: res.data?.reply ?? "No reply",
-        createdAt: botNow,
-        time: formatTime(botNow),
-        cards: Array.isArray(res.data?.cards) ? res.data.cards : [],
-      };
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content: res.data?.reply ?? "No reply",
+          createdAt: botNow,
+          time: formatTime(botNow),
+          cards: Array.isArray(res.data?.cards) ? res.data.cards : [],
+        },
+      ]);
 
-      setMessages((prev) => [...prev, botMessage]);
       fetchSessions();
     } catch (err) {
       console.error("Send message failed:", err);
@@ -265,32 +258,67 @@ export default function ChatWidget() {
         @media (prefers-reduced-motion: reduce) {
           .nw-bouncing { animation: none !important; }
         }
+
+        /* Responsive Chat Button + Panel */
+        .nw-chat-btn{
+          position: fixed;
+          bottom: 30px;
+          right: 30px;
+          width: 58px;
+          height: 58px;
+          border-radius: 50%;
+          background: linear-gradient(135deg,#8b5cf6,#6366f1);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          color: #fff;
+          font-weight: 800;
+          z-index: 1000;
+          user-select: none;
+          overflow: hidden;
+        }
+
+        .nw-chat-panel{
+          position: fixed;
+          bottom: 95px;
+          right: 30px;
+          width: 460px;
+          height: 760px;
+          background: rgba(255,255,255,0.92);
+          backdrop-filter: blur(22px);
+          -webkit-backdrop-filter: blur(22px);
+          border-radius: 26px;
+          box-shadow: 0 30px 70px rgba(0,0,0,0.35);
+          display: flex;
+          flex-direction: column;
+          z-index: 1000;
+          border: 1px solid rgba(15, 23, 42, 0.08);
+        }
+
+        @media (max-width: 540px){
+          .nw-chat-btn{
+            bottom: 18px;
+            right: 18px;
+            width: 54px;
+            height: 54px;
+          }
+          .nw-chat-panel{
+            left: 12px;
+            right: 12px;
+            width: auto;
+            bottom: 84px;
+            height: calc(100vh - 110px);
+            border-radius: 20px;
+          }
+        }
       `}</style>
 
-      {/* Floating Button */}
       <div
         onClick={() => setOpen((v) => !v)}
-        className="nw-bouncing"
+        className={`nw-chat-btn ${open ? "" : "nw-bouncing"}`}
         style={{
-          position: "fixed",
-          bottom: 30,
-          right: 30,
-          width: 58,
-          height: 58,
-          borderRadius: "50%",
-          background: "linear-gradient(135deg,#8b5cf6,#6366f1)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          cursor: "pointer",
-          color: "#fff",
-          fontWeight: 800,
-          zIndex: 1000,
-          userSelect: "none",
-          overflow: "hidden",
-          animation: open
-            ? "none"
-            : "nw-bounce 2.2s infinite, nw-bounce-shadow 2.2s infinite",
+          animation: open ? "none" : "nw-bounce 2.2s infinite, nw-bounce-shadow 2.2s infinite",
         }}
         title="Open AI Chat"
       >
@@ -305,26 +333,8 @@ export default function ChatWidget() {
         />
       </div>
 
-      {/* Chat Panel */}
       {open && (
-        <div
-          style={{
-            position: "fixed",
-            bottom: 95,
-            right: 30,
-            width: 460,
-            height: 760,
-            background: "rgba(255,255,255,0.92)",
-            backdropFilter: "blur(22px)",
-            borderRadius: 26,
-            boxShadow: "0 30px 70px rgba(0,0,0,0.35)",
-            display: "flex",
-            flexDirection: "column",
-            zIndex: 1000,
-            overflow: "visible",
-            border: "1px solid rgba(15, 23, 42, 0.08)",
-          }}
-        >
+        <div className="nw-chat-panel">
           {/* Header */}
           <div
             style={{
@@ -353,13 +363,8 @@ export default function ChatWidget() {
                   flexShrink: 0,
                 }}
               >
-                <img
-                  src={BOT_LOGO}
-                  alt="AI Logo"
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                />
+                <img src={BOT_LOGO} alt="AI Logo" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
               </div>
-
               <div style={{ letterSpacing: 0.2 }}>NorthWay AI Guide</div>
             </div>
 
@@ -386,7 +391,6 @@ export default function ChatWidget() {
               🕘
             </div>
 
-            {/* History Dropdown */}
             {showHistory && (
               <div
                 ref={historyRef}
@@ -495,7 +499,6 @@ export default function ChatWidget() {
                   marginBottom: 18,
                 }}
               >
-                {/* Avatar */}
                 {msg.role === "assistant" ? (
                   <div
                     style={{
@@ -511,11 +514,7 @@ export default function ChatWidget() {
                       justifyContent: "center",
                     }}
                   >
-                    <img
-                      src={BOT_LOGO}
-                      alt="AI"
-                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                    />
+                    <img src={BOT_LOGO} alt="AI" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                   </div>
                 ) : (
                   <div
@@ -537,7 +536,6 @@ export default function ChatWidget() {
                   </div>
                 )}
 
-                {/* Bubble */}
                 <div
                   style={{
                     maxWidth: "72%",
@@ -556,13 +554,8 @@ export default function ChatWidget() {
                   }}
                 >
                   <div style={{ whiteSpace: "pre-wrap" }}>{msg.content}</div>
-
-                  {/* ✅ Cards under assistant reply */}
                   {msg.role === "assistant" ? <CardGrid cards={msg.cards} /> : null}
-
-                  <div style={{ fontSize: 10, marginTop: 8, opacity: 0.6 }}>
-                    {msg.time || formatTime(msg.createdAt)}
-                  </div>
+                  <div style={{ fontSize: 10, marginTop: 8, opacity: 0.6 }}>{msg.time || formatTime(msg.createdAt)}</div>
                 </div>
               </div>
             ))}
