@@ -7,10 +7,8 @@ export default function HotelListItem({ hotel }) {
   const [open, setOpen] = useState(false);
 
   const id = hotel?.id || hotel?._id;
-
   const ratingAvg = Number(hotel?.ratingAvg ?? 0);
   const ratingCount = Number(hotel?.ratingCount ?? 0);
-
   const ratingText =
     ratingCount > 0 && ratingAvg > 0 ? `${ratingAvg.toFixed(1)} (${ratingCount})` : "New";
 
@@ -21,40 +19,23 @@ export default function HotelListItem({ hotel }) {
     <>
       <div className="card listCard">
         <div className="listCardImage">
-          <img src={image} alt={hotel?.name} onError={(e) => (e.currentTarget.src = "/images/home1.png")} />
-
-          <div
-            style={{
-              position: "absolute",
-              top: 10,
-              left: 10,
-              padding: "6px 10px",
-              borderRadius: 999,
-              fontSize: 12,
-              fontWeight: 700,
-              background: "rgba(2,6,23,0.72)",
-              border: "1px solid rgba(245,158,11,0.55)",
-              color: "rgb(253,230,138)",
-            }}
-          >
-            ★ {ratingText}
-          </div>
+          <img
+            src={image}
+            alt={hotel?.name}
+            onError={(e) => (e.currentTarget.src = "/images/home1.png")}
+          />
+          <span className="nkChip nkChip--onImage">★ {ratingText}</span>
         </div>
 
         <div className="listCardContent">
-          <div style={{ fontWeight: 1100, fontSize: 18 }}>{hotel?.name}</div>
-
-          <p className="p">
+          <div className="nkTitle nkTitle--lg">{hotel?.name}</div>
+          <div className="nkMeta">
             {hotel?.city} • From PKR {hotel?.priceFrom}/night
-          </p>
+          </div>
 
           <div className="listCardActions">
-            <button className="btn primary" onClick={() => setOpen(true)}>
-              Book Now
-            </button>
-            <Link className="btn ghost" to={`/hotels/${id}`}>
-              More Info
-            </Link>
+            <button className="btn primary" onClick={() => setOpen(true)}>Book Now</button>
+            <Link className="btn ghost" to={`/hotels/${id}`}>More Info</Link>
           </div>
         </div>
       </div>
