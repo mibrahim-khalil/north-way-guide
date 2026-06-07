@@ -2,19 +2,32 @@ import nodemailer from "nodemailer";
 
 export function makeTransport() {
   const host = process.env.SMTP_HOST || "smtp.gmail.com";
-
- 
   const port = Number(process.env.SMTP_PORT || 465);
+
+  // Gmail: 465 = secure true, 587 = secure false
   const secure = port === 465;
+
+  if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
+    throw new Error("SMTP_USER/SMTP_PASS missing in environment variables");
+  }
 
   return nodemailer.createTransport({
     host,
     port,
     secure,
-    family: 4,
     auth: {
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS,
+    },
+
+    // IMPORTANT: prevent hanging forever on Render
+    connectionTimeout: 10_000,
+    greetingTimeout: 10_000,
+    socketTimeout: 20_000,
+
+    // Helps some hosting environments
+    tls: {
+      servername: host,
     },
   });
 }
@@ -23,10 +36,17 @@ function fromAddress() {
   return process.env.SMTP_FROM || process.env.SMTP_USER;
 }
 
-export async function sendOtpEmail({ to, code }) {
+async function sendMailSafe(mailOptions) {
   const transport = makeTransport();
 
-  await transport.sendMail({
+  // Optional: checks SMTP connection; will fail fast if wrong
+  await transport.verify();
+
+  return transport.sendMail(mailOptions);
+}
+
+export async function sendOtpEmail({ to, code }) {
+  await sendMailSafe({
     from: fromAddress(),
     to,
     subject: "North Way Guide - Email Verification Code",
@@ -35,9 +55,7 @@ export async function sendOtpEmail({ to, code }) {
 }
 
 export async function sendPasswordResetEmail({ to, resetUrl }) {
-  const transport = makeTransport();
-
-  await transport.sendMail({
+  await sendMailSafe({
     from: fromAddress(),
     to,
     subject: "North Way Guide - Reset your password",
