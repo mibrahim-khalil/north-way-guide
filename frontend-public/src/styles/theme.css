@@ -354,3 +354,8 @@ label{
 .listCardImage{
   position: relative;
 }
+
+.nwMain{
+  padding: var(--s-7) 0;
+  background: var(--canvas);
+}
