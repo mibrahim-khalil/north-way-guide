@@ -20,8 +20,11 @@ export const heroByRoute = (path) => {
   ];
 
   const spotsImgs = [
-    "https://media.istockphoto.com/id/2267547021/photo/majestic-mountain-peak-bathed-in-sunrise-glow-rakaposhi-is-a-mountain-within-the-karakoram.jpg?s=1024x1024&w=is&k=20&c=_z-5Gx8rSIzhRMQp61VGwqRv0NWFqImGHUNfY76LJ3w=",
-    "https://media.istockphoto.com/id/2251762221/photo/k2.jpg?s=2048x2048&w=is&k=20&c=HIYIPQf9drvn6tXIZBbvuBymSqU9p1URFfsY9UrdQB4=",
+    "https://images.pexels.com/photos/17851168/pexels-photo-17851168.jpeg",
+    "https://images.pexels.com/photos/11655576/pexels-photo-11655576.jpeg",
+    "https://images.pexels.com/photos/19442073/pexels-photo-19442073.jpeg",
+    "https://images.pexels.com/photos/15556462/pexels-photo-15556462.jpeg",
+    "https://images.pexels.com/photos/34607725/pexels-photo-34607725.jpeg",
   ];
 
   const transportImgs = [
