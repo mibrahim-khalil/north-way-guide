@@ -41,8 +41,7 @@ const homeImgs = [
   ];
 
   const aboutImgs = [
-    "https://images.unsplash.com/photo-1526779259212-939e64788e3c?auto=format&fit=crop&w=2000&q=60",
-    "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=2000&q=60",
+    "https://plus.unsplash.com/premium_photo-1723485618246-afd5f5830ea1?auto=format&fit=crop&crop=entropy&w=2400&h=1028&q=80",
   ];
 
   if (path === "/") {
