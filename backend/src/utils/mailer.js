@@ -1,11 +1,7 @@
-import axios from "axios";
-
 function parseFrom(fromStr) {
   const s = String(fromStr || "").trim();
   const m = s.match(/^(.*)<([^>]+)>$/);
-  if (m) {
-    return { name: m[1].trim().replace(/^"|"$/g, ""), email: m[2].trim() };
-  }
+  if (m) return { name: m[1].trim().replace(/^"|"$/g, ""), email: m[2].trim() };
   return { name: "North Way Guide", email: s };
 }
 
@@ -19,24 +15,31 @@ async function sendViaBrevo({ to, subject, text, html }) {
 
   const sender = parseFrom(fromAddress());
 
-  await axios.post(
-    "https://api.brevo.com/v3/smtp/email",
-    {
+  // timeout
+  const controller = new AbortController();
+  const t = setTimeout(() => controller.abort(), 15000);
+
+  const r = await fetch("https://api.brevo.com/v3/smtp/email", {
+    method: "POST",
+    headers: {
+      "api-key": apiKey,
+      "content-type": "application/json",
+      accept: "application/json",
+    },
+    body: JSON.stringify({
       sender,
       to: [{ email: to }],
       subject,
       textContent: text,
       htmlContent: html || undefined,
-    },
-    {
-      headers: {
-        "api-key": apiKey,
-        "content-type": "application/json",
-        accept: "application/json",
-      },
-      timeout: 15000,
-    }
-  );
+    }),
+    signal: controller.signal,
+  }).finally(() => clearTimeout(t));
+
+  if (!r.ok) {
+    const body = await r.text().catch(() => "");
+    throw new Error(`Brevo API error ${r.status}: ${body}`);
+  }
 }
 
 export async function sendOtpEmail({ to, code }) {
