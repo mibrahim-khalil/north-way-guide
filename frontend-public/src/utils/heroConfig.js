@@ -17,6 +17,7 @@ const homeImgs = [
   const tripImgs = [
     "https://unsplash.com/photos/woman-on-a-cliff-overlooking-the-mountains-and-a-valley-G47UwbJ_Utw",
     "/images/skardu.png",
+    "https://images.unsplash.com/photo-1646514323663-f5b6595763ff?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGdpbGdpdCUyMGJhbHRpc3RhbnxlbnwwfHwwfHx8MA%3D%3D",
   ];
 
   const hotelImgs = [
