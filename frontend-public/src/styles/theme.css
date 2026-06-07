@@ -359,3 +359,11 @@ label{
   padding: var(--s-7) 0;
   background: var(--canvas);
 }
+
+.nwViewAll{
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  font-size: 13px;
+}
