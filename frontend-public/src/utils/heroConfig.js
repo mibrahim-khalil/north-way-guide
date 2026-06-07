@@ -41,7 +41,7 @@ const homeImgs = [
   ];
 
   const aboutImgs = [
-    "https://plus.unsplash.com/premium_photo-1723485618246-afd5f5830ea1?auto=format&fit=crop&crop=entropy&w=2400&h=1028&q=80"
+    "https://images.pexels.com/photos/13567192/pexels-photo-13567192.jpeg"
   ];
 
   if (path === "/") {
