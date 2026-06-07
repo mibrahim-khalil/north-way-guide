@@ -41,7 +41,7 @@ const homeImgs = [
   ];
 
   const aboutImgs = [
-    "https://images.unsplash.com/photo-1656105745434-ec8dc6b40f2b?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzB8fGdpbGdpdCUyMGJhbHRpc3RhbnxlbnwwfHwwfHx8MA%3D%3D",
+    "https://plus.unsplash.com/premium_photo-1723485618246-afd5f5830ea1?auto=format&fit=crop&crop=entropy&w=2400&h=1028&q=80"
   ];
 
   if (path === "/") {
