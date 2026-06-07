@@ -1,10 +1,11 @@
 import nodemailer from "nodemailer";
+import dns from "dns";
+
+dns.setDefaultResultOrder("ipv4first");
 
 export function makeTransport() {
   const host = process.env.SMTP_HOST || "smtp.gmail.com";
-  const port = Number(process.env.SMTP_PORT || 465);
-
-  // Gmail: 465 = secure true, 587 = secure false
+  const port = Number(process.env.SMTP_PORT || 587);
   const secure = port === 465;
 
   if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
@@ -15,20 +16,19 @@ export function makeTransport() {
     host,
     port,
     secure,
+
+    // IMPORTANT: force IPv4 (prevents Gmail resolving to IPv6 on Render)
+    family: 4,
+
     auth: {
       user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS,
+      pass: process.env.SMTP_PASS, // must be Gmail App Password
     },
 
-    // IMPORTANT: prevent hanging forever on Render
+    // prevent hanging forever
     connectionTimeout: 10_000,
     greetingTimeout: 10_000,
     socketTimeout: 20_000,
-
-    // Helps some hosting environments
-    tls: {
-      servername: host,
-    },
   });
 }
 
@@ -36,17 +36,9 @@ function fromAddress() {
   return process.env.SMTP_FROM || process.env.SMTP_USER;
 }
 
-async function sendMailSafe(mailOptions) {
-  const transport = makeTransport();
-
-  // Optional: checks SMTP connection; will fail fast if wrong
-  await transport.verify();
-
-  return transport.sendMail(mailOptions);
-}
-
 export async function sendOtpEmail({ to, code }) {
-  await sendMailSafe({
+  const transport = makeTransport();
+  await transport.sendMail({
     from: fromAddress(),
     to,
     subject: "North Way Guide - Email Verification Code",
@@ -55,7 +47,8 @@ export async function sendOtpEmail({ to, code }) {
 }
 
 export async function sendPasswordResetEmail({ to, resetUrl }) {
-  await sendMailSafe({
+  const transport = makeTransport();
+  await transport.sendMail({
     from: fromAddress(),
     to,
     subject: "North Way Guide - Reset your password",
