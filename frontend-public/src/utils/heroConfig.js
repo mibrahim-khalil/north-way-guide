@@ -133,9 +133,9 @@ export const heroByRoute = (path) => {
 
   return {
     ...base,
-    title: "North Way Guide",
+    title: "Local Guides",
     subtitle:
-      "Explore Gilgit-Baltistan with smart planning and trusted local services.",
+      "Find trusted local guides in Gilgit-Baltistan. Compare ratings, specialties, and daily rates before you book.",
     badges: ["Explore", "Plan", "Travel"],
     images: homeImgs,
   };
