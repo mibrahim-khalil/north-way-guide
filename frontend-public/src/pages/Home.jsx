@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import { api } from "../utils/api";
+import "./Home.css";
 
 import SpotCard from "../components/cards/SpotCard";
 import HotelCard from "../components/cards/HotelCard";
@@ -24,7 +25,6 @@ function mapSpot(doc) {
     images: Array.isArray(doc.images) ? doc.images : [],
     description: doc.description || "",
     mapsUrl: doc.mapsUrl || "",
-    // from highlights API
     ratingAvg: Number(doc.ratingAvg || 0),
     ratingCount: Number(doc.ratingCount || 0),
   };
@@ -50,9 +50,7 @@ function mapGuide(doc) {
     name: doc.name || "",
     area: doc.baseCity || "",
     rate: doc.pricePerDay ? `PKR ${doc.pricePerDay}/day` : "",
-    specialization: Array.isArray(doc.specialties)
-      ? doc.specialties.join(", ")
-      : "",
+    specialization: Array.isArray(doc.specialties) ? doc.specialties.join(", ") : "",
     image: (doc.images && doc.images[0]) || "",
     ratingAvg: Number(doc.ratingAvg ?? doc.rating ?? 0),
     ratingCount: Number(doc.ratingCount ?? 0),
@@ -71,11 +69,61 @@ function mapProduct(doc) {
     locationName: doc.locationName || "",
     googleMapUrl: doc.googleMapUrl || "",
     stock: Number(doc.stock || 0),
-
-    // from highlights API
     ratingAvg: Number(doc.ratingAvg || 0),
     ratingCount: Number(doc.ratingCount || 0),
   };
+}
+
+function SectionHead({ title, subtitle, to, linkLabel }) {
+  return (
+    <div className="nwSectionHead">
+      <div className="nwSectionLeft">
+        <h3 className="nwSectionTitle">{title}</h3>
+        {subtitle ? <p className="nwSectionSub">{subtitle}</p> : null}
+      </div>
+
+      {to ? (
+        <Link className="nwViewAll" to={to}>
+          {linkLabel || "View all"}
+        </Link>
+      ) : null}
+    </div>
+  );
+}
+
+function SkeletonCard() {
+  return (
+    <div className="card nwSkeletonCard" aria-hidden="true">
+      <div className="nwSkeletonMedia" />
+      <div className="nwSkeletonBody">
+        <div className="nwSkLine w70" />
+        <div className="nwSkLine w45" />
+        <div className="nwSkLine w55" />
+        <div className="nwSkBtns">
+          <div className="nwSkBtn" />
+          <div className="nwSkBtn" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CardsRow({ loading, items, renderItem, skeletonCount = 4 }) {
+  if (loading) {
+    return (
+      <div className="nwCards">
+        {Array.from({ length: skeletonCount }).map((_, i) => (
+          <SkeletonCard key={i} />
+        ))}
+      </div>
+    );
+  }
+
+  if (!items?.length) {
+    return <div className="nwEmpty">No items found.</div>;
+  }
+
+  return <div className="nwCards">{items.map(renderItem)}</div>;
 }
 
 export default function Home() {
@@ -83,7 +131,6 @@ export default function Home() {
   const [hotelsDb, setHotelsDb] = useState([]);
   const [guidesDb, setGuidesDb] = useState([]);
   const [productsDb, setProductsDb] = useState([]);
-
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -112,64 +159,68 @@ export default function Home() {
   const topProducts = useMemo(() => productsDb.slice(0, 4), [productsDb]);
 
   return (
-    <div style={{ display: "grid", gap: 24 }}>
-      <section>
-        <div style={{ display: "flex", alignItems: "end", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
-          <div>
-            <h2 style={{ margin: "0 0 6px" }}>Explore Highlights</h2>
-            <p className="p">{loading ? "Loading..." : "Top picks — sorted by rating (spots/products use approved reviews)."}</p>
-          </div>
-        </div>
+    <div className="nwHome">
+      <div className="nwIntro">
+        <h2 className="nwIntroTitle">Explore Highlights</h2>
+        <p className="nwIntroSub">
+          Top picks — sorted by rating (spots/products use approved reviews).
+        </p>
+      </div>
+
+      <section className="nwSection">
+        <SectionHead
+          title="Top Rated Tourist Spots"
+          subtitle="Top 4 spots by approved reviews (fallback newest)."
+          to="/tourist-spots"
+          linkLabel="View all spots"
+        />
+        <CardsRow
+          loading={loading}
+          items={topSpots}
+          renderItem={(s) => <SpotCard key={s.id} spot={s} />}
+        />
       </section>
 
-      <section>
-        <div style={{ display: "flex", alignItems: "end", justifyContent: "space-between", gap: 12, flexWrap: "wrap", marginBottom: 10 }}>
-          <div>
-            <h3 style={{ margin: "0 0 6px" }}>Top Rated Tourist Spots</h3>
-            <p className="p">{loading ? "Loading..." : "Top 4 spots by approved reviews (fallback newest)."}</p>
-          </div>
-          <Link className="btn" to="/tourist-spots">View All Spots</Link>
-        </div>
-        <div className="grid cols-4">
-          {topSpots.map((s) => <SpotCard key={s.id} spot={s} />)}
-        </div>
+      <section className="nwSection">
+        <SectionHead
+          title="Top Rated Hotels"
+          subtitle="Top 4 hotels by rating field."
+          to="/hotels"
+          linkLabel="View all hotels"
+        />
+        <CardsRow
+          loading={loading}
+          items={topHotels}
+          renderItem={(h) => <HotelCard key={h.id} hotel={h} />}
+        />
       </section>
 
-      <section>
-        <div style={{ display: "flex", alignItems: "end", justifyContent: "space-between", gap: 12, flexWrap: "wrap", marginBottom: 10 }}>
-          <div>
-            <h3 style={{ margin: "0 0 6px" }}>Top Rated Hotels</h3>
-            <p className="p">{loading ? "Loading..." : "Top 4 hotels by rating field."}</p>
-          </div>
-          <Link className="btn" to="/hotels">View All Hotels</Link>
-        </div>
-        <div className="grid cols-4">{topHotels.map((h) => <HotelCard key={h.id} hotel={h} />)}</div>
+      <section className="nwSection">
+        <SectionHead
+          title="Top Guides"
+          subtitle="Top 4 guides by rating field."
+          to="/guides"
+          linkLabel="View all guides"
+        />
+        <CardsRow
+          loading={loading}
+          items={topGuides}
+          renderItem={(g) => <GuideCard key={g.id} guide={g} />}
+        />
       </section>
 
-      <section>
-        <div style={{ display: "flex", alignItems: "end", justifyContent: "space-between", gap: 12, flexWrap: "wrap", marginBottom: 10 }}>
-          <div>
-            <h3 style={{ margin: "0 0 6px" }}>Top Guides</h3>
-            <p className="p">{loading ? "Loading..." : "Top 4 guides by rating field."}</p>
-          </div>
-          <Link className="btn" to="/guides">View All Guides</Link>
-        </div>
-        <div className="grid cols-4">
-          {topGuides.map((g) => <GuideCard key={g.id} guide={g} />)}
-        </div>
-      </section>
-
-      <section>
-        <div style={{ display: "flex", alignItems: "end", justifyContent: "space-between", gap: 12, flexWrap: "wrap", marginBottom: 10 }}>
-          <div>
-            <h3 style={{ margin: "0 0 6px" }}>Top Rated Products</h3>
-            <p className="p">{loading ? "Loading..." : "Top 4 products by approved reviews (fallback newest)."}</p>
-          </div>
-          <Link className="btn" to="/local-products">View All Products</Link>
-        </div>
-        <div className="grid cols-4">
-          {topProducts.map((p) => <ProductCard key={p.id} product={p} />)}
-        </div>
+      <section className="nwSection">
+        <SectionHead
+          title="Top Rated Products"
+          subtitle="Top 4 products by approved reviews (fallback newest)."
+          to="/local-products"
+          linkLabel="View all products"
+        />
+        <CardsRow
+          loading={loading}
+          items={topProducts}
+          renderItem={(p) => <ProductCard key={p.id} product={p} />}
+        />
       </section>
     </div>
   );
