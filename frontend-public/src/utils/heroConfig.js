@@ -59,8 +59,8 @@ export const heroByRoute = (path) => {
       ...base,
       title: "North Way Guide",
       subtitle:
-        "A unified digital tourism system for Gilgit-Baltistan: plan trips, explore spots, compare transport, and discover verified local services.",
-      badges: ["Gilgit-Baltistan", "Smart Planning", "Verified Services"],
+        "Plan smarter trips across Gilgit-Baltistan. Explore top spots, book hotels, compare transport, and discover trusted local services.",
+      badges: ["Explore GB", "Plan Trips", "Trusted Services"],
       images: homeImgs,
     };
   }
@@ -70,8 +70,8 @@ export const heroByRoute = (path) => {
       ...base,
       title: "AI Trip Planner",
       subtitle:
-        "Enter your budget, days, travelers, and start location to preview an itinerary flow.",
-      badges: ["Decision Tree (Later)", "Road + Air", "Day-by-Day Plan"],
+        "Set your days, budget, travelers, and start point. Get a day‑by‑day itinerary you can edit and save.",
+      badges: ["Itinerary Builder", "Budget-Aware", "Day by Day"],
       images: tripImgs,
     };
   }
@@ -79,10 +79,10 @@ export const heroByRoute = (path) => {
   if (path.startsWith("/hotels")) {
     return {
       ...base,
-      title: "Hotels in Gilgit-Baltistan",
+      title: "Hotels",
       subtitle:
-        "Explore recommended hotels with ratings & reviews.",
-      badges: ["Ratings", "Verified Listings", "Stay Smart"],
+        "Browse stays across Gilgit-Baltistan with ratings, pricing, and booking requests.",
+      badges: ["Top Rated", "Price Range", "Verified Stays"],
       images: hotelImgs,
     };
   }
@@ -90,10 +90,10 @@ export const heroByRoute = (path) => {
   if (path.startsWith("/tourist-spots")) {
     return {
       ...base,
-      title: "Tourist Spots Directory",
+      title: "Tourist Spots",
       subtitle:
-        "Discover iconic valleys, lakes, forts, and viewpoints with rich information and location details.",
-      badges: ["Culture", "Nature", "Maps"],
+        "Discover valleys, lakes, forts, and viewpoints with photos, maps, and reviews.",
+      badges: ["Maps", "Reviews", "Highlights"],
       images: spotsImgs,
     };
   }
@@ -101,10 +101,10 @@ export const heroByRoute = (path) => {
   if (path.startsWith("/transport")) {
     return {
       ...base,
-      title: "Transport Fare Comparison",
+      title: "Transport",
       subtitle:
-        "Compare local and private transport options by pickup & drop.",
-      badges: ["Pickup/Drop", "Fare Estimate", "Availability"],
+        "Compare routes and fares for local and private transport based on pickup and drop.",
+      badges: ["Route Options", "Fare Compare", "Pickup → Drop"],
       images: transportImgs,
     };
   }
@@ -112,10 +112,10 @@ export const heroByRoute = (path) => {
   if (path.startsWith("/local-products")) {
     return {
       ...base,
-      title: "Local Products & Handicrafts",
+      title: "Local Products",
       subtitle:
-        "Traditional foods, herbal products, and authentic handicrafts from Gilgit-Baltistan.",
-      badges: ["Shilajit", "Dry Fruits", "Handmade"],
+        "Shop authentic Gilgit-Baltistan foods and handicrafts from verified sellers.",
+      badges: ["Handicrafts", "Local Food", "Verified Sellers"],
       images: productImgs,
     };
   }
@@ -123,10 +123,10 @@ export const heroByRoute = (path) => {
   if (path.startsWith("/about")) {
     return {
       ...base,
-      title: "About North Way Guide",
+      title: "About",
       subtitle:
-        "Our mission is to promote tourism and empower local businesses through a trusted digital platform.",
-      badges: ["Mission", "Vision", "Team"],
+        "North Way Guide helps travelers plan confidently and supports local businesses through a trusted platform.",
+      badges: ["Mission", "Platform", "Community"],
       images: aboutImgs,
     };
   }
@@ -134,7 +134,8 @@ export const heroByRoute = (path) => {
   return {
     ...base,
     title: "North Way Guide",
-    subtitle: "Explore Gilgit-Baltistan with smart planning and verified services.",
+    subtitle:
+      "Explore Gilgit-Baltistan with smart planning and trusted local services.",
     badges: ["Explore", "Plan", "Travel"],
     images: homeImgs,
   };
