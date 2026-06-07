@@ -1,5 +1,4 @@
 :root{
-  /* Nike-inspired tokens */
   --ink:#111111;
   --canvas:#ffffff;
   --soft:#f5f5f5;
@@ -7,25 +6,20 @@
   --text: var(--ink);
   --muted:#707072;
 
-  /* compatibility alias (your older CSS uses --heading) */
   --heading: var(--ink);
 
   --hairline:#e5e5e5;
 
-  /* semantic */
   --sale:#d30005;
   --success:#007d48;
 
-  /* layout */
   --container: 1440px;
 
-  /* radii */
   --r-0: 0px;
   --r-12: 12px;
   --r-24: 24px;
   --r-pill: 9999px;
 
-  /* spacing (8px grid) */
   --s-1: 4px;
   --s-2: 8px;
   --s-3: 12px;
@@ -34,9 +28,12 @@
   --s-6: 32px;
   --s-7: 48px;
 
-  /* fonts */
   --font-ui: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   --font-display: "Bebas Neue", "Anton", Impact, var(--font-ui);
+
+  --btn-radius: var(--r-pill);
+  --btn-shadow: 2px 2px 4px rgba(0,0,0,0.25);
+  --btn-shadow-hover: 3px 3px 8px rgba(0,0,0,0.22);
 }
 
 *{ box-sizing:border-box; }
@@ -66,7 +63,6 @@ hr.sep{
   margin: var(--s-6) 0;
 }
 
-/* Typography helpers (you already use these class names) */
 .h1{
   font-size: clamp(34px, 4.5vw, 56px);
   font-weight: 700;
@@ -74,13 +70,13 @@ hr.sep{
   margin: 0 0 var(--s-3);
   color: var(--ink);
 }
+
 .p{
   margin:0;
   color: var(--muted);
   line-height: 1.6;
 }
 
-/* Editorial display (use only for hero/campaign moments) */
 .display-campaign{
   font-family: var(--font-display);
   text-transform: uppercase;
@@ -89,7 +85,6 @@ hr.sep{
   letter-spacing: 0.5px;
 }
 
-/* Badge: neutral by default (hero overrides in HeroSlider.css) */
 .badge{
   display:inline-flex;
   align-items:center;
@@ -104,7 +99,6 @@ hr.sep{
   border: 1px solid var(--hairline);
 }
 
-/* Cards: flat, no blur, no heavy shadow */
 .card{
   background: var(--canvas);
   border: 1px solid var(--hairline);
@@ -112,9 +106,9 @@ hr.sep{
   box-shadow: none;
   overflow:hidden;
 }
+
 .cardBody{ padding: var(--s-5); }
 
-/* Buttons: single consistent system (no duplicates) */
 .btn,
 button.btn,
 a.btn{
@@ -123,13 +117,13 @@ a.btn{
   justify-content:center;
   gap: 10px;
 
-  height: 48px;
-  padding: 0 28px;
+  height: 44px;
+  padding: 0 22px;
 
-  border-radius: var(--r-pill);
-  border: 1px solid var(--hairline);
+  border: 1px solid transparent;
+  border-radius: var(--btn-radius);
 
-  background: var(--canvas);
+  background: var(--soft);
   color: var(--ink);
 
   font-family: var(--font-ui);
@@ -139,33 +133,69 @@ a.btn{
 
   cursor:pointer;
   user-select:none;
+
+  box-shadow: var(--btn-shadow);
+  transition: background 0.18s ease, box-shadow 0.18s ease, transform 0.06s ease;
 }
 
-.btn:hover{ background: #fafafa; }
-.btn:active{ transform: scale(0.98); opacity: 0.9; }
+.btn:hover{
+  background: linear-gradient(90deg, #f5f5f5 0%, #e9e9e9 100%);
+  box-shadow: var(--btn-shadow-hover);
+}
 
-/* Primary = black pill */
+.btn:active,
+button.btn:active,
+a.btn:active{
+  transform: translateY(3px);
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.22);
+}
+
+.btn:focus-visible{
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(17,17,17,0.12), var(--btn-shadow);
+}
+
 .btn.primary{
   background: var(--ink);
-  border-color: var(--ink);
   color: var(--canvas);
+  border-color: var(--ink);
 }
 
-/* Ghost = outline-ish */
+.btn.primary:hover{
+  background: linear-gradient(90deg, #111111 0%, #2b2b2b 100%);
+  box-shadow: var(--btn-shadow-hover);
+}
+
 .btn.ghost{
   background: var(--canvas);
-  border-color: var(--hairline);
   color: var(--ink);
+  border-color: var(--hairline);
+  box-shadow: none;
 }
 
-/* Optional secondary = soft gray */
+.btn.ghost:hover{
+  background: linear-gradient(90deg, #ffffff 0%, #f5f5f5 100%);
+  box-shadow: none;
+}
+
 .btn.secondary{
   background: var(--soft);
-  border-color: var(--soft);
   color: var(--ink);
+  border-color: var(--soft);
 }
 
-/* Inputs */
+.btn.secondary:hover{
+  background: linear-gradient(90deg, #f5f5f5 0%, #e9e9e9 100%);
+}
+
+.btn:disabled,
+button.btn:disabled{
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
 .input, select, textarea{
   width: 100%;
   height: 44px;
@@ -193,7 +223,6 @@ label{
   margin-bottom: 6px;
 }
 
-/* Grids: tighter gutters */
 .grid{ display:grid; gap: var(--s-2); }
 .grid.cols-4{ grid-template-columns: repeat(4, 1fr); }
 .grid.cols-3{ grid-template-columns: repeat(3, 1fr); }
@@ -202,38 +231,44 @@ label{
 @media (max-width: 1000px){
   .grid.cols-4, .grid.cols-3{ grid-template-columns: repeat(2, 1fr); }
 }
+
 @media (max-width: 600px){
   .grid.cols-2, .grid.cols-3, .grid.cols-4{ grid-template-columns: 1fr; }
   .container{ width: min(var(--container), calc(100% - 32px)); }
 }
 
-/* Your list cards still work, now in the new style */
 .listCard{
   display: grid;
   grid-template-columns: 240px 1fr;
   align-items: stretch;
 }
+
 .listCardImage{
   height: 220px;
   background: var(--soft);
+  position: relative;
 }
+
 .listCardImage img{
   width:100%;
   height:100%;
   object-fit: cover;
 }
+
 .listCardContent{
   display:flex;
   flex-direction:column;
   justify-content:center;
   padding: var(--s-5);
 }
+
 .listCardActions{
   margin-top: var(--s-4);
   display:flex;
   gap: var(--s-2);
   flex-wrap: wrap;
 }
+
 @media (max-width: 700px){
   .listCard{ grid-template-columns: 1fr; }
   .listCardImage{ height: 200px; }
@@ -244,7 +279,6 @@ label{
   flex-direction:column;
 }
 
-/* Square image stage (Nike-like) */
 .nkMedia{
   position: relative;
   width: 100%;
@@ -266,7 +300,6 @@ label{
   background: var(--soft);
 }
 
-/* Chips that float on image */
 .nkChipRow{
   position: absolute;
   top: 10px;
@@ -295,7 +328,6 @@ label{
   border: 1px solid rgba(0,0,0,0.06);
 }
 
-/* Single chip on image (used by EventCard / GuideCard / HotelCard) */
 .nkMedia > .nkChip{
   position:absolute;
   top:10px;
@@ -303,7 +335,6 @@ label{
   z-index:2;
 }
 
-/* Body content */
 .nkBody{
   padding: 14px 16px 18px;
   display: flex;
@@ -317,6 +348,7 @@ label{
   color: var(--ink);
   line-height: 1.3;
 }
+
 .nkTitle--lg{
   font-size: 18px;
 }
@@ -326,6 +358,7 @@ label{
   color: var(--muted);
   line-height: 1.4;
 }
+
 .nkMeta--sm{
   font-size: 12px;
 }
@@ -344,15 +377,9 @@ label{
   margin-top: 12px;
 }
 
-/* Make CTA buttons in cards stretch nicely */
 .nkActions .btn{
   flex: 1 1 auto;
   min-width: 0;
-}
-
-/* listCard image overlay support */
-.listCardImage{
-  position: relative;
 }
 
 .nwMain{
