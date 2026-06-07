@@ -27,6 +27,7 @@ export const heroByRoute = (path) => {
 
   const transportImgs = [
     "https://images.pexels.com/photos/1031008/pexels-photo-1031008.jpeg",
+    "https://images.pexels.com/photos/17324034/pexels-photo-17324034.jpeg",
   ];
 
   const productImgs = [
