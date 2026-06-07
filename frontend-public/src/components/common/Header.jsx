@@ -58,7 +58,6 @@ export default function Header() {
           <img src={logo} alt="North Way Guide Logo" className="brandLogo" />
           <div className="brandTextCol">
             <div className="brandText">NORTH WAY GUIDE</div>
-            <div className="brandSub">OFFICIAL</div>
           </div>
         </Link>
 
