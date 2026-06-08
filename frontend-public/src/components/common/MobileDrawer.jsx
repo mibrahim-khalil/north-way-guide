@@ -15,6 +15,27 @@ const navItems = [
   { to: "/about", label: "About" },
 ];
 
+function SearchIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M10.5 18.5a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z"
+        stroke="currentColor"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M16.5 16.5 21 21"
+        stroke="currentColor"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 function CartIcon() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -59,12 +80,14 @@ export default function MobileDrawer({ open, onClose, q, setQ, onSearchSubmit, c
   return createPortal(
     <>
       <div className="mdOverlay" onClick={onClose} />
+
       <aside className="mdDrawer" role="dialog" aria-modal="true" aria-label="Menu">
         <div className="mdTop">
-          <div className="mdBrand">
+          <Link to="/" className="mdBrand" onClick={onClose}>
             <img src={logo} alt="North Way Guide" className="mdLogo" />
             <div className="mdTitle">NORTH WAY GUIDE</div>
-          </div>
+          </Link>
+
           <button className="mdClose" onClick={onClose} aria-label="Close menu" type="button">
             ×
           </button>
@@ -72,58 +95,50 @@ export default function MobileDrawer({ open, onClose, q, setQ, onSearchSubmit, c
 
         <form className="mdSearch" onSubmit={onSearchSubmit}>
           <span className="mdSearchIcon" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M10.5 18.5a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z"
-                stroke="currentColor"
-                strokeWidth="2.2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M16.5 16.5 21 21"
-                stroke="currentColor"
-                strokeWidth="2.2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            <SearchIcon />
           </span>
 
           <input
             className="mdSearchInput"
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            placeholder="Search: Hunza, Skardu, hotels..."
+            placeholder="Search places, hotels, guides..."
           />
 
-          <button className="mdSearchBtn" type="submit">Go</button>
+          <button className="mdSearchBtn" type="submit">
+            Go
+          </button>
         </form>
 
-        <Link to="/cart" className="mdCartLink" onClick={onClose} aria-label={`Cart (${cartCount})`}>
-          <span className="mdCartLeft">
-            <CartIcon />
-            <span>Cart</span>
-          </span>
-          <span className="mdCartCount">{cartCount}</span>
-        </Link>
-
         <nav className="mdNav" aria-label="Primary">
+          <Link to="/cart" className="mdRow" onClick={onClose} aria-label={`Cart (${cartCount})`}>
+            <span className="mdRowLeft">
+              <span className="mdRowIcon" aria-hidden="true">
+                <CartIcon />
+              </span>
+              <span>Cart</span>
+            </span>
+            <span className="mdCount">{cartCount}</span>
+          </Link>
+
           {navItems.map((n) => (
             <NavLink
               key={n.to}
               to={n.to}
               end={n.end}
-              className={({ isActive }) => `mdLink ${isActive ? "active" : ""}`}
+              className={({ isActive }) => `mdRow ${isActive ? "active" : ""}`}
               onClick={onClose}
             >
-              {n.label}
+              <span className="mdRowLeft">
+                <span>{n.label}</span>
+              </span>
+              <span className="mdChevron" aria-hidden="true">›</span>
             </NavLink>
           ))}
         </nav>
 
-        <div className="mdUserBlock">
-          <div className="mdUserTitle">Account</div>
+        <div className="mdSection">
+          <div className="mdSectionTitle">Account</div>
 
           {user ? (
             <>
@@ -135,18 +150,36 @@ export default function MobileDrawer({ open, onClose, q, setQ, onSearchSubmit, c
                 </div>
               </div>
 
-              <div className="mdUserLinks">
-                <Link to="/profile" className="mdUserLink" onClick={onClose}>Profile</Link>
-                <Link to="/register-service" className="mdUserLink" onClick={onClose}>Register a Service</Link>
-                <Link to="/orders" className="mdUserLink" onClick={onClose}>Order History</Link>
-                <Link to="/support" className="mdUserLink" onClick={onClose}>Support</Link>
-                <button type="button" className="mdUserLink danger" onClick={handleLogout}>Logout</button>
+              <div className="mdAccountList">
+                <Link to="/profile" className="mdRow" onClick={onClose}>
+                  <span className="mdRowLeft">Profile</span>
+                  <span className="mdChevron" aria-hidden="true">›</span>
+                </Link>
+                <Link to="/register-service" className="mdRow" onClick={onClose}>
+                  <span className="mdRowLeft">Register a Service</span>
+                  <span className="mdChevron" aria-hidden="true">›</span>
+                </Link>
+                <Link to="/orders" className="mdRow" onClick={onClose}>
+                  <span className="mdRowLeft">Order History</span>
+                  <span className="mdChevron" aria-hidden="true">›</span>
+                </Link>
+                <Link to="/support" className="mdRow" onClick={onClose}>
+                  <span className="mdRowLeft">Support</span>
+                  <span className="mdChevron" aria-hidden="true">›</span>
+                </Link>
+                <button type="button" className="mdRow mdDanger" onClick={handleLogout}>
+                  <span className="mdRowLeft">Logout</span>
+                </button>
               </div>
             </>
           ) : (
-            <div className="mdActions">
-              <Link className="btn ghost mdFull" to="/login" onClick={onClose}>Login</Link>
-              <Link className="btn primary mdFull" to="/register" onClick={onClose}>Register</Link>
+            <div className="mdAuth">
+              <Link className="btn ghost mdFull" to="/login" onClick={onClose}>
+                Login
+              </Link>
+              <Link className="btn primary mdFull" to="/register" onClick={onClose}>
+                Register
+              </Link>
             </div>
           )}
         </div>
