@@ -163,14 +163,14 @@ export default function Home() {
       <div className="nwIntro">
         <h2 className="nwIntroTitle">Explore Highlights</h2>
         <p className="nwIntroSub">
-          Top picks — sorted by rating (spots/products use approved reviews).
+          Explore Trending & Top-Reviewed Experiences Across the Region.
         </p>
       </div>
 
       <section className="nwSection">
         <SectionHead
           title="Top Rated Tourist Spots"
-          subtitle="Top 4 spots by approved reviews (fallback newest)."
+          subtitle="Discover the Region’s Highest-Rated Attractions."
           to="/tourist-spots"
           linkLabel="View all spots"
         />
@@ -184,7 +184,7 @@ export default function Home() {
       <section className="nwSection">
         <SectionHead
           title="Top Rated Hotels"
-          subtitle="Top 4 hotels by rating field."
+          subtitle="Explore Highly Rated Stays Across the Region."
           to="/hotels"
           linkLabel="View all hotels"
         />
@@ -198,7 +198,7 @@ export default function Home() {
       <section className="nwSection">
         <SectionHead
           title="Top Guides"
-          subtitle="Top 4 guides by rating field."
+          subtitle="Trusted Guides Recommended by Travelers."
           to="/guides"
           linkLabel="View all guides"
         />
@@ -212,7 +212,7 @@ export default function Home() {
       <section className="nwSection">
         <SectionHead
           title="Top Rated Products"
-          subtitle="Top 4 products by approved reviews (fallback newest)."
+          subtitle="Featured Products Loved by Verified Buyers."
           to="/local-products"
           linkLabel="View all products"
         />
