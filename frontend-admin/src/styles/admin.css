@@ -714,3 +714,39 @@ label{
   font-weight: 700;
   font-size: 13px;
 }
+
+.adminAuth{
+  display: grid;
+  place-items: center;
+}
+
+.adminAuthCard{
+  width: min(440px, 100%);
+  margin: 0 auto;
+}
+
+.adminAuthLogoRow{
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--s-4);
+}
+
+.adminAuthLogoStage{
+  width: 64px;
+  height: 64px;
+  border-radius: var(--r-pill);
+  background: var(--ink);
+  border: 1px solid var(--ink);
+  display: grid;
+  place-items: center;
+}
+
+.adminAuthLogoImg{
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+}
+
+.adminAuthTitle{
+  margin: 0;
+}
