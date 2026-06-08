@@ -685,3 +685,156 @@ label{
 .saModal{
   border-radius: var(--r-0) !important;
 }
+/* ===================== DASHBOARD LAYOUT ===================== */
+.dashWrap{
+  display: grid;
+  gap: var(--s-3);
+}
+
+.dashTop{
+  display:flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: var(--s-3);
+  flex-wrap: wrap;
+}
+
+.dashGrid2{
+  display:grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap: var(--s-3);
+}
+@media (max-width: 1100px){
+  .dashGrid2{ grid-template-columns: 1fr; }
+}
+
+.dashKpiGrid{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-3);
+}
+@media (max-width: 950px){
+  .dashKpiGrid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 650px){
+  .dashKpiGrid{ grid-template-columns: 1fr; }
+}
+
+/* KPI card (Link) */
+.kpiCard{
+  display:flex;                /* IMPORTANT */
+  align-items:center;
+  gap: 12px;
+  padding: 14px;
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+}
+
+.kpiCard:hover{
+  border-color: rgba(17,17,17,0.35);
+}
+
+.kpiIcon{
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-pill);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size: 18px;
+  background: var(--soft);
+  border: 1px solid var(--hairline);
+  flex: 0 0 auto;
+}
+
+.kpiLabel{
+  font-weight: 800;
+  color: var(--ink);
+  font-size: 13px;
+}
+.kpiValue{
+  font-weight: 800;
+  color: var(--ink);
+  font-size: 20px;
+  margin-top: 2px;
+}
+.kpiSub{
+  font-weight: 600;
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 4px;
+}
+.kpiArrow{
+  margin-left:auto;
+  font-weight: 800;
+  color: var(--muted);
+}
+
+.kpiWarn{
+  border-color: rgba(211,0,5,0.25) !important;
+  background: rgba(211,0,5,0.04) !important;
+}
+
+/* Pending cards */
+.pendingGrid{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: var(--s-3);
+}
+@media (max-width: 650px){
+  .pendingGrid{ grid-template-columns: 1fr; }
+}
+
+.pendingItem{
+  padding: 12px;
+  border: 1px solid var(--hairline);
+  background: var(--canvas);
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+  gap: 10px;
+}
+
+.pendingItem.pendingWarn{
+  border-color: rgba(211,0,5,0.25);
+  background: rgba(211,0,5,0.04);
+}
+
+.pendingLabel{
+  font-weight: 800;
+  color: var(--ink);
+  font-size: 13px;
+}
+.pendingValue{
+  font-weight: 800;
+  font-size: 18px;
+  color: var(--ink);
+}
+.pendingLink{
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+/* Orders rows */
+.rowList{
+  display:grid;
+  gap: 10px;
+  margin-top: var(--s-3);
+}
+.rowItem{
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--hairline);
+  background: var(--canvas);
+}
+.rowTitle{ font-weight: 800; color: var(--ink); }
+.rowVal{ font-weight: 800; color: var(--ink); }
