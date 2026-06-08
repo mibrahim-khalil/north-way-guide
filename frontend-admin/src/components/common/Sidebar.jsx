@@ -17,8 +17,8 @@ const iconByLabel = (label) => {
     "Manage Hotel Bookings": "🛎",
     "Manage Reviews": "⭐",
     "Manage Reports": "📝",
-    "Weather Updates": "⛅", // for weather
-    "Events": "📅", // for events
+    "Weather Updates": "⛅",
+    Events: "📅",
     Settings: "⚙",
   };
   return map[label] || "•";
@@ -60,19 +60,7 @@ export default function Sidebar() {
             <span className="adminNavText">{n.label}</span>
 
             {n.label === "Applications" && pendingCount > 0 ? (
-              <span
-                style={{
-                  marginLeft: "auto",
-                  background: "crimson",
-                  color: "white",
-                  borderRadius: 999,
-                  padding: "2px 8px",
-                  fontSize: 12,
-                  fontWeight: 900,
-                }}
-              >
-                {pendingCount}
-              </span>
+              <span className="adminNavCount">{pendingCount}</span>
             ) : (
               <span className="adminNavDot" aria-hidden />
             )}
