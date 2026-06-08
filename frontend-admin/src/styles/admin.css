@@ -777,3 +777,73 @@ label{
   font-weight: 700;
   font-size: 13px;
 }
+
+/* Login background image */
+.adminAuth{
+  position: relative;
+  isolation: isolate;
+  background: var(--canvas);
+}
+
+.adminAuth::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/admin-login-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  filter: grayscale(1);
+  opacity: 0.16;
+  z-index: -2;
+}
+
+.adminAuth::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.78);
+  z-index: -1;
+}
+
+/* Center logo + title + subtitle */
+.adminAuthCard{
+  text-align: center;
+}
+
+.adminAuthLogoRow{
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--s-4);
+}
+
+/* Make your current logo stage not restrict the logo */
+.adminAuthLogoStage{
+  background: transparent;
+  border: none;
+  width: auto;
+  height: auto;
+  border-radius: 0;
+}
+
+.adminAuthLogoImg{
+  width: 170px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+.adminAuthTitle{
+  text-align: center;
+  margin: 0;
+}
+
+.adminAuthCard .adminMuted{
+  text-align: center;
+  margin-top: 6px;
+}
+
+/* Keep form left aligned */
+.adminAuthForm{
+  text-align: left;
+}
