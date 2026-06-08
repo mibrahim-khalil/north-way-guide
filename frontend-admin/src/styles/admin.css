@@ -847,3 +847,53 @@ label{
 .adminAuthForm{
   text-align: left;
 }
+
+/* Login: force center header + show background image */
+.adminAuth{
+  position: relative;
+  isolation: isolate;
+  background: var(--canvas);
+}
+
+/* IMPORTANT:
+   Use relative URL so it works on /admin/login deployment */
+.adminAuth::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("admin-login-bg.jpg"); /* not starting with / */
+  background-size: cover;
+  background-position: center;
+  filter: grayscale(1);
+  opacity: 0.18;
+  z-index: -2;
+}
+
+.adminAuth::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.78);
+  z-index: -1;
+}
+
+/* Force heading + subtitle center */
+.adminAuthCard{
+  text-align: center !important;
+}
+
+.adminAuthTitle,
+.adminAuthCard .adminMuted{
+  text-align: center !important;
+}
+
+/* Center logo row */
+.adminAuthLogoRow{
+  display: flex;
+  justify-content: center !important;
+}
+
+/* Keep form left aligned */
+.adminAuthForm{
+  text-align: left !important;
+}
