@@ -91,3 +91,13 @@
     justify-content: flex-start;
   }
 }
+
+.authForm .grid{
+  gap: 12px;
+}
+
+.authForm label{
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
