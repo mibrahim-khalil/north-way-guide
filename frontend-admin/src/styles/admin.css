@@ -1428,3 +1428,29 @@ textarea.setInput{
     padding: var(--s-4) !important; /* 16px */
   }
 }
+/* ===== Sidebar active state FIX (override unifier) ===== */
+.adminNavLink.active{
+  background: var(--ink) !important;
+  border-color: var(--ink) !important;
+  transform: none !important;
+}
+
+.adminNavLink.active .adminNavText{
+  color: var(--canvas) !important;
+  opacity: 1 !important;
+}
+
+.adminNavLink.active .adminNavIcon{
+  background: rgba(255,255,255,0.12) !important;
+  border-color: rgba(255,255,255,0.18) !important;
+  color: var(--canvas) !important;
+}
+
+.adminNavLink.active .adminNavDot{
+  background: var(--canvas) !important;
+}
+.adminNavText{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
