@@ -1413,3 +1413,18 @@ textarea.setInput{
 
 /* aCard soft surface (where used) */
 .aCard{ background: var(--soft) !important; }
+
+/* ===== Admin: full-width content like old UI ===== */
+.adminContent{
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: var(--s-5) !important;   /* 24px */
+  min-height: calc(100vh - 64px);
+}
+
+@media (max-width: 600px){
+  .adminContent{
+    padding: var(--s-4) !important; /* 16px */
+  }
+}
