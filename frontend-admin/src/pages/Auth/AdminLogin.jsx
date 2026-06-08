@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAdminAuth } from "../../context/AdminAuthContext";
+import logo from "../../assets/images/logowhite.png";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
@@ -36,10 +37,14 @@ export default function AdminLogin() {
   return (
     <div className="adminAuth">
       <div className="adminAuthCard">
-        <h2 style={{ margin: 0, color: "var(--ink)", fontWeight: 1000 }}>Admin Login</h2>
-        <p className="adminMuted" style={{ marginTop: 6 }}>
-          Sign in to manage applications, listings, and orders.
-        </p>
+        <div className="adminAuthLogoRow">
+          <div className="adminAuthLogoStage">
+            <img className="adminAuthLogoImg" src={logo} alt="North Way Guide" />
+          </div>
+        </div>
+
+        <h2 className="adminAuthTitle">Admin Login</h2>
+        <p className="adminMuted">Sign in to manage applications, listings, and orders.</p>
 
         {error ? <div className="adminError">{error}</div> : null}
 
@@ -52,7 +57,6 @@ export default function AdminLogin() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               autoComplete="email"
-              placeholder="admin@example.com"
               required
             />
           </div>
@@ -65,7 +69,6 @@ export default function AdminLogin() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               autoComplete="current-password"
-              placeholder="••••••••"
               required
             />
           </div>
