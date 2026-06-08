@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { api } from "../../utils/api";
+import { useAuth } from "../../context/AuthContext";
 
 const BOT_LOGO = "/images/chatbot-logo.png";
 
@@ -145,6 +146,8 @@ function CardGrid({ cards = [] }) {
 }
 
 export default function ChatWidget() {
+  const { user } = useAuth();
+
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
@@ -170,7 +173,36 @@ export default function ChatWidget() {
       cards: m.cards || [],
     }));
 
+  const loginNext = () => {
+    const next = window.location.pathname + window.location.search;
+    return `/login?next=${encodeURIComponent(next)}`;
+  };
+
+  const pushBotLoginPrompt = () => {
+    const botNow = new Date();
+    setMessages((prev) => [
+      ...prev,
+      {
+        role: "assistant",
+        content: "Please login to continue the chat.",
+        createdAt: botNow,
+        time: formatTime(botNow),
+        cards: [
+          {
+            title: "Login",
+            subtitle: "Sign in to use NorthWay AI Guide",
+            to: loginNext(),
+          },
+        ],
+      },
+    ]);
+  };
+
   const fetchSessions = async () => {
+    if (!user) {
+      setSessions([]);
+      return;
+    }
     try {
       const res = await api.get("/chat");
       const list = Array.isArray(res.data) ? res.data : res.data?.sessions || [];
@@ -184,7 +216,8 @@ export default function ChatWidget() {
   useEffect(() => {
     if (open) fetchSessions();
     else setShowHistory(false);
-  }, [open]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, user]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -209,7 +242,14 @@ export default function ChatWidget() {
       ...prev,
       { role: "user", content: text, createdAt: now, time: formatTime(now), cards: [] },
     ]);
+
     setInput("");
+
+    if (!user) {
+      pushBotLoginPrompt();
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -230,6 +270,24 @@ export default function ChatWidget() {
 
       fetchSessions();
     } catch (err) {
+      const status = err?.response?.status;
+
+      if (status === 401) {
+        pushBotLoginPrompt();
+      } else {
+        const botNow = new Date();
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: "assistant",
+            content: "Sorry, I could not respond right now. Please try again.",
+            createdAt: botNow,
+            time: formatTime(botNow),
+            cards: [],
+          },
+        ]);
+      }
+
       console.error("Send message failed:", err);
     } finally {
       setLoading(false);
@@ -237,6 +295,10 @@ export default function ChatWidget() {
   };
 
   const loadSession = async (id) => {
+    if (!user) {
+      pushBotLoginPrompt();
+      return;
+    }
     try {
       const res = await api.get(`/chat/${id}`);
       setMessages(normalizeMessages(res.data?.session?.messages || []));
@@ -248,6 +310,11 @@ export default function ChatWidget() {
   };
 
   const deleteSession = async (id) => {
+    if (!user) {
+      pushBotLoginPrompt();
+      return;
+    }
+
     const ok = window.confirm("Delete this chat?");
     if (!ok) return;
 
@@ -360,6 +427,7 @@ export default function ChatWidget() {
               justifyContent: "space-between",
               alignItems: "center",
               borderBottom: "1px solid rgba(255,255,255,0.10)",
+              position: "relative",
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -374,7 +442,11 @@ export default function ChatWidget() {
                   flexShrink: 0,
                 }}
               >
-                <img src={BOT_LOGO} alt="AI Logo" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                <img
+                  src={BOT_LOGO}
+                  alt="AI Logo"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
               </div>
               <div style={{ letterSpacing: 0.2 }}>NorthWay AI Guide</div>
             </div>
@@ -398,7 +470,7 @@ export default function ChatWidget() {
                 border: "1px solid rgba(255,255,255,0.14)",
                 color: "#fff",
               }}
-              title="Chat History"
+              title={user ? "Chat History" : "Login required"}
             >
               <ClockIcon />
             </button>
@@ -421,7 +493,11 @@ export default function ChatWidget() {
                   zIndex: 5000,
                 }}
               >
-                {sessions.length === 0 ? (
+                {!user ? (
+                  <div style={{ fontSize: 13, color: MUTED, padding: 6 }}>
+                    Login required to view chat history.
+                  </div>
+                ) : sessions.length === 0 ? (
                   <div style={{ fontSize: 13, color: MUTED, padding: 6 }}>
                     No previous chats
                   </div>
@@ -532,7 +608,11 @@ export default function ChatWidget() {
                     {isUser ? (
                       "U"
                     ) : (
-                      <img src={BOT_LOGO} alt="AI" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                      <img
+                        src={BOT_LOGO}
+                        alt="AI"
+                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                      />
                     )}
                   </div>
 
