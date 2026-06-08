@@ -343,20 +343,10 @@ button, input, select, textarea{ font: inherit; }
   box-shadow: 1px 1px 3px rgba(0,0,0,0.22);
 }
 
-.aBtn:focus-visible{
-  outline: none;
-  box-shadow: 0 0 0 4px rgba(17,17,17,0.12), var(--btn-shadow);
-}
-
 .aBtn.primary{
   background: var(--ink);
   color: var(--canvas);
   border-color: var(--ink);
-}
-
-.aBtn.primary:hover{
-  background: linear-gradient(90deg, #111111 0%, #2b2b2b 100%);
-  box-shadow: var(--btn-shadow-hover);
 }
 
 .aBtn.danger{
@@ -396,27 +386,6 @@ button, input, select, textarea{ font: inherit; }
   box-shadow: 0 0 0 4px rgba(17,17,17,0.08);
 }
 
-select.hmInput,
-select.setInput,
-select.smInput,
-select.vmInput,
-select.vpmInput{
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  padding-right: 42px;
-  background-image:
-    linear-gradient(45deg, transparent 50%, var(--ink) 50%),
-    linear-gradient(135deg, var(--ink) 50%, transparent 50%);
-  background-position:
-    calc(100% - 18px) 50%,
-    calc(100% - 12px) 50%;
-  background-size:
-    6px 6px,
-    6px 6px;
-  background-repeat: no-repeat;
-}
-
 label{
   display:block;
   font-size: 12px;
@@ -454,85 +423,6 @@ label{
   background: rgba(211,0,5,0.06);
   border-color: rgba(211,0,5,0.22);
   color: var(--sale);
-}
-
-.evTableOuter,
-.evTableWrap,
-.hbTableOuter,
-.saTableWrap{
-  border: 1px solid var(--hairline) !important;
-  border-radius: var(--r-0) !important;
-  background: var(--canvas) !important;
-  overflow: hidden !important;
-}
-
-.evTable thead th,
-.hbTable thead th,
-.saTable thead th{
-  background: var(--soft) !important;
-  color: var(--muted) !important;
-  border-bottom: 1px solid var(--hairline) !important;
-  font-weight: 700 !important;
-  text-transform: uppercase !important;
-  letter-spacing: .8px !important;
-  white-space: nowrap !important;
-}
-
-.evTable tbody td,
-.hbTable tbody td,
-.saTable tbody td{
-  background: var(--canvas) !important;
-  border-bottom: 1px solid var(--hairline) !important;
-}
-
-@media (hover: hover) and (pointer: fine){
-  .evTable tbody tr:hover td,
-  .hbTable tbody tr:hover td,
-  .saTable tbody tr:hover td{
-    background: rgba(17,17,17,0.03) !important;
-  }
-}
-
-.kebabBtn{
-  border-radius: var(--r-pill) !important;
-  border: 1px solid var(--hairline) !important;
-  background: var(--soft) !important;
-  color: var(--ink) !important;
-}
-
-.detailsPanel{
-  border: 1px solid var(--hairline) !important;
-  border-radius: var(--r-12) !important;
-  background: var(--canvas) !important;
-}
-
-.itemRow{
-  border: 1px solid var(--hairline) !important;
-  border-radius: var(--r-12) !important;
-  background: var(--soft) !important;
-}
-
-.evLink{
-  color: var(--ink) !important;
-  text-decoration: underline !important;
-  text-underline-offset: 4px !important;
-}
-
-.evActions{
-  display: flex !important;
-  justify-content: flex-end !important;
-  gap: 10px !important;
-  flex-wrap: nowrap !important;
-  align-items: center !important;
-}
-
-.evActions .aBtn{ white-space: nowrap !important; }
-
-@media (max-width: 700px){
-  .evActions{
-    flex-wrap: wrap !important;
-    justify-content: flex-start !important;
-  }
 }
 
 .dashWrap{
@@ -672,29 +562,12 @@ label{
   display:grid;
   place-items: center;
   padding: var(--s-5);
-  background: var(--canvas);
-  position: relative;
-  isolation: isolate;
 }
 
-.adminAuth::before{
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url("/admin-login-bg.jpg");
+.adminAuthBg{
   background-size: cover;
   background-position: center;
-  filter: grayscale(1);
-  opacity: 0.22;
-  z-index: -2;
-}
-
-.adminAuth::after{
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(255,255,255,0.74);
-  z-index: -1;
+  background-repeat: no-repeat;
 }
 
 .adminAuthCard{
@@ -703,7 +576,6 @@ label{
   border-radius: var(--r-24);
   border: 1px solid var(--hairline);
   background: rgba(255,255,255,0.94);
-  box-shadow: none;
   text-align: center;
 }
 
@@ -734,7 +606,7 @@ label{
   text-align: center;
 }
 
-.adminAuthCard .adminMuted{
+.adminAuthSubtitle{
   text-align: center;
   margin-top: 6px;
 }
@@ -772,55 +644,4 @@ label{
   color: var(--sale);
   font-weight: 700;
   font-size: 13px;
-}
-.adminAuth{
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-  padding: var(--s-5);
-  position: relative;
-  isolation: isolate;
-  background: var(--canvas);
-}
-
-.adminAuth::before{
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url("/admin/admin-login-bg.jpg"), url("/admin-login-bg.jpg");
-  background-size: cover;
-  background-position: center;
-  filter: grayscale(1);
-  opacity: 0.22;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.adminAuth::after{
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(255,255,255,0.74);
-  z-index: 1;
-  pointer-events: none;
-}
-
-.adminAuthCard{
-  position: relative;
-  z-index: 2;
-  text-align: center !important;
-}
-
-.adminAuthTitle,
-.adminAuthCard .adminMuted{
-  text-align: center !important;
-}
-
-.adminAuthLogoRow{
-  display: flex !important;
-  justify-content: center !important;
-}
-
-.adminAuthForm{
-  text-align: left !important;
 }
