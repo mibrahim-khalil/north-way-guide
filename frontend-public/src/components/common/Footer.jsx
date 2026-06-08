@@ -25,7 +25,7 @@ export default function Footer() {
             </div>
             <div>
               <div className="footerTitle">North Way Guide</div>
-              <div className="footerSub">A tourism platform for Gilgit-Baltistan</div>
+              <div className="footerSub">North Way Guide is a smart tourism and marketplace platform designed to help travelers explore Gilgit-Baltistan through trusted local services, guided experiences, accommodations, and AI-powered trip planning.</div>
             </div>
           </div>
 
