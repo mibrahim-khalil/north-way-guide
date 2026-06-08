@@ -37,23 +37,39 @@ export default function AdminLogin() {
 
   return (
     <div
-      className="adminAuth adminAuthBg"
+      className="adminAuth"
       style={{
-        backgroundImage: `linear-gradient(rgba(255,255,255,0.75), rgba(255,255,255,0.75)), url(${bg})`,
+        backgroundImage: `linear-gradient(rgba(255,255,255,0.72), rgba(255,255,255,0.72)), url(${bg})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
       }}
     >
       <div className="adminAuthCard">
-        <div className="adminAuthHead">
-          <img className="adminAuthLogoBig" src={logo} alt="North Way Guide" />
-          <h2 className="adminAuthTitle">Admin Login</h2>
-          <p className="adminAuthSubtitle">
+        <div style={{ textAlign: "center", marginBottom: 16 }}>
+          <img
+            src={logo}
+            alt="North Way Guide"
+            style={{ width: 170, height: "auto", display: "block", margin: "0 auto 16px" }}
+          />
+
+          <h2 style={{ margin: 0, textAlign: "center" }}>Admin Login</h2>
+
+          <p
+            style={{
+              margin: "6px 0 0",
+              textAlign: "center",
+              color: "var(--muted)",
+              fontWeight: 600,
+            }}
+          >
             Sign in to manage applications, listings, and orders.
           </p>
         </div>
 
         {error ? <div className="adminError">{error}</div> : null}
 
-        <form onSubmit={submit} className="adminAuthForm">
+        <form onSubmit={submit} className="adminAuthForm" style={{ textAlign: "left" }}>
           <div>
             <label htmlFor="adminEmail">Email</label>
             <input
