@@ -1454,3 +1454,64 @@ textarea.setInput{
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* ===== Sidebar: smaller items + no horizontal scroll + grey active ===== */
+
+/* stop any horizontal scroll coming from sidebar */
+.adminSidebar{
+  overflow-x: hidden !important;
+}
+
+/* nav item sizing */
+.adminNav{
+  gap: 8px !important;
+}
+
+.adminNavLink{
+  padding: 10px 10px !important;      /* smaller */
+  border-radius: 18px !important;
+}
+
+.adminNavIcon{
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 9999px !important;
+  font-size: 14px !important;         /* emoji/icon smaller */
+}
+
+/* text smaller + keep in one line */
+.adminNavText{
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  min-width: 0 !important;
+}
+
+/* ACTIVE (current page): use grey, not black */
+.adminNavLink.active{
+  background: #ededed !important;      /* grey surface */
+  border-color: #d9d9d9 !important;
+}
+
+.adminNavLink.active .adminNavText{
+  color: var(--ink) !important;
+}
+
+.adminNavLink.active .adminNavIcon{
+  background: rgba(17,17,17,0.06) !important;
+  border-color: rgba(17,17,17,0.10) !important;
+  color: var(--ink) !important;
+}
+
+.adminNavLink.active .adminNavDot{
+  background: rgba(17,17,17,0.35) !important;
+}
+
+/* keep pending count pill readable on grey active */
+.adminNavLink.active .adminNavCount{
+  background: var(--ink) !important;
+  color: var(--canvas) !important;
+  border-color: var(--ink) !important;
+}
