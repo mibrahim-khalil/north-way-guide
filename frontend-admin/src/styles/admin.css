@@ -600,3 +600,63 @@ label{
   font-weight: 700;
   font-size: 13px;
 }
+.adminMain{
+  background: var(--soft);
+}
+
+.card,
+.aCard{
+  background: var(--canvas);
+}
+
+.cardBody{
+  padding: var(--s-6);
+}
+
+@media (max-width: 600px){
+  .cardBody{
+    padding: var(--s-5);
+  }
+}
+
+.dashWrap{
+  gap: var(--s-4);
+}
+
+.dashKpiGrid{
+  gap: var(--s-4);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (max-width: 950px){
+  .dashKpiGrid{
+    grid-template-columns: 1fr;
+  }
+}
+
+.dashGrid2{
+  gap: var(--s-4);
+}
+
+.dashWrap .aCard:not(.kpiCard){
+  padding: var(--s-6) !important;
+}
+
+.kpiCard{
+  padding: 18px;
+  min-height: 92px;
+}
+
+.pendingGrid{
+  gap: 12px;
+}
+
+.pendingItem,
+.rowItem{
+  padding: 14px;
+  background: var(--soft);
+}
+
+.adminShell{
+  grid-template-columns: 280px 1fr;
+}
