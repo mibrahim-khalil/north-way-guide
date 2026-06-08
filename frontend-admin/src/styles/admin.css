@@ -1,12 +1,11 @@
 :root{
-  /* === SAME AS PUBLIC theme.css === */
+  /* Tokens (same as public theme.css) */
   --ink:#111111;
   --canvas:#ffffff;
   --soft:#f5f5f5;
 
   --text: var(--ink);
   --muted:#707072;
-
   --heading: var(--ink);
 
   --hairline:#e5e5e5;
@@ -30,13 +29,12 @@
   --s-7: 48px;
 
   --font-ui: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  --font-display: "Bebas Neue", "Anton", Impact, var(--font-ui);
 
   --btn-radius: var(--r-pill);
   --btn-shadow: 2px 2px 4px rgba(0,0,0,0.25);
   --btn-shadow-hover: 3px 3px 8px rgba(0,0,0,0.22);
 
-  /* === Admin compatibility aliases (so old code doesn't break) === */
+  /* Compatibility aliases */
   --bg-gradient: var(--canvas);
   --card: var(--canvas);
   --card2: var(--soft);
@@ -61,9 +59,7 @@ body{
 a{ color:inherit; text-decoration:none; }
 img{ max-width:100%; display:block; }
 
-/* =========================================================
-   ADMIN SHELL (layout)
-   ========================================================= */
+/* Layout */
 .adminShell{
   display:grid;
   grid-template-columns: 300px 1fr;
@@ -71,13 +67,14 @@ img{ max-width:100%; display:block; }
 }
 
 .adminSidebar{
-  background: var(--canvas);
+  background: var(--soft);
   border-right: 1px solid var(--hairline);
   padding: var(--s-4);
   position: sticky;
   top: 0;
   height: 100vh;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .adminMain{
@@ -87,7 +84,6 @@ img{ max-width:100%; display:block; }
   background: var(--canvas);
 }
 
-/* Topbar stays full width, but content aligns with page width */
 .adminTopbar{
   height: 64px;
   display:flex;
@@ -130,22 +126,25 @@ img{ max-width:100%; display:block; }
   gap: 10px;
 }
 
-/* IMPORTANT: match public container rhythm */
+/* Full width content like previous admin */
 .adminContent{
-  width: min(var(--container), calc(100% - 48px));
-  margin-inline: auto;
-  padding: var(--s-5) 0;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: var(--s-5);
+  min-height: calc(100vh - 64px);
 }
 
 @media (max-width: 1000px){
   .adminShell{ grid-template-columns: 1fr; }
   .adminSidebar{ position: relative; height: auto; }
-  .adminContent{ width: min(var(--container), calc(100% - 32px)); }
 }
 
-/* =========================================================
-   SIDEBAR BRAND
-   ========================================================= */
+@media (max-width: 600px){
+  .adminContent{ padding: var(--s-4); }
+}
+
+/* Sidebar brand */
 .adminBrand{
   display:flex;
   align-items:center;
@@ -162,7 +161,7 @@ img{ max-width:100%; display:block; }
   object-fit: contain;
   padding: 8px;
   border-radius: var(--r-pill);
-  background: var(--ink);      /* your logo is white */
+  background: var(--ink);
   border: 1px solid var(--ink);
 }
 
@@ -179,7 +178,6 @@ img{ max-width:100%; display:block; }
   margin-top: 2px;
 }
 
-/* Nav Title */
 .adminNavTitle{
   margin-top: 14px;
   margin-bottom: 8px;
@@ -190,28 +188,35 @@ img{ max-width:100%; display:block; }
   text-transform: uppercase;
 }
 
-/* =========================================================
-   SIDEBAR NAV (Nike-like: flat + hairline + ink active)
-   ========================================================= */
+/* Sidebar nav (smaller + no horizontal scroll) */
 .adminNav{
   display:grid;
-  gap: 10px;
+  gap: 8px;
 }
 
 .adminNavLink{
   display:flex;
   align-items:center;
   gap: 10px;
-  padding: 12px 12px;
-  border-radius: var(--r-24);
+  padding: 10px 10px;
+  border-radius: 18px;
   border: 1px solid var(--hairline);
-  background: var(--canvas);
+  background: rgba(255,255,255,0.92);
   text-decoration: none;
+  transition: background 0.18s ease, border-color 0.18s ease, transform 0.06s ease;
+}
+
+@media (hover: hover) and (pointer: fine){
+  .adminNavLink:hover{
+    background: linear-gradient(90deg, #ffffff 0%, #f5f5f5 100%);
+    border-color: rgba(17,17,17,0.24);
+    transform: translateY(-1px);
+  }
 }
 
 .adminNavIcon{
-  width: 34px;
-  height: 34px;
+  width: 30px;
+  height: 30px;
   border-radius: var(--r-pill);
   display:flex;
   align-items:center;
@@ -221,41 +226,46 @@ img{ max-width:100%; display:block; }
   color: var(--ink);
   font-weight: 900;
   flex: 0 0 auto;
+  font-size: 14px;
 }
 
 .adminNavText{
   flex: 1;
   color: var(--ink);
   font-weight: 800;
+  font-size: 13px;
   min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .adminNavDot{
   width: 10px;
   height: 10px;
   border-radius: var(--r-pill);
-  background: var(--hairline);
+  background: rgba(17,17,17,0.18);
   flex: 0 0 auto;
 }
 
-.adminNavLink:hover{
-  border-color: rgba(17,17,17,0.35);
-}
-
+/* Active state (grey instead of black) */
 .adminNavLink.active{
-  background: var(--ink);
-  border-color: var(--ink);
+  background: #ededed;
+  border-color: #d9d9d9;
+  transform: none;
 }
 
-.adminNavLink.active .adminNavText{ color: var(--canvas); }
+.adminNavLink.active .adminNavText{ color: var(--ink); }
 .adminNavLink.active .adminNavIcon{
-  background: rgba(255,255,255,0.12);
-  border-color: rgba(255,255,255,0.18);
-  color: var(--canvas);
+  background: rgba(17,17,17,0.06);
+  border-color: rgba(17,17,17,0.10);
+  color: var(--ink);
 }
-.adminNavLink.active .adminNavDot{ background: var(--canvas); }
+.adminNavLink.active .adminNavDot{
+  background: rgba(17,17,17,0.35);
+}
 
-/* Optional: pending count pill (if you use it) */
+/* Pending count pill */
 .adminNavCount{
   margin-left: auto;
   height: 24px;
@@ -277,55 +287,54 @@ img{ max-width:100%; display:block; }
 }
 .adminHint{ color: var(--muted); font-size: 12px; font-weight: 700; }
 
-/* Helpers */
 .adminMuted{ color: var(--muted); font-weight: 700; }
 
-/* =========================================================
-   CORE SURFACES (Admin)
-   ========================================================= */
-.aCard{
-  background: var(--canvas);
-  border: 1px solid var(--hairline);
-  border-radius: var(--r-24);   /* panels feel like public pills system */
-  box-shadow: none;
-}
-
+/* Cards and surfaces */
 .card{
-  background: var(--canvas);
+  background: var(--soft);
   border: 1px solid var(--hairline);
   border-radius: var(--r-0);
   box-shadow: none;
-  overflow:hidden;
+  overflow: hidden;
 }
 
 .cardBody{ padding: var(--s-5); }
 
-/* =========================================================
-   BUTTONS (match public .btn behavior exactly)
-   ========================================================= */
+.aCard{
+  background: var(--soft);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-0);
+  box-shadow: none;
+}
+
+/* Optional card hover */
+@media (hover: hover) and (pointer: fine){
+  .card:hover{
+    border-color: rgba(17,17,17,0.20);
+    box-shadow: 0 14px 34px rgba(0,0,0,0.06);
+    transform: translateY(-1px);
+    transition: box-shadow 0.18s ease, border-color 0.18s ease, transform 0.06s ease;
+  }
+}
+
+/* Buttons */
 .aBtn{
   display:inline-flex;
   align-items:center;
   justify-content:center;
   gap: 10px;
-
   height: 44px;
   padding: 0 22px;
-
   border: 1px solid transparent;
   border-radius: var(--btn-radius);
-
   background: var(--soft);
   color: var(--ink);
-
   font-family: var(--font-ui);
   font-weight: 600;
   font-size: 14px;
   line-height: 1;
-
   cursor:pointer;
   user-select:none;
-
   box-shadow: var(--btn-shadow);
   transition: background 0.18s ease, box-shadow 0.18s ease, transform 0.06s ease;
 }
@@ -369,11 +378,11 @@ img{ max-width:100%; display:block; }
   box-shadow: none;
 }
 
-/* =========================================================
-   INPUTS (match public inputs)
-   ========================================================= */
+/* Inputs used across pages */
+.hmInput,
+.setInput,
 .srInput, .stInput, .smInput,
-.vmInput, .smInput, .vpmInput{
+.vmInput, .vpmInput{
   width: 100%;
   height: 44px;
   padding: 0 14px;
@@ -386,21 +395,23 @@ img{ max-width:100%; display:block; }
   font-weight: 600;
 }
 
+.hmInput:focus,
+.setInput:focus,
 .srInput:focus, .stInput:focus, .smInput:focus,
 .vmInput:focus, .vpmInput:focus{
   border-color: var(--ink);
   box-shadow: 0 0 0 4px rgba(17,17,17,0.08);
 }
 
+select.hmInput,
+select.setInput,
 select.smInput,
 select.vmInput,
 select.vpmInput{
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-
   padding-right: 42px;
-
   background-image:
     linear-gradient(45deg, transparent 50%, var(--ink) 50%),
     linear-gradient(135deg, var(--ink) 50%, transparent 50%);
@@ -421,9 +432,7 @@ label{
   margin-bottom: 6px;
 }
 
-/* =========================================================
-   PILLS (status)
-   ========================================================= */
+/* Pills */
 .pill{
   display:inline-flex;
   align-items:center;
@@ -438,18 +447,109 @@ label{
 }
 .pill.ok{
   background: rgba(0,125,72,0.10);
-  border-color: rgba(0,125,72,0.25);
+  border-color: rgba(0,125,72,0.22);
   color: #065f46;
 }
 .pill.warn{
-  background: rgba(211,0,5,0.08);
-  border-color: rgba(211,0,5,0.25);
+  background: rgba(245,158,11,0.12);
+  border-color: rgba(245,158,11,0.25);
+  color: #92400e;
+}
+.pill.danger{
+  background: rgba(211,0,5,0.06);
+  border-color: rgba(211,0,5,0.22);
   color: var(--sale);
 }
 
-/* =========================================================
-   LOGIN (flat + centered)
-   ========================================================= */
+/* Tables (override page inline style blocks using !important) */
+.evTableOuter,
+.evTableWrap,
+.hbTableOuter,
+.saTableWrap{
+  border: 1px solid var(--hairline) !important;
+  border-radius: var(--r-0) !important;
+  background: var(--canvas) !important;
+  overflow: hidden !important;
+}
+
+.evTable thead th,
+.hbTable thead th,
+.saTable thead th{
+  background: var(--soft) !important;
+  color: var(--muted) !important;
+  border-bottom: 1px solid var(--hairline) !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: .8px !important;
+  white-space: nowrap !important;
+}
+
+.evTable tbody td,
+.hbTable tbody td,
+.saTable tbody td{
+  background: var(--canvas) !important;
+  border-bottom: 1px solid var(--hairline) !important;
+}
+
+@media (hover: hover) and (pointer: fine){
+  .evTable tbody tr:hover td,
+  .hbTable tbody tr:hover td,
+  .saTable tbody tr:hover td{
+    background: rgba(17,17,17,0.03) !important;
+  }
+}
+
+/* Kebab button */
+.kebabBtn{
+  border-radius: var(--r-pill) !important;
+  border: 1px solid var(--hairline) !important;
+  background: var(--soft) !important;
+  color: var(--ink) !important;
+}
+@media (hover: hover) and (pointer: fine){
+  .kebabBtn:hover{
+    background: linear-gradient(90deg, #f5f5f5 0%, #ededed 100%) !important;
+    border-color: rgba(17,17,17,0.22) !important;
+  }
+}
+
+/* Details panels */
+.detailsPanel{
+  border: 1px solid var(--hairline) !important;
+  border-radius: var(--r-12) !important;
+  background: var(--canvas) !important;
+}
+.itemRow{
+  border: 1px solid var(--hairline) !important;
+  border-radius: var(--r-12) !important;
+  background: var(--soft) !important;
+}
+
+/* Links inside tables */
+.evLink{
+  color: var(--ink) !important;
+  text-decoration: underline !important;
+  text-underline-offset: 4px !important;
+}
+
+/* ManageHotels actions in one line */
+.evActions{
+  display: flex !important;
+  justify-content: flex-end !important;
+  gap: 10px !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+}
+.evActions .aBtn{ white-space: nowrap !important; }
+
+@media (max-width: 700px){
+  .evActions{
+    flex-wrap: wrap !important;
+    justify-content: flex-start !important;
+  }
+}
+
+/* Login */
 .adminAuth{
   min-height: 100vh;
   display:grid;
@@ -499,1019 +599,4 @@ label{
   color: var(--sale);
   font-weight: 700;
   font-size: 13px;
-}
-
-/* =========================================================
-   SERVICE APPLICATIONS table + modal (if you use these classes)
-   ========================================================= */
-.saTop{
-  display:flex;
-  justify-content: space-between;
-  align-items: end;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.saFilterGrid{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-@media (max-width: 900px){
-  .saFilterGrid{ grid-template-columns: 1fr; }
-}
-
-.saTableWrap{
-  overflow-x: auto;
-  border-radius: var(--r-24);
-  border: 1px solid var(--hairline);
-  background: var(--canvas);
-  overflow: hidden;
-}
-
-.saTable{
-  width:100%;
-  min-width: 1100px;
-  border-collapse: collapse;
-  table-layout: fixed;
-  font-size: 13px;
-}
-
-.saTable thead th{
-  text-align:left;
-  padding: 14px 14px;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--muted);
-  background: var(--soft);
-  border-bottom: 1px solid var(--hairline);
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  white-space: nowrap;
-  text-transform: uppercase;
-  letter-spacing: .8px;
-}
-
-.saTable tbody td{
-  padding: 14px 14px;
-  vertical-align: top;
-  border-bottom: 1px solid var(--hairline);
-  background: var(--canvas);
-}
-.saTable tbody tr:last-child td{ border-bottom: none; }
-
-.saUserName{
-  font-weight: 800;
-  color: var(--ink);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.saUserEmail{
-  font-size: 12px;
-  color: var(--muted);
-  font-weight: 600;
-  margin-top: 4px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.saActions{
-  display:flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-}
-@media (max-width: 900px){
-  .saActions{ justify-content: flex-start; }
-}
-
-/* Modal */
-.saOverlay{
-  position: fixed;
-  inset: 0;
-  background: rgba(17,17,17,0.45);
-  z-index: 9998;
-}
-.saModal{
-  position: fixed;
-  left: 50%;
-  top: 6%;
-  transform: translateX(-50%);
-  width: min(980px, calc(100% - 24px));
-  max-height: 88vh;
-  overflow: auto;
-  z-index: 9999;
-  background: var(--canvas);
-  border: 1px solid var(--hairline);
-  border-radius: var(--r-24);
-  box-shadow: none;
-  padding: 14px;
-}
-.saModalTop{
-  display:flex;
-  justify-content: space-between;
-  align-items:flex-start;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-.saModalTitle{
-  font-weight: 800;
-  font-size: 18px;
-  color: var(--ink);
-}
-.saModalSub{
-  font-weight: 600;
-  font-size: 12px;
-  color: var(--muted);
-  margin-top: 4px;
-}
-.saPre{
-  margin: 0;
-  padding: 12px;
-  border-radius: var(--r-12);
-  background: var(--soft);
-  border: 1px solid var(--hairline);
-  overflow: auto;
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 1.4;
-}
-.saDocRow{
-  display:flex;
-  justify-content: space-between;
-  gap: 10px;
-  align-items: center;
-  border: 1px solid var(--hairline);
-  padding: 10px 12px;
-  border-radius: var(--r-12);
-  background: var(--canvas);
-}
-.saDocName{
-  font-weight: 800;
-  font-size: 13px;
-  color: var(--ink);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.saDocMeta{
-  font-weight: 600;
-  font-size: 12px;
-  margin-top: 3px;
-  color: var(--muted);
-}
-
-/* Dashboard helpers (if you use these classNames) */
-.dashWrap{ display:grid; gap: 12px; }
-.dashTop{ display:flex; justify-content: space-between; align-items: end; gap: 10px; flex-wrap: wrap; }
-.dashError{
-  margin-top: 10px;
-  padding: 10px 12px;
-  border-radius: var(--r-12);
-  border: 1px solid rgba(211,0,5,0.25);
-  background: rgba(211,0,5,0.06);
-  color: var(--sale);
-  font-weight: 700;
-  font-size: 13px;
-}
-/* === Make admin panels sharp like public cards === */
-.aCard,
-.saTableWrap{
-  border-radius: var(--r-0) !important;
-}
-/* optional: sharp modal too */
-.saModal{
-  border-radius: var(--r-0) !important;
-}
-/* ===================== DASHBOARD LAYOUT ===================== */
-.dashWrap{
-  display: grid;
-  gap: var(--s-3);
-}
-
-.dashTop{
-  display:flex;
-  justify-content: space-between;
-  align-items: end;
-  gap: var(--s-3);
-  flex-wrap: wrap;
-}
-
-.dashGrid2{
-  display:grid;
-  grid-template-columns: 1.2fr .8fr;
-  gap: var(--s-3);
-}
-@media (max-width: 1100px){
-  .dashGrid2{ grid-template-columns: 1fr; }
-}
-
-.dashKpiGrid{
-  display:grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--s-3);
-}
-@media (max-width: 950px){
-  .dashKpiGrid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-@media (max-width: 650px){
-  .dashKpiGrid{ grid-template-columns: 1fr; }
-}
-
-/* KPI card (Link) */
-.kpiCard{
-  display:flex;                /* IMPORTANT */
-  align-items:center;
-  gap: 12px;
-  padding: 14px;
-  text-decoration: none;
-  color: inherit;
-  width: 100%;
-}
-
-.kpiCard:hover{
-  border-color: rgba(17,17,17,0.35);
-}
-
-.kpiIcon{
-  width: 44px;
-  height: 44px;
-  border-radius: var(--r-pill);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size: 18px;
-  background: var(--soft);
-  border: 1px solid var(--hairline);
-  flex: 0 0 auto;
-}
-
-.kpiLabel{
-  font-weight: 800;
-  color: var(--ink);
-  font-size: 13px;
-}
-.kpiValue{
-  font-weight: 800;
-  color: var(--ink);
-  font-size: 20px;
-  margin-top: 2px;
-}
-.kpiSub{
-  font-weight: 600;
-  color: var(--muted);
-  font-size: 12px;
-  margin-top: 4px;
-}
-.kpiArrow{
-  margin-left:auto;
-  font-weight: 800;
-  color: var(--muted);
-}
-
-.kpiWarn{
-  border-color: rgba(211,0,5,0.25) !important;
-  background: rgba(211,0,5,0.04) !important;
-}
-
-/* Pending cards */
-.pendingGrid{
-  display:grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  margin-top: var(--s-3);
-}
-@media (max-width: 650px){
-  .pendingGrid{ grid-template-columns: 1fr; }
-}
-
-.pendingItem{
-  padding: 12px;
-  border: 1px solid var(--hairline);
-  background: var(--canvas);
-  display:flex;
-  justify-content: space-between;
-  align-items:center;
-  gap: 10px;
-}
-
-.pendingItem.pendingWarn{
-  border-color: rgba(211,0,5,0.25);
-  background: rgba(211,0,5,0.04);
-}
-
-.pendingLabel{
-  font-weight: 800;
-  color: var(--ink);
-  font-size: 13px;
-}
-.pendingValue{
-  font-weight: 800;
-  font-size: 18px;
-  color: var(--ink);
-}
-.pendingLink{
-  font-weight: 600;
-  color: var(--ink);
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  margin-left: auto;
-  white-space: nowrap;
-}
-
-/* Orders rows */
-.rowList{
-  display:grid;
-  gap: 10px;
-  margin-top: var(--s-3);
-}
-.rowItem{
-  display:flex;
-  justify-content: space-between;
-  align-items:center;
-  gap: 10px;
-  padding: 12px;
-  border: 1px solid var(--hairline);
-  background: var(--canvas);
-}
-.rowTitle{ font-weight: 800; color: var(--ink); }
-.rowVal{ font-weight: 800; color: var(--ink); }
-
-/* ===================== NIKE-LIKE SOFT SURFACES + HOVER ===================== */
-
-/* Sidebar background slightly grey (like Nike soft surface) */
-.adminSidebar{
-  background: var(--soft);
-}
-
-/* Keep brand card white so logo area pops */
-.adminBrand{
-  background: var(--canvas);
-}
-
-/* Sidebar nav items: slightly grey fill + hover */
-.adminNavLink{
-  background: rgba(255,255,255,0.9); /* light grey/white */
-  border-color: var(--hairline);
-  transition: background 0.18s ease, border-color 0.18s ease, transform 0.06s ease;
-}
-
-.adminNavLink:hover{
-  background: linear-gradient(90deg, #ffffff 0%, #f5f5f5 100%);
-  border-color: rgba(17,17,17,0.28);
-  transform: translateY(-1px);
-}
-
-/* Active stays pure ink */
-.adminNavLink.active{
-  background: var(--ink);
-  border-color: var(--ink);
-  transform: none;
-}
-
-/* ===== Dashboard "boxes": give soft fill + hover ===== */
-
-/* KPI link cards */
-.kpiCard{
-  background: var(--soft);
-  transition: background 0.18s ease, border-color 0.18s ease, transform 0.06s ease, box-shadow 0.18s ease;
-}
-
-.kpiCard:hover{
-  background: linear-gradient(90deg, #f5f5f5 0%, #ededed 100%);
-  border-color: rgba(17,17,17,0.28);
-  transform: translateY(-1px);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.06); /* small hover depth */
-}
-
-/* Pending small boxes */
-.pendingItem,
-.rowItem{
-  background: var(--soft);
-  transition: background 0.18s ease, border-color 0.18s ease;
-}
-
-.pendingItem:hover,
-.rowItem:hover{
-  background: linear-gradient(90deg, #f5f5f5 0%, #ededed 100%);
-  border-color: rgba(17,17,17,0.22);
-}
-
-/* Warning variant keeps red tint but still readable */
-.pendingItem.pendingWarn{
-  background: rgba(211,0,5,0.05);
-  border-color: rgba(211,0,5,0.22);
-}
-.pendingItem.pendingWarn:hover{
-  background: rgba(211,0,5,0.07);
-  border-color: rgba(211,0,5,0.28);
-}
-
-/* Optional: make big panels (Quick Actions / Orders cards) also slightly grey */
-.dashGrid2 > .aCard{
-  background: var(--soft);
-}
-
-/* ===================== SOFT BOXES + HOVER (GLOBAL) ===================== */
-
-/* Sidebar surface slightly grey */
-.adminSidebar{
-  background: var(--soft);
-}
-
-/* Panels/cards slightly grey so they don't look like only border lines */
-.aCard{
-  background: var(--soft);
-}
-
-/* Keep table area readable on white */
-.saTableWrap{
-  background: var(--soft);
-}
-.saTable,
-.saTable tbody td{
-  background: var(--canvas);
-}
-
-/* Nice hover (small) for clickable/boxy items */
-.adminNavLink,
-.kpiCard,
-.pendingItem,
-.rowItem,
-.saDocRow{
-  transition: background 0.18s ease, border-color 0.18s ease, transform 0.06s ease, box-shadow 0.18s ease;
-}
-
-/* Sidebar hover */
-.adminNavLink:hover{
-  background: linear-gradient(90deg, #ffffff 0%, #f5f5f5 100%);
-  border-color: rgba(17,17,17,0.28);
-  transform: translateY(-1px);
-}
-
-/* Active stays black */
-.adminNavLink.active{
-  background: var(--ink);
-  border-color: var(--ink);
-  transform: none;
-}
-
-/* Dashboard KPI hover */
-.kpiCard:hover{
-  background: linear-gradient(90deg, #f5f5f5 0%, #ededed 100%);
-  border-color: rgba(17,17,17,0.28);
-  transform: translateY(-1px);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.06);
-}
-
-/* Small box hover */
-.pendingItem:hover,
-.rowItem:hover,
-.saDocRow:hover{
-  background: linear-gradient(90deg, #f5f5f5 0%, #ededed 100%);
-  border-color: rgba(17,17,17,0.22);
-}
-
-/* Service Applications row hover */
-.saTable tbody tr:hover td{
-  background: rgba(17,17,17,0.03);
-}
-
-/* Pending count pill in sidebar (Nike-like) */
-.adminNavCount{
-  margin-left: auto;
-  height: 24px;
-  padding: 0 10px;
-  border-radius: var(--r-pill);
-  background: var(--ink);
-  color: var(--canvas);
-  border: 1px solid var(--ink);
-  font-size: 12px;
-  font-weight: 900;
-  display:inline-flex;
-  align-items:center;
-}
-
-/* ======================================================================
-   ADMIN UI UNIFIER (Nike-like) — paste at END of admin.css
-   هدف: كل صفحات الادمن نفس الستايل + soft boxes + hover + horizontal actions
-   ====================================================================== */
-
-/* Soft page boxes (so not only border lines) */
-.card{
-  background: var(--soft) !important;
-  border: 1px solid var(--hairline) !important;
-  border-radius: var(--r-0) !important;
-  box-shadow: none !important;
-}
-
-/* Slight hover on big boxes/cards (desktop hover only) */
-@media (hover: hover) and (pointer: fine){
-  .card:hover{
-    border-color: rgba(17,17,17,0.20) !important;
-    box-shadow: 0 14px 34px rgba(0,0,0,0.06) !important;
-    transform: translateY(-1px);
-    transition: box-shadow 0.18s ease, border-color 0.18s ease, transform 0.06s ease;
-  }
-}
-
-/* Sidebar: soft surface + hover */
-.adminSidebar{ background: var(--soft) !important; }
-.adminNavLink{
-  background: rgba(255,255,255,0.92) !important;
-  border-color: var(--hairline) !important;
-  transition: background 0.18s ease, border-color 0.18s ease, transform 0.06s ease;
-}
-@media (hover: hover) and (pointer: fine){
-  .adminNavLink:hover{
-    background: linear-gradient(90deg, #ffffff 0%, #f5f5f5 100%) !important;
-    border-color: rgba(17,17,17,0.24) !important;
-    transform: translateY(-1px);
-  }
-}
-.adminNavLink.active{ transform: none !important; }
-
-/* Pending count pill */
-.adminNavCount{
-  margin-left: auto;
-  height: 24px;
-  padding: 0 10px;
-  border-radius: var(--r-pill);
-  background: var(--ink);
-  color: var(--canvas);
-  border: 1px solid var(--ink);
-  font-size: 12px;
-  font-weight: 900;
-  display:inline-flex;
-  align-items:center;
-}
-
-/* Inputs used everywhere in your pages */
-.hmInput,
-.setInput{
-  width: 100% !important;
-  height: 44px !important;
-  padding: 0 14px !important;
-  border-radius: var(--r-12) !important;
-  border: 1px solid var(--hairline) !important;
-  background: var(--canvas) !important;
-  color: var(--ink) !important;
-  outline: none !important;
-  font-size: 14px !important;
-  font-weight: 600 !important;
-}
-textarea.hmInput,
-textarea.setInput{
-  height: auto !important;
-  padding: 12px 14px !important;
-}
-.hmInput:focus,
-.setInput:focus{
-  border-color: var(--ink) !important;
-  box-shadow: 0 0 0 4px rgba(17,17,17,0.08) !important;
-}
-
-/* Make ALL your table shells consistent (Events/Guides/Spots/Vendors/Orders/Reports/Reviews/Weather/etc) */
-.evTableOuter,
-.evTableWrap,
-.hbTableOuter,
-.saTableWrap{
-  border: 1px solid var(--hairline) !important;
-  border-radius: var(--r-0) !important;
-  background: var(--canvas) !important;
-  overflow: hidden !important;
-}
-
-/* Table header + cells (override the purple/glass styles inside page <style> blocks) */
-.evTable thead th,
-.hbTable thead th,
-.saTable thead th{
-  background: var(--soft) !important;
-  color: var(--muted) !important;
-  border-bottom: 1px solid var(--hairline) !important;
-  font-weight: 700 !important;
-  text-transform: uppercase !important;
-  letter-spacing: .8px !important;
-  white-space: nowrap !important;
-}
-.evTable tbody td,
-.hbTable tbody td,
-.saTable tbody td{
-  background: var(--canvas) !important;
-  border-bottom: 1px solid var(--hairline) !important;
-}
-
-/* Row hover everywhere (neutral ink hover, not purple) */
-@media (hover: hover) and (pointer: fine){
-  .evTable tbody tr:hover td,
-  .hbTable tbody tr:hover td,
-  .saTable tbody tr:hover td{
-    background: rgba(17,17,17,0.03) !important;
-  }
-}
-
-/* Kebab button (all pages) */
-.kebabBtn{
-  border-radius: var(--r-pill) !important;
-  border: 1px solid var(--hairline) !important;
-  background: var(--soft) !important;
-  color: var(--ink) !important;
-}
-@media (hover: hover) and (pointer: fine){
-  .kebabBtn:hover{
-    background: linear-gradient(90deg, #f5f5f5 0%, #ededed 100%) !important;
-    border-color: rgba(17,17,17,0.22) !important;
-  }
-}
-
-/* Details panels (Orders/Bookings/Reviews) – remove glass feel */
-.detailsPanel{
-  border: 1px solid var(--hairline) !important;
-  border-radius: var(--r-12) !important;
-  background: var(--canvas) !important;
-}
-.itemRow{
-  border: 1px solid var(--hairline) !important;
-  border-radius: var(--r-12) !important;
-  background: var(--soft) !important;
-}
-
-/* Links in tables: Nike-like (black underline, not blue) */
-.evLink{
-  color: var(--ink) !important;
-  text-decoration: underline !important;
-  text-underline-offset: 4px !important;
-}
-
-/* Badges consistency */
-.evBadge,
-.hbBadge,
-.payChip{
-  border: 1px solid var(--hairline) !important;
-  background: var(--soft) !important;
-  color: var(--ink) !important;
-}
-.evBadge.ok,
-.hbBadge.ok,
-.payChip.ok{
-  background: rgba(0,125,72,0.10) !important;
-  border-color: rgba(0,125,72,0.22) !important;
-  color: #065f46 !important;
-}
-.evBadge.no,
-.hbBadge.danger,
-.payChip.danger{
-  background: rgba(211,0,5,0.06) !important;
-  border-color: rgba(211,0,5,0.22) !important;
-  color: var(--sale) !important;
-}
-.payChip.warn,
-.hbBadge.warn{
-  background: rgba(245,158,11,0.12) !important;
-  border-color: rgba(245,158,11,0.25) !important;
-  color: #92400e !important;
-}
-.payChip.neutral,
-.hbBadge.neutral{
-  background: rgba(148,163,184,0.14) !important;
-  border-color: rgba(148,163,184,0.22) !important;
-  color: #1e293b !important;
-}
-
-/* Your .pill already exists — add missing "danger" variant */
-.pill.danger{
-  background: rgba(211,0,5,0.06) !important;
-  border-color: rgba(211,0,5,0.22) !important;
-  color: var(--sale) !important;
-}
-
-/* ===== Fix ManageHotels buttons: keep in ONE horizontal line ===== */
-.evActions{
-  display: flex !important;
-  justify-content: flex-end !important;
-  gap: 10px !important;
-  flex-wrap: nowrap !important;       /* the key line */
-  align-items: center !important;
-}
-.evActions .aBtn{ white-space: nowrap !important; }
-
-/* On small screens allow wrap */
-@media (max-width: 700px){
-  .evActions{ flex-wrap: wrap !important; justify-content: flex-start !important; }
-}
-
-/* Make aCard slightly grey too (if used anywhere) */
-.aCard{
-  background: var(--soft) !important;
-}
-
-/* ======================================================================
-   ADMIN UI UNIFIER (Nike-like) — paste at END of admin.css
-   ====================================================================== */
-
-/* Soft page boxes (so not only border lines) */
-.card{
-  background: var(--soft) !important;
-  border: 1px solid var(--hairline) !important;
-  border-radius: var(--r-0) !important;
-  box-shadow: none !important;
-}
-
-@media (hover: hover) and (pointer: fine){
-  .card:hover{
-    border-color: rgba(17,17,17,0.20) !important;
-    box-shadow: 0 14px 34px rgba(0,0,0,0.06) !important;
-    transform: translateY(-1px);
-    transition: box-shadow 0.18s ease, border-color 0.18s ease, transform 0.06s ease;
-  }
-}
-
-/* Sidebar: soft surface + hover */
-.adminSidebar{ background: var(--soft) !important; }
-.adminNavLink{
-  background: rgba(255,255,255,0.92) !important;
-  border-color: var(--hairline) !important;
-  transition: background 0.18s ease, border-color 0.18s ease, transform 0.06s ease;
-}
-@media (hover: hover) and (pointer: fine){
-  .adminNavLink:hover{
-    background: linear-gradient(90deg, #ffffff 0%, #f5f5f5 100%) !important;
-    border-color: rgba(17,17,17,0.24) !important;
-    transform: translateY(-1px);
-  }
-}
-.adminNavLink.active{ transform: none !important; }
-
-/* Pending count pill */
-.adminNavCount{
-  margin-left: auto;
-  height: 24px;
-  padding: 0 10px;
-  border-radius: var(--r-pill);
-  background: var(--ink);
-  color: var(--canvas);
-  border: 1px solid var(--ink);
-  font-size: 12px;
-  font-weight: 900;
-  display:inline-flex;
-  align-items:center;
-}
-
-/* Inputs used everywhere in your pages */
-.hmInput,
-.setInput{
-  width: 100% !important;
-  height: 44px !important;
-  padding: 0 14px !important;
-  border-radius: var(--r-12) !important;
-  border: 1px solid var(--hairline) !important;
-  background: var(--canvas) !important;
-  color: var(--ink) !important;
-  outline: none !important;
-  font-size: 14px !important;
-  font-weight: 600 !important;
-}
-textarea.hmInput,
-textarea.setInput{
-  height: auto !important;
-  padding: 12px 14px !important;
-}
-.hmInput:focus,
-.setInput:focus{
-  border-color: var(--ink) !important;
-  box-shadow: 0 0 0 4px rgba(17,17,17,0.08) !important;
-}
-
-/* Table shells consistent (Events/Guides/Spots/Vendors/Orders/Reports/Reviews/Weather/Bookings/Products) */
-.evTableOuter,
-.evTableWrap,
-.hbTableOuter,
-.saTableWrap{
-  border: 1px solid var(--hairline) !important;
-  border-radius: var(--r-0) !important;
-  background: var(--canvas) !important;
-  overflow: hidden !important;
-}
-
-/* Header + cells override page inline styles */
-.evTable thead th,
-.hbTable thead th,
-.saTable thead th{
-  background: var(--soft) !important;
-  color: var(--muted) !important;
-  border-bottom: 1px solid var(--hairline) !important;
-  font-weight: 700 !important;
-  text-transform: uppercase !important;
-  letter-spacing: .8px !important;
-  white-space: nowrap !important;
-}
-.evTable tbody td,
-.hbTable tbody td,
-.saTable tbody td{
-  background: var(--canvas) !important;
-  border-bottom: 1px solid var(--hairline) !important;
-}
-
-/* Neutral row hover (no purple) */
-@media (hover: hover) and (pointer: fine){
-  .evTable tbody tr:hover td,
-  .hbTable tbody tr:hover td,
-  .saTable tbody tr:hover td{
-    background: rgba(17,17,17,0.03) !important;
-  }
-}
-
-/* Kebab button */
-.kebabBtn{
-  border-radius: var(--r-pill) !important;
-  border: 1px solid var(--hairline) !important;
-  background: var(--soft) !important;
-  color: var(--ink) !important;
-}
-@media (hover: hover) and (pointer: fine){
-  .kebabBtn:hover{
-    background: linear-gradient(90deg, #f5f5f5 0%, #ededed 100%) !important;
-    border-color: rgba(17,17,17,0.22) !important;
-  }
-}
-
-/* Details panels (Orders/Bookings/Reviews) */
-.detailsPanel{
-  border: 1px solid var(--hairline) !important;
-  border-radius: var(--r-12) !important;
-  background: var(--canvas) !important;
-}
-.itemRow{
-  border: 1px solid var(--hairline) !important;
-  border-radius: var(--r-12) !important;
-  background: var(--soft) !important;
-}
-
-/* Links: black underline */
-.evLink{
-  color: var(--ink) !important;
-  text-decoration: underline !important;
-  text-underline-offset: 4px !important;
-}
-
-/* Badges consistency */
-.evBadge,
-.hbBadge,
-.payChip{
-  border: 1px solid var(--hairline) !important;
-  background: var(--soft) !important;
-  color: var(--ink) !important;
-}
-.evBadge.ok,
-.hbBadge.ok,
-.payChip.ok{
-  background: rgba(0,125,72,0.10) !important;
-  border-color: rgba(0,125,72,0.22) !important;
-  color: #065f46 !important;
-}
-.evBadge.no,
-.hbBadge.danger,
-.payChip.danger{
-  background: rgba(211,0,5,0.06) !important;
-  border-color: rgba(211,0,5,0.22) !important;
-  color: var(--sale) !important;
-}
-.payChip.warn,
-.hbBadge.warn{
-  background: rgba(245,158,11,0.12) !important;
-  border-color: rgba(245,158,11,0.25) !important;
-  color: #92400e !important;
-}
-.payChip.neutral,
-.hbBadge.neutral{
-  background: rgba(148,163,184,0.14) !important;
-  border-color: rgba(148,163,184,0.22) !important;
-  color: #1e293b !important;
-}
-
-/* Add missing danger variant for .pill */
-.pill.danger{
-  background: rgba(211,0,5,0.06) !important;
-  border-color: rgba(211,0,5,0.22) !important;
-  color: var(--sale) !important;
-}
-
-/* ManageHotels actions: force one horizontal line */
-.evActions{
-  display: flex !important;
-  justify-content: flex-end !important;
-  gap: 10px !important;
-  flex-wrap: nowrap !important;
-  align-items: center !important;
-}
-.evActions .aBtn{ white-space: nowrap !important; }
-@media (max-width: 700px){
-  .evActions{ flex-wrap: wrap !important; justify-content: flex-start !important; }
-}
-
-/* aCard soft surface (where used) */
-.aCard{ background: var(--soft) !important; }
-
-/* ===== Admin: full-width content like old UI ===== */
-.adminContent{
-  width: 100% !important;
-  max-width: none !important;
-  margin: 0 !important;
-  padding: var(--s-5) !important;   /* 24px */
-  min-height: calc(100vh - 64px);
-}
-
-@media (max-width: 600px){
-  .adminContent{
-    padding: var(--s-4) !important; /* 16px */
-  }
-}
-/* ===== Sidebar active state FIX (override unifier) ===== */
-.adminNavLink.active{
-  background: var(--ink) !important;
-  border-color: var(--ink) !important;
-  transform: none !important;
-}
-
-.adminNavLink.active .adminNavText{
-  color: var(--canvas) !important;
-  opacity: 1 !important;
-}
-
-.adminNavLink.active .adminNavIcon{
-  background: rgba(255,255,255,0.12) !important;
-  border-color: rgba(255,255,255,0.18) !important;
-  color: var(--canvas) !important;
-}
-
-.adminNavLink.active .adminNavDot{
-  background: var(--canvas) !important;
-}
-.adminNavText{
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* ===== Sidebar: smaller items + no horizontal scroll + grey active ===== */
-
-/* stop any horizontal scroll coming from sidebar */
-.adminSidebar{
-  overflow-x: hidden !important;
-}
-
-/* nav item sizing */
-.adminNav{
-  gap: 8px !important;
-}
-
-.adminNavLink{
-  padding: 10px 10px !important;      /* smaller */
-  border-radius: 18px !important;
-}
-
-.adminNavIcon{
-  width: 30px !important;
-  height: 30px !important;
-  border-radius: 9999px !important;
-  font-size: 14px !important;         /* emoji/icon smaller */
-}
-
-/* text smaller + keep in one line */
-.adminNavText{
-  font-size: 13px !important;
-  font-weight: 800 !important;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  min-width: 0 !important;
-}
-
-/* ACTIVE (current page): use grey, not black */
-.adminNavLink.active{
-  background: #ededed !important;      /* grey surface */
-  border-color: #d9d9d9 !important;
-}
-
-.adminNavLink.active .adminNavText{
-  color: var(--ink) !important;
-}
-
-.adminNavLink.active .adminNavIcon{
-  background: rgba(17,17,17,0.06) !important;
-  border-color: rgba(17,17,17,0.10) !important;
-  color: var(--ink) !important;
-}
-
-.adminNavLink.active .adminNavDot{
-  background: rgba(17,17,17,0.35) !important;
-}
-
-/* keep pending count pill readable on grey active */
-.adminNavLink.active .adminNavCount{
-  background: var(--ink) !important;
-  color: var(--canvas) !important;
-  border-color: var(--ink) !important;
 }
