@@ -1,36 +1,50 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import "./ImageGallery.css";
 
 export default function ImageGallery({
   images = [],
   alt = "",
   height = 320,
-  fit = "cover",          // cover = fills box, no side spaces
+  fit = "cover",
   showViewFull = true,
 }) {
   const list = useMemo(() => (Array.isArray(images) ? images.filter(Boolean) : []), [images]);
   const [idx, setIdx] = useState(0);
-
   const [lightboxOpen, setLightboxOpen] = useState(false);
-
-  const active = list[idx] || list[0] || "/images/home1.png";
 
   const hasMany = list.length > 1;
 
-  const open = () => setLightboxOpen(true);
-  const close = () => setLightboxOpen(false);
+  useEffect(() => {
+    if (idx < 0) setIdx(0);
+    else if (idx >= list.length && list.length > 0) setIdx(0);
+  }, [idx, list.length]);
 
-  const prev = () => {
+  const active = list[idx] || list[0] || "/images/home1.png";
+
+  const open = useCallback(() => setLightboxOpen(true), []);
+  const close = useCallback(() => setLightboxOpen(false), []);
+
+  const prev = useCallback(() => {
     if (!hasMany) return;
     setIdx((p) => (p - 1 + list.length) % list.length);
-  };
+  }, [hasMany, list.length]);
 
-  const next = () => {
+  const next = useCallback(() => {
     if (!hasMany) return;
     setIdx((p) => (p + 1) % list.length);
-  };
+  }, [hasMany, list.length]);
 
-  // ESC + arrows in modal
+  useEffect(() => {
+    if (!lightboxOpen) return;
+
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [lightboxOpen]);
+
   useEffect(() => {
     if (!lightboxOpen) return;
 
@@ -42,8 +56,7 @@ export default function ImageGallery({
 
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lightboxOpen, hasMany, list.length]);
+  }, [lightboxOpen, close, prev, next]);
 
   return (
     <div className="igWrap">
@@ -64,7 +77,7 @@ export default function ImageGallery({
         />
       </div>
 
-      {list.length > 1 ? (
+      {hasMany ? (
         <div className="igThumbRow">
           {list.slice(0, 12).map((u, i) => (
             <button
@@ -84,12 +97,11 @@ export default function ImageGallery({
         </div>
       ) : null}
 
-      {/* ✅ Lightbox Modal */}
       {lightboxOpen ? (
         <div className="igLbOverlay" onClick={close} role="dialog" aria-modal="true">
           <div className="igLbModal" onClick={(e) => e.stopPropagation()}>
             <button type="button" className="igLbClose" onClick={close} aria-label="Close">
-              ✕
+              ×
             </button>
 
             {hasMany ? (
