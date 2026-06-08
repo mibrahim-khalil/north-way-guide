@@ -1,43 +1,93 @@
-.authWrap {
+.authWrap{
+  width: 100%;
+  max-width: 1100px;
+  margin: 24px auto 0;
+
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  align-items: center;
-  min-height: 80vh; 
-}
-@media (max-width: 900px){ .authWrap { grid-template-columns: 1fr; } }
+  gap: 24px;
 
-.authLeft {
-  padding: 40px;
-  background: #ffffff; 
-  border: 1px solid #f1f5f9;
+  align-items: stretch;
 }
 
-.authTitle { font-size: 32px; color: var(--heading); margin-bottom: 8px; }
-.authHint { color: var(--muted); margin-bottom: 30px; }
-.authForm { display: grid; gap: 16px; }
+/* Left: you already use className="card authLeft" */
+.authLeft{
+  padding: 28px;
+}
 
-.smallLink {
-  color: var(--accent);
+/* Right: remove pink, remove any forced height */
+.authRight{
+  height: auto !important;
+  min-height: 0 !important;
+
+  border: 1px solid var(--hairline);
+  background: var(--soft);
+  padding: 28px;
+
+  display: flex;
+}
+
+/* Keeps right box content balanced (not stuck at top with huge empty bottom) */
+.authRightInner{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+}
+
+.authTitle{
+  margin: 0 0 8px;
+  font-size: 28px;
+  line-height: 1.1;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.authHint{
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.authForm{
+  display: grid;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.smallLink{
+  color: var(--ink);
   font-weight: 600;
-  text-decoration: none;
-}
-.smallLink:hover { text-decoration: underline; }
-
-
-.authRight {
-  height: 100%;
-  min-height: 400px;
-  border-radius: 24px;
-  background: linear-gradient(135deg, #ffd1ff 0%, #fad0c4 100%);
-  display: flex; flex-direction: column; justify-content: center;
-  padding: 40px;
-  color: #5d4037; 
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  font-size: 13px;
 }
 
-.featureItem {
-  background: rgba(255,255,255,0.4);
-  padding: 16px; border-radius: 16px;
-  margin-bottom: 10px;
+.featureList{
+  margin-top: 10px;
+  display: grid;
+  gap: 10px;
 }
-.featureItem strong { display: block; color: #3e2723; }
+
+.featureItem{
+  border: 1px solid var(--hairline);
+  background: var(--canvas);
+  padding: 14px;
+}
+
+.featureItem strong{
+  color: var(--ink);
+  font-weight: 700;
+}
+
+@media (max-width: 900px){
+  .authWrap{
+    grid-template-columns: 1fr;
+  }
+
+  .authRightInner{
+    justify-content: flex-start;
+  }
+}
