@@ -1,5 +1,4 @@
 :root{
-  /* Tokens (same as public theme.css) */
   --ink:#111111;
   --canvas:#ffffff;
   --soft:#f5f5f5;
@@ -31,19 +30,8 @@
   --font-ui: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 
   --btn-radius: var(--r-pill);
-  --btn-shadow: 2px 2px 4px rgba(0,0,0,0.25);
-  --btn-shadow-hover: 3px 3px 8px rgba(0,0,0,0.22);
-
-  /* Compatibility aliases */
-  --bg-gradient: var(--canvas);
-  --card: var(--canvas);
-  --card2: var(--soft);
-  --border: var(--hairline);
-  --accent: var(--ink);
-  --accentSoft: rgba(17,17,17,0.06);
-  --danger: var(--sale);
-  --ok: var(--success);
-  --shadow: none;
+  --btn-shadow: 2px 2px 4px rgba(0,0,0,0.18);
+  --btn-shadow-hover: 3px 3px 8px rgba(0,0,0,0.20);
 }
 
 *{ box-sizing:border-box; }
@@ -58,11 +46,12 @@ body{
 
 a{ color:inherit; text-decoration:none; }
 img{ max-width:100%; display:block; }
+button, input, select, textarea{ font: inherit; }
 
 /* Layout */
 .adminShell{
   display:grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 280px 1fr;
   min-height: 100vh;
 }
 
@@ -81,7 +70,7 @@ img{ max-width:100%; display:block; }
   display:flex;
   flex-direction: column;
   min-width: 0;
-  background: var(--canvas);
+  background: var(--soft);
 }
 
 .adminTopbar{
@@ -126,7 +115,6 @@ img{ max-width:100%; display:block; }
   gap: 10px;
 }
 
-/* Full width content like previous admin */
 .adminContent{
   width: 100%;
   max-width: none;
@@ -188,7 +176,7 @@ img{ max-width:100%; display:block; }
   text-transform: uppercase;
 }
 
-/* Sidebar nav (smaller + no horizontal scroll) */
+/* Sidebar nav */
 .adminNav{
   display:grid;
   gap: 8px;
@@ -248,13 +236,12 @@ img{ max-width:100%; display:block; }
   flex: 0 0 auto;
 }
 
-/* Active state (grey instead of black) */
+/* Active state */
 .adminNavLink.active{
   background: #ededed;
   border-color: #d9d9d9;
   transform: none;
 }
-
 .adminNavLink.active .adminNavText{ color: var(--ink); }
 .adminNavLink.active .adminNavIcon{
   background: rgba(17,17,17,0.06);
@@ -265,7 +252,6 @@ img{ max-width:100%; display:block; }
   background: rgba(17,17,17,0.35);
 }
 
-/* Pending count pill */
 .adminNavCount{
   margin-left: auto;
   height: 24px;
@@ -289,27 +275,31 @@ img{ max-width:100%; display:block; }
 
 .adminMuted{ color: var(--muted); font-weight: 700; }
 
-/* Cards and surfaces */
+/* Cards */
 .card{
-  background: var(--soft);
+  background: var(--canvas);
   border: 1px solid var(--hairline);
   border-radius: var(--r-0);
   box-shadow: none;
   overflow: hidden;
 }
 
-.cardBody{ padding: var(--s-5); }
+.cardBody{ padding: var(--s-6); }
+
+@media (max-width: 600px){
+  .cardBody{ padding: var(--s-5); }
+}
 
 .aCard{
-  background: var(--soft);
+  background: var(--canvas);
   border: 1px solid var(--hairline);
   border-radius: var(--r-0);
   box-shadow: none;
 }
 
-/* Optional card hover */
 @media (hover: hover) and (pointer: fine){
-  .card:hover{
+  .card:hover,
+  .aCard:hover{
     border-color: rgba(17,17,17,0.20);
     box-shadow: 0 14px 34px rgba(0,0,0,0.06);
     transform: translateY(-1px);
@@ -329,7 +319,6 @@ img{ max-width:100%; display:block; }
   border-radius: var(--btn-radius);
   background: var(--soft);
   color: var(--ink);
-  font-family: var(--font-ui);
   font-weight: 600;
   font-size: 14px;
   line-height: 1;
@@ -378,7 +367,7 @@ img{ max-width:100%; display:block; }
   box-shadow: none;
 }
 
-/* Inputs used across pages */
+/* Inputs */
 .hmInput,
 .setInput,
 .srInput, .stInput, .smInput,
@@ -461,7 +450,7 @@ label{
   color: var(--sale);
 }
 
-/* Tables (override page inline style blocks using !important) */
+/* Tables unify (override inline page style blocks) */
 .evTableOuter,
 .evTableWrap,
 .hbTableOuter,
@@ -499,18 +488,11 @@ label{
   }
 }
 
-/* Kebab button */
 .kebabBtn{
   border-radius: var(--r-pill) !important;
   border: 1px solid var(--hairline) !important;
   background: var(--soft) !important;
   color: var(--ink) !important;
-}
-@media (hover: hover) and (pointer: fine){
-  .kebabBtn:hover{
-    background: linear-gradient(90deg, #f5f5f5 0%, #ededed 100%) !important;
-    border-color: rgba(17,17,17,0.22) !important;
-  }
 }
 
 /* Details panels */
@@ -525,14 +507,13 @@ label{
   background: var(--soft) !important;
 }
 
-/* Links inside tables */
 .evLink{
   color: var(--ink) !important;
   text-decoration: underline !important;
   text-underline-offset: 4px !important;
 }
 
-/* ManageHotels actions in one line */
+/* ManageHotels actions */
 .evActions{
   display: flex !important;
   justify-content: flex-end !important;
@@ -548,6 +529,139 @@ label{
     justify-content: flex-start !important;
   }
 }
+
+/* Dashboard layout (critical) */
+.dashWrap{
+  display: grid;
+  gap: var(--s-5);
+}
+
+.dashTop{
+  display:flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: var(--s-3);
+  flex-wrap: wrap;
+}
+
+.dashError{
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: var(--r-12);
+  border: 1px solid rgba(211,0,5,0.25);
+  background: rgba(211,0,5,0.06);
+  color: var(--sale);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.dashKpiGrid{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-4);
+}
+
+@media (max-width: 950px){
+  .dashKpiGrid{ grid-template-columns: 1fr; }
+}
+
+.kpiCard{
+  display:flex;
+  align-items:center;
+  gap: 12px;
+  padding: 18px;
+  min-height: 92px;
+}
+
+.kpiIcon{
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-pill);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size: 18px;
+  background: var(--soft);
+  border: 1px solid var(--hairline);
+  flex: 0 0 auto;
+}
+
+.kpiLabel{ font-weight: 800; font-size: 13px; color: var(--ink); }
+.kpiValue{ font-weight: 900; font-size: 22px; color: var(--ink); margin-top: 2px; }
+.kpiSub{ font-weight: 600; font-size: 12px; color: var(--muted); margin-top: 4px; }
+.kpiArrow{ margin-left:auto; font-weight: 900; color: var(--muted); }
+
+.kpiWarn{
+  border-color: rgba(211,0,5,0.25) !important;
+  background: rgba(211,0,5,0.03) !important;
+}
+
+.dashGrid2{
+  display: grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap: var(--s-5);
+}
+
+@media (max-width: 1100px){
+  .dashGrid2{ grid-template-columns: 1fr; }
+}
+
+.pendingGrid{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: var(--s-4);
+}
+
+@media (max-width: 650px){
+  .pendingGrid{ grid-template-columns: 1fr; }
+}
+
+.pendingItem{
+  padding: 14px;
+  border: 1px solid var(--hairline);
+  background: var(--soft);
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.pendingItem.pendingWarn{
+  border-color: rgba(211,0,5,0.22);
+  background: rgba(211,0,5,0.04);
+}
+
+.pendingLabel{ font-weight: 900; font-size: 13px; color: var(--ink); }
+.pendingValue{ font-weight: 900; font-size: 18px; color: var(--ink); }
+
+.pendingLink{
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.rowList{
+  display:grid;
+  gap: 12px;
+  margin-top: var(--s-4);
+}
+
+.rowItem{
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid var(--hairline);
+  background: var(--soft);
+}
+
+.rowTitle{ font-weight: 900; color: var(--ink); }
+.rowVal{ font-weight: 900; color: var(--ink); }
 
 /* Login */
 .adminAuth{
