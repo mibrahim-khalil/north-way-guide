@@ -138,6 +138,12 @@
   border: 1px solid var(--hairline);
 }
 
+.mdCartLeft{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+}
+
 .mdCartCount{
   min-width: 24px;
   height: 24px;
@@ -193,28 +199,79 @@
   margin-bottom: 10px;
 }
 
+.mdMe{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--hairline);
+  background: var(--soft);
+  border-radius: 14px;
+  margin-bottom: 10px;
+}
+
+.mdAvatar{
+  width: 34px;
+  height: 34px;
+  border-radius: 9999px;
+  background: var(--ink);
+  color: var(--canvas);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight: 700;
+  flex: 0 0 auto;
+}
+
+.mdMeText{
+  min-width: 0;
+}
+
+.mdMeName{
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mdMeSub{
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .mdUserLinks{
-  display:grid;
-  gap: 8px;
+  display:flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--hairline);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--canvas);
 }
 
 .mdUserLink{
   text-align: left;
   padding: 12px;
-  border-radius: 14px;
-
   font-weight: 600;
   color: var(--ink);
-
-  background: var(--canvas);
-  border: 1px solid var(--hairline);
-
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--hairline);
   cursor: pointer;
+}
+
+.mdUserLink:last-child{
+  border-bottom: 0;
 }
 
 .mdUserLink.danger{
   color: #b00020;
-  border-color: rgba(176,0,32,0.25);
   background: rgba(176,0,32,0.06);
 }
 

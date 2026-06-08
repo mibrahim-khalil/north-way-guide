@@ -19,6 +19,33 @@ const navItems = [
   { to: "/about", label: "About" },
 ];
 
+function CartIcon() {
+  return (
+    <svg className="headerIconSvg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M6.5 6h15l-1.5 8.5H8.2L6.5 6Z"
+        stroke="currentColor"
+        strokeWidth="2.2"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M6.5 6 5.7 3.5H3"
+        stroke="currentColor"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M9 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"
+        fill="currentColor"
+      />
+      <path
+        d="M18 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -55,7 +82,7 @@ export default function Header() {
     <header className="nwHeader">
       <div className="nwHeaderInner">
         <Link to="/" className="brand">
-          <img src={logo} alt="North Way Guide Logo" className="brandLogo" />
+          <img src={logo} alt="North Way Guide" className="brandLogo" />
           <div className="brandTextCol">
             <div className="brandText">NORTH WAY GUIDE</div>
           </div>
@@ -64,20 +91,46 @@ export default function Header() {
         <div className="rightGroup">
           <nav className="nav">
             {navItems.map((n) => (
-              <NavLink key={n.to} to={n.to} end={n.end} className={({ isActive }) => (isActive ? "active" : "")}>
+              <NavLink
+                key={n.to}
+                to={n.to}
+                end={n.end}
+                className={({ isActive }) => (isActive ? "active" : "")}
+              >
                 {n.label}
               </NavLink>
             ))}
           </nav>
 
           <div className="actions">
-            {/* ✅ Weather icon only (popover on click) */}
             <HeaderWeatherPopover />
+
+            <Link
+              to="/events"
+              className="headerIconBtn"
+              aria-label="Events"
+              title="Events"
+            >
+              <svg className="headerIconSvg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M7 3v3M17 3v3M4 9h16"
+                  stroke="currentColor"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M6.5 6h11A3.5 3.5 0 0 1 21 9.5v9A3.5 3.5 0 0 1 17.5 22h-11A3.5 3.5 0 0 1 3 18.5v-9A3.5 3.5 0 0 1 6.5 6Z"
+                  stroke="currentColor"
+                  strokeWidth="2.2"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </Link>
 
             <button
               type="button"
               className="headerIconBtn"
-              aria-label="Open search"
+              aria-label="Search"
               title="Search"
               onClick={() => setSearchOpen(true)}
             >
@@ -100,30 +153,13 @@ export default function Header() {
             </button>
 
             <Link
-              to="/events"
-              className="headerIconBtn"
-              aria-label="Events"
-              title="Events"
+              to="/cart"
+              className="headerIconBtn headerCartBtn"
+              aria-label={`Cart (${totals.count})`}
+              title="Cart"
             >
-              {/* calendar icon */}
-              <svg className="headerIconSvg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path
-                  d="M7 3v3M17 3v3M4 9h16"
-                  stroke="currentColor"
-                  strokeWidth="2.2"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M6.5 6h11A3.5 3.5 0 0 1 21 9.5v9A3.5 3.5 0 0 1 17.5 22h-11A3.5 3.5 0 0 1 3 18.5v-9A3.5 3.5 0 0 1 6.5 6Z"
-                  stroke="currentColor"
-                  strokeWidth="2.2"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </Link>
-
-            <Link className="cartBtn" to="/cart">
-              Cart <span className="cartCount">{totals.count}</span>
+              <CartIcon />
+              <span className="headerBadge">{totals.count}</span>
             </Link>
 
             {user ? (
