@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAdminAuth } from "../../context/AdminAuthContext";
 import logo from "../../assets/images/logowhite.png";
+import bg from "../../assets/images/admin-login-bg.jpg";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
@@ -35,7 +36,12 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="adminAuth">
+    <div
+      className="adminAuth adminAuthBg"
+      style={{
+        backgroundImage: `linear-gradient(rgba(255,255,255,0.78), rgba(255,255,255,0.78)), url(${bg})`,
+      }}
+    >
       <div className="adminAuthCard">
         <div className="adminAuthLogoRow">
           <div className="adminAuthLogoStage">
@@ -44,7 +50,9 @@ export default function AdminLogin() {
         </div>
 
         <h2 className="adminAuthTitle">Admin Login</h2>
-        <p className="adminMuted">Sign in to manage applications, listings, and orders.</p>
+        <p className="adminMuted adminAuthSubtitle">
+          Sign in to manage applications, listings, and orders.
+        </p>
 
         {error ? <div className="adminError">{error}</div> : null}
 
