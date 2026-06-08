@@ -9,20 +9,20 @@ const team = [
   {
     id: "ibrahim",
     name: "Muhammad Ibrahim Khalil",
-    role: "Software Engineering Student",
+    role: "Web Developer",
     photo: m1,
     bio: "Worked on system architecture, frontend Developement, backend development and APIs, and database design.",
-    skills: ["React", "Node", "MongoDB", "Python"],
+    skills: ["MERN Stack", "Node", "React", "Python"],
     links: {
-      github: "#",
-      linkedin: "#",
-      email: "mailto:ibrahimraees564@email.com",
+      github: "https://github.com/mibrahim-khalil",
+      linkedin: "https://www.linkedin.com/in/muhammad-ibrahim-khalil-680b6526a/",
+      email: "mailto:mibrahimkhalil564@email.com",
     },
   },
   {
     id: "uday", 
-    name: "Software Engineering Student",
-    role: "Computer Science Student",
+    name: "Sardar Uday Ali Babar",
+    role: "Software Engineering Student",
     photo: m2,
     bio: "Worked on documentations, frontend UI, and database design.",
     skills: ["React", "Node", "MongoDB", "UI/UX"],
@@ -37,7 +37,7 @@ const team = [
     name: "Hunzala Tahir",
     role: "Software Engineering Student",
     photo: m3,
-    bio: "Worked on system architecture, frontend UI, backend APIs, and database design.",
+    bio: "Worked on system architecture, frontend UI and database design.",
     skills: ["React", "Node", "MongoDB", "UI/UX"],
     links: {
       github: "#",
@@ -61,11 +61,11 @@ export default function About() {
         <div className="cardBody aboutIntroInner">
           <div>
             <span className="badge">North Way Guide</span>
-            <h2 className="aboutTitle">Built for Gilgit-Baltistan Tourism</h2>
+            <h2 className="aboutTitle">Building the Digital Future of Tourism in Gilgit Baltistan</h2>
             <p className="p">
-              North Way Guide is a MERN-based tourism platform designed to unify
-              trip planning, verified local services, transport fare comparison,
-              and authentic regional information into one digital system.
+              North Way Guide is an AI-powered tourism and local services ecosystem
+              designed to help travelers discover Gilgit-Baltistan through smart trip planning, verified
+              local services, accommodations, transportation, and authentic regional experiences.
             </p>
 
             <div className="aboutCtas">
@@ -105,8 +105,8 @@ export default function About() {
           <div className="cardBody">
             <h3 className="aboutH3">Mission</h3>
             <p className="p">
-              Promote tourism and support local businesses in Gilgit-Baltistan
-              through a unified, reliable, and user-friendly platform.
+              Empower travelers and local businesses through a modern, reliable, and
+              intelligent tourism ecosystem built specifically for Gilgit-Baltistan.
             </p>
           </div>
         </div>
@@ -114,8 +114,8 @@ export default function About() {
           <div className="cardBody">
             <h3 className="aboutH3">Vision</h3>
             <p className="p">
-              Create a trusted digital ecosystem where travelers can plan
-              confidently and local service providers can grow sustainably.
+              To become the leading digital tourism platform of Northern Pakistan by connecting
+              travelers with trusted experiences, local communities, and AI-driven travel assistance.
             </p>
           </div>
         </div>
@@ -129,13 +129,13 @@ export default function About() {
           </div>
 
           <div className="moduleGrid">
-            <ModuleCard title="AI Trip Planner" desc="Decision Tree model (backend integration later)." />
-            <ModuleCard title="Hotels" desc="Top-rated stays, booking UI, room categories and details." />
-            <ModuleCard title="Transport" desc="Pickup/drop fare comparison with seasonal estimation." />
-            <ModuleCard title="Tourist Spots" desc="Spot details with directions and rich info." />
-            <ModuleCard title="Guides" desc="Hire guide workflow UI and ratings based discovery." />
-            <ModuleCard title="Local Products" desc="Order products UI + vendor/shop information." />
-            <ModuleCard title="Admin Panel" desc="RBAC, verification, approvals, and content control." />
+            <ModuleCard title="Smart AI Trip Planner" desc="Decision Tree model (backend integration later)." />
+            <ModuleCard title="Hotel Booking & Stays" desc="Top-rated stays, booking UI, room categories and details." />
+            <ModuleCard title="Smart Transport Comparison" desc="Pickup/drop fare comparison with seasonal estimation." />
+            <ModuleCard title="Destination Explorer" desc="Spot details with directions and rich info." />
+            <ModuleCard title="Local Guides" desc="Hire guide workflow UI and ratings based discovery." />
+            <ModuleCard title="Local Marketplace" desc="Order products UI + vendor/shop information." />
+            <ModuleCard title="Management Dashboard" desc="RBAC, verification, approvals, and content control." />
           </div>
         </div>
       </section>
