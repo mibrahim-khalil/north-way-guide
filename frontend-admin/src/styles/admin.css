@@ -645,3 +645,37 @@ label{
   font-weight: 700;
   font-size: 13px;
 }
+.adminAuthBg{
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.adminAuthHead{
+  text-align: center;
+  margin-bottom: var(--s-4);
+}
+
+.adminAuthLogoBig{
+  width: 170px;
+  height: auto;
+  display: block;
+  margin: 0 auto var(--s-4);
+}
+
+.adminAuthTitle{
+  text-align: center;
+  margin: 0;
+}
+
+.adminAuthSubtitle{
+  text-align: center;
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* keep form left */
+.adminAuthForm{
+  text-align: left;
+}
