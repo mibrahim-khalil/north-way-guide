@@ -6,7 +6,6 @@ const STATUS = ["PENDING", "APPROVED", "REJECTED"];
 const TYPES = ["HOTEL", "GUIDE", "TRANSPORT", "PRODUCT_VENDOR"];
 
 function apiOrigin() {
-  // api.baseURL = "http://localhost:5000/api"
   const b = api?.defaults?.baseURL || "http://localhost:5000/api";
   return b.replace(/\/api\/?$/, "");
 }
@@ -47,24 +46,16 @@ function ViewModal({ open, onClose, app }) {
               {app.serviceType} • {app.status}
             </div>
           </div>
-          <button className="aBtn" onClick={onClose}>
-            Close
-          </button>
+          <button className="aBtn" onClick={onClose}>Close</button>
         </div>
 
         <div style={{ display: "grid", gap: 12 }}>
           <div className="aCard" style={{ padding: 12 }}>
             <div style={{ fontWeight: 1000, marginBottom: 6 }}>User</div>
             <div style={{ fontSize: 13, fontWeight: 900, color: "var(--heading)" }}>
-              <div>
-                <span style={{ color: "var(--muted)" }}>Name:</span> {app.userId?.name || "—"}
-              </div>
-              <div>
-                <span style={{ color: "var(--muted)" }}>Email:</span> {app.userId?.email || "—"}
-              </div>
-              <div>
-                <span style={{ color: "var(--muted)" }}>Phone:</span> {app.userId?.phone || "—"}
-              </div>
+              <div><span className="adminMuted">Name:</span> {app.userId?.name || "—"}</div>
+              <div><span className="adminMuted">Email:</span> {app.userId?.email || "—"}</div>
+              <div><span className="adminMuted">Phone:</span> {app.userId?.phone || "—"}</div>
             </div>
           </div>
 
@@ -126,9 +117,7 @@ export default function ServiceApplications() {
   const fetchApps = async () => {
     setLoading(true);
     try {
-      const res = await api.get("/admin/applications", {
-        params: { status, serviceType },
-      });
+      const res = await api.get("/admin/applications", { params: { status, serviceType } });
       setRows(res.data.applications || []);
     } catch (e) {
       alert(e?.response?.data?.message || "Failed to load applications");
@@ -140,12 +129,12 @@ export default function ServiceApplications() {
 
   useEffect(() => {
     fetchApps();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status, serviceType]);
 
   const approve = async (id) => {
     const ok = confirm("Approve this application? This will create the real listing.");
     if (!ok) return;
-
     try {
       await api.patch(`/admin/applications/${id}`, { status: "APPROVED" });
       await fetchApps();
@@ -168,180 +157,10 @@ export default function ServiceApplications() {
 
   return (
     <div style={{ display: "grid", gap: 12 }}>
-      {/* ✅ Styles aligned with Manage Events / Settings */}
-      <style>{`
-        .saTop{
-          display:flex;
-          justify-content: space-between;
-          align-items: end;
-          gap: 10px;
-          flex-wrap: wrap;
-        }
-
-        .saFilterGrid{
-          display:grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 12px;
-        }
-        @media (max-width: 900px){
-          .saFilterGrid{ grid-template-columns: 1fr; }
-        }
-
-        /* Rounded table container like Events page */
-        .saTableWrap{
-          overflow-x: auto;
-          border-radius: 16px;
-          border: 1px solid rgba(15,23,42,0.10);
-          background: rgba(255,255,255,0.55);
-          overflow: hidden;
-        }
-
-        .saTable{
-          width:100%;
-          min-width: 1100px;
-          border-collapse: separate;
-          border-spacing: 0;
-          table-layout: fixed;
-          font-size: 13px;
-        }
-
-        .saTable thead th{
-          text-align:left;
-          padding: 12px 12px;
-          font-size: 12px;
-          font-weight: 1000;
-          color: rgba(15,23,42,0.82);
-          background: rgba(255,255,255,0.75);
-          border-bottom: 1px solid rgba(15,23,42,0.10);
-          position: sticky;
-          top: 0;
-          z-index: 2;
-        }
-
-        .saTable tbody td{
-          padding: 12px 12px;
-          vertical-align: top;
-          border-bottom: 1px solid rgba(15,23,42,0.08);
-          background: rgba(255,255,255,0.40);
-        }
-        .saTable tbody tr:hover td{
-          background: rgba(109,40,217,0.06);
-        }
-        .saTable tbody tr:last-child td{
-          border-bottom: none;
-        }
-
-        .saUserName{
-          font-weight: 1000;
-          color: var(--heading);
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-        .saUserEmail{
-          font-size: 12px;
-          color: var(--muted);
-          font-weight: 800;
-          margin-top: 4px;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-
-        .saActions{
-          display:flex;
-          gap: 8px;
-          flex-wrap: wrap;
-          justify-content: flex-end;
-        }
-        @media (max-width: 900px){
-          .saActions{ justify-content: flex-start; }
-        }
-
-        /* Modal */
-        .saOverlay{
-          position: fixed;
-          inset: 0;
-          background: rgba(15,23,42,0.45);
-          z-index: 9998;
-        }
-        .saModal{
-          position: fixed;
-          left: 50%;
-          top: 6%;
-          transform: translateX(-50%);
-          width: min(980px, calc(100% - 24px));
-          max-height: 88vh;
-          overflow: auto;
-          z-index: 9999;
-          background: rgba(255,255,255,0.92);
-          border: 1px solid rgba(15,23,42,0.10);
-          border-radius: 18px;
-          box-shadow: 0 30px 90px rgba(15,23,42,0.16);
-          backdrop-filter: blur(18px);
-          padding: 14px;
-        }
-        .saModalTop{
-          display:flex;
-          justify-content: space-between;
-          align-items:flex-start;
-          gap: 12px;
-          margin-bottom: 12px;
-        }
-        .saModalTitle{
-          font-weight: 1000;
-          font-size: 18px;
-          color: var(--heading);
-        }
-        .saModalSub{
-          font-weight: 900;
-          font-size: 12px;
-          color: var(--muted);
-          margin-top: 4px;
-        }
-        .saPre{
-          margin: 0;
-          padding: 12px;
-          border-radius: 12px;
-          background: rgba(15,23,42,0.04);
-          border: 1px solid rgba(15,23,42,0.08);
-          overflow: auto;
-          font-size: 12px;
-          font-weight: 800;
-          line-height: 1.4;
-        }
-        .saDocRow{
-          display:flex;
-          justify-content: space-between;
-          gap: 10px;
-          align-items: center;
-          border: 1px solid rgba(15,23,42,0.08);
-          padding: 10px;
-          border-radius: 12px;
-          background: rgba(255,255,255,0.55);
-        }
-        .saDocName{
-          font-weight: 1000;
-          font-size: 13px;
-          color: var(--heading);
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-        .saDocMeta{
-          font-weight: 800;
-          opacity: 0.7;
-          font-size: 12px;
-          margin-top: 3px;
-          color: var(--muted);
-        }
-      `}</style>
-
-      {/* Top bar like Manage Events */}
       <div className="saTop">
         <div>
           <h2 style={{ margin: 0 }}>Service Applications</h2>
-          <div style={{ opacity: 0.75, marginTop: 6 }}>
+          <div className="adminMuted" style={{ marginTop: 6 }}>
             Review pending applications and approve or reject listings.
           </div>
         </div>
@@ -351,7 +170,6 @@ export default function ServiceApplications() {
         </button>
       </div>
 
-      {/* Filters card */}
       <div className="aCard" style={{ padding: 16 }}>
         <div className="saFilterGrid">
           <div>
@@ -360,9 +178,7 @@ export default function ServiceApplications() {
             </div>
             <select className="smInput" value={serviceType} onChange={(e) => setServiceType(e.target.value)}>
               {TYPES.map((t) => (
-                <option key={t} value={t}>
-                  {t}
-                </option>
+                <option key={t} value={t}>{t}</option>
               ))}
             </select>
           </div>
@@ -373,9 +189,7 @@ export default function ServiceApplications() {
             </div>
             <select className="smInput" value={status} onChange={(e) => setStatus(e.target.value)}>
               {STATUS.map((s) => (
-                <option key={s} value={s}>
-                  {s}
-                </option>
+                <option key={s} value={s}>{s}</option>
               ))}
             </select>
           </div>
@@ -386,7 +200,6 @@ export default function ServiceApplications() {
         </div>
       </div>
 
-      {/* Results table (rounded like Events) */}
       <div className="aCard" style={{ padding: 16 }}>
         {items.length === 0 ? (
           <div className="adminMuted" style={{ fontWeight: 900 }}>
@@ -435,11 +248,11 @@ export default function ServiceApplications() {
                       </span>
                     </td>
 
-                    <td style={{ fontWeight: 900, color: "rgba(100,116,139,0.95)" }}>
+                    <td className="adminMuted" style={{ fontWeight: 900 }}>
                       {payloadPreview(a)}
                     </td>
 
-                    <td style={{ fontWeight: 900, color: "rgba(100,116,139,0.95)" }}>
+                    <td className="adminMuted" style={{ fontWeight: 900 }}>
                       {a.serviceType === "GUIDE"
                         ? (a.documents || []).length > 0
                           ? `${a.documents.length} file(s)`
@@ -449,21 +262,15 @@ export default function ServiceApplications() {
 
                     <td>
                       <div className="saActions">
-                        <button className="aBtn" onClick={() => setViewing(a)}>
-                          View
-                        </button>
+                        <button className="aBtn" onClick={() => setViewing(a)}>View</button>
 
                         {a.status === "PENDING" ? (
                           <>
-                            <button className="aBtn primary" onClick={() => approve(a._id)}>
-                              Approve
-                            </button>
-                            <button className="aBtn danger" onClick={() => reject(a._id)}>
-                              Reject
-                            </button>
+                            <button className="aBtn primary" onClick={() => approve(a._id)}>Approve</button>
+                            <button className="aBtn danger" onClick={() => reject(a._id)}>Reject</button>
                           </>
                         ) : (
-                          <span style={{ color: "var(--muted)", fontWeight: 900, alignSelf: "center" }}>
+                          <span className="adminMuted" style={{ fontWeight: 900, alignSelf: "center" }}>
                             No actions
                           </span>
                         )}
