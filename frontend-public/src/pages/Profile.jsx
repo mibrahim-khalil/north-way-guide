@@ -3,6 +3,7 @@ import { useToast } from "../context/ToastContext";
 import { useAuth } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { api } from "../utils/api";
+import "./Profile.css";
 
 import MyHotelEditModal from "../components/forms/MyHotelEditModal";
 import MyGuideEditModal from "../components/forms/MyGuideEditModal";
@@ -16,8 +17,7 @@ import MyGuideBookingsReceivedSection from "../components/profile/MyGuideBooking
 import MyOrdersSection from "../components/profile/MyOrdersSection";
 import MyTripPlansSection from "../components/profile/MyTripPlansSection";
 
-// ---------------- Icons (small) ----------------
-const IconCalendar = ({ color = "#7c3aed" }) => (
+const IconCalendar = ({ color = "currentColor" }) => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
     <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
     <line x1="16" y1="2" x2="16" y2="6" />
@@ -26,7 +26,7 @@ const IconCalendar = ({ color = "#7c3aed" }) => (
   </svg>
 );
 
-const IconBag = ({ color = "#f59e0b" }) => (
+const IconBag = ({ color = "currentColor" }) => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
     <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
     <line x1="3" y1="6" x2="21" y2="6" />
@@ -34,14 +34,14 @@ const IconBag = ({ color = "#f59e0b" }) => (
   </svg>
 );
 
-const IconPlane = ({ color = "#3b82f6" }) => (
+const IconPlane = ({ color = "currentColor" }) => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
     <path d="m22 2-7 20-4-9-9-4Z" />
     <path d="M22 2 11 13" />
   </svg>
 );
 
-const IconShop = ({ color = "#ec4899" }) => (
+const IconShop = ({ color = "currentColor" }) => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
     <path d="M20.2 7.8H3.8l-1.3 3.3c-.5 1.4.4 2.9 1.9 2.9h.1c1.2 0 2.2-1 2.2-2.2V11" />
     <path d="M21.5 11.1c-.5-1.4-1.9-2.2-3.3-2.2h-1.4V7.8" />
@@ -49,28 +49,27 @@ const IconShop = ({ color = "#ec4899" }) => (
   </svg>
 );
 
-const IconUser = ({ color = "#6366f1" }) => (
+const IconUser = ({ color = "currentColor" }) => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
     <path d="M20 21a8 8 0 0 0-16 0" />
     <circle cx="12" cy="7" r="4" />
   </svg>
 );
 
-const IconInbox = ({ color = "#0ea5e9" }) => (
+const IconInbox = ({ color = "currentColor" }) => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
     <path d="M22 12h-6l-2 3h-4l-2-3H2" />
     <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11Z" />
   </svg>
 );
 
-const IconSearch = ({ color = "#64748b" }) => (
+const IconSearch = ({ color = "currentColor" }) => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
     <circle cx="11" cy="11" r="8" />
     <path d="m21 21-4.3-4.3" />
   </svg>
 );
 
-// ---------------- Tabs ----------------
 const SERVICE_TABS = [
   { key: "GUIDE", label: "Guides" },
   { key: "HOTEL", label: "Hotels" },
@@ -92,7 +91,6 @@ const PURCHASE_TABS = [
   { key: "ORDERS", label: "Product Orders" },
 ];
 
-// ---------------- UI helpers ----------------
 function chipStyle(status) {
   const s = String(status || "").toUpperCase();
   if (s === "APPROVED") return { background: "rgba(16,185,129,0.15)", color: "rgb(6,95,70)" };
@@ -103,17 +101,7 @@ function chipStyle(status) {
 
 function SegmentedTabs({ tabs, activeKey, onChange }) {
   return (
-    <div
-      style={{
-        display: "inline-flex",
-        gap: 6,
-        padding: 6,
-        borderRadius: 999,
-        background: "rgba(15,23,42,0.04)",
-        border: "1px solid rgba(15,23,42,0.08)",
-        flexWrap: "wrap",
-      }}
-    >
+    <div className="profileSeg">
       {tabs.map((t) => {
         const active = t.key === activeKey;
         return (
@@ -121,16 +109,7 @@ function SegmentedTabs({ tabs, activeKey, onChange }) {
             key={t.key}
             type="button"
             onClick={() => onChange(t.key)}
-            style={{
-              padding: "8px 12px",
-              borderRadius: 999,
-              border: "1px solid rgba(15,23,42,0.10)",
-              background: active ? "#0f172a" : "#fff",
-              color: active ? "#fff" : "#0f172a",
-              fontWeight: 900,
-              fontSize: 13,
-              cursor: "pointer",
-            }}
+            className={`profileSegBtn ${active ? "active" : ""}`}
           >
             {t.label}
           </button>
@@ -140,35 +119,12 @@ function SegmentedTabs({ tabs, activeKey, onChange }) {
   );
 }
 
-function QuickCard({ iconBg, icon, label, onClick, asLinkTo, active = false }) {
-  const base = {
-    border: active ? "2px solid rgba(124,58,237,0.45)" : "1px solid rgba(15,23,42,0.08)",
-    borderRadius: 14,
-    cursor: "pointer",
-    background: "#fff",
-    boxShadow: "0 2px 10px rgba(0,0,0,0.04)",
-    minWidth: 150,
-    flex: "0 0 auto",
-  };
-
+function QuickCard({ icon, label, onClick, asLinkTo, active = false }) {
   const body = (
-    <div className="card" style={base} onClick={onClick}>
-      <div className="cardBody" style={{ textAlign: "center", padding: "14px 10px" }}>
-        <div
-          style={{
-            background: iconBg,
-            width: 34,
-            height: 34,
-            borderRadius: 10,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            margin: "0 auto 10px",
-          }}
-        >
-          {icon}
-        </div>
-        <div style={{ fontWeight: 800, fontSize: 13, color: "#111827", whiteSpace: "nowrap" }}>{label}</div>
+    <div className={`profileQuickCard ${active ? "active" : ""}`} onClick={onClick}>
+      <div className="profileQuickBody">
+        <div className="profileQuickIcon">{icon}</div>
+        <div className="profileQuickLabel">{label}</div>
       </div>
     </div>
   );
@@ -185,13 +141,15 @@ function QuickCard({ iconBg, icon, label, onClick, asLinkTo, active = false }) {
 
 function Panel({ title, right, children }) {
   return (
-    <div className="card" style={{ border: "1px solid rgba(15,23,42,0.08)", background: "#fff", borderRadius: 16, boxShadow: "none" }}>
+    <div className="card">
       <div className="cardBody">
         <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
-          <h3 style={{ margin: 0 }}>{title}</h3>
+          <h3 className="profilePanelTitle">{title}</h3>
           {right}
         </div>
-        <div style={{ marginTop: 12, maxHeight: "70vh", overflowY: "auto", paddingRight: 6 }}>{children}</div>
+        <div style={{ marginTop: 12, maxHeight: "70vh", overflowY: "auto", paddingRight: 6 }}>
+          {children}
+        </div>
       </div>
     </div>
   );
@@ -218,9 +176,9 @@ function StatusFilterPill({ label, value, active, onClick, tone }) {
       style={{
         borderRadius: 999,
         padding: "8px 12px",
-        border: `1px solid ${active ? "#0f172a" : t.bd}`,
-        background: active ? "#0f172a" : t.bg,
-        color: active ? "#fff" : t.fg,
+        border: `1px solid ${active ? "var(--ink)" : t.bd}`,
+        background: active ? "var(--ink)" : t.bg,
+        color: active ? "var(--canvas)" : t.fg,
         fontWeight: 900,
         fontSize: 13,
         cursor: "pointer",
@@ -255,18 +213,19 @@ function ServiceTypeIcon({ type }) {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    border: "1px solid rgba(15,23,42,0.08)",
+    border: "1px solid var(--hairline)",
     fontWeight: 1000,
+    background: "var(--soft)",
+    color: "var(--ink)",
   };
 
-  if (t === "GUIDE") return <div style={{ ...common, background: "rgba(124,58,237,0.10)", color: "#7c3aed" }}>G</div>;
-  if (t === "HOTEL") return <div style={{ ...common, background: "rgba(59,130,246,0.10)", color: "#3b82f6" }}>H</div>;
-  if (t === "TRANSPORT") return <div style={{ ...common, background: "rgba(16,185,129,0.10)", color: "#10b981" }}>T</div>;
-  if (t === "PRODUCT_VENDOR") return <div style={{ ...common, background: "rgba(236,72,153,0.10)", color: "#ec4899" }}>V</div>;
-  return <div style={{ ...common, background: "rgba(100,116,139,0.10)", color: "#334155" }}>?</div>;
+  if (t === "GUIDE") return <div style={common}>G</div>;
+  if (t === "HOTEL") return <div style={common}>H</div>;
+  if (t === "TRANSPORT") return <div style={common}>T</div>;
+  if (t === "PRODUCT_VENDOR") return <div style={common}>V</div>;
+  return <div style={common}>?</div>;
 }
 
-// ---------------- Seller service rows ----------------
 function GuideRow({ g, onViewTo, onEdit, onDeactivate, onActivate, mode }) {
   const thumb = g?.images?.[0];
 
@@ -275,9 +234,9 @@ function GuideRow({ g, onViewTo, onEdit, onDeactivate, onActivate, mode }) {
       <div className="cardBody" style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
         <div style={{ display: "flex", gap: 12, alignItems: "center", minWidth: 260 }}>
           {thumb ? (
-            <img src={thumb} alt={g?.name} style={{ width: 56, height: 56, borderRadius: 12, objectFit: "cover", border: "1px solid rgba(15,23,42,0.08)" }} />
+            <img src={thumb} alt={g?.name} style={{ width: 56, height: 56, borderRadius: 12, objectFit: "cover", border: "1px solid var(--hairline)" }} />
           ) : (
-            <div style={{ width: 56, height: 56, borderRadius: 12, background: "rgba(15,23,42,0.06)", border: "1px solid rgba(15,23,42,0.08)" }} />
+            <div style={{ width: 56, height: 56, borderRadius: 12, background: "var(--soft)", border: "1px solid var(--hairline)" }} />
           )}
 
           <div>
@@ -324,9 +283,9 @@ function HotelRow({ h, mode, onViewTo, onEdit, onDeactivate, onActivate }) {
       <div className="cardBody" style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
         <div style={{ display: "flex", gap: 12, alignItems: "center", minWidth: 260 }}>
           {thumb ? (
-            <img src={thumb} alt={h?.name} style={{ width: 56, height: 56, borderRadius: 12, objectFit: "cover", border: "1px solid rgba(15,23,42,0.08)" }} />
+            <img src={thumb} alt={h?.name} style={{ width: 56, height: 56, borderRadius: 12, objectFit: "cover", border: "1px solid var(--hairline)" }} />
           ) : (
-            <div style={{ width: 56, height: 56, borderRadius: 12, background: "rgba(15,23,42,0.06)", border: "1px solid rgba(15,23,42,0.08)" }} />
+            <div style={{ width: 56, height: 56, borderRadius: 12, background: "var(--soft)", border: "1px solid var(--hairline)" }} />
           )}
 
           <div>
@@ -401,7 +360,6 @@ function TransportRow({ r, mode, onEdit, onDeactivate, onActivate }) {
   );
 }
 
-// ---------------- Main ----------------
 export default function Profile() {
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -411,21 +369,15 @@ export default function Profile() {
 
   const [view, setView] = useState(null);
 
-  // shared form
   const [form, setForm] = useState({ name: "", email: "", phone: "" });
   const [saving, setSaving] = useState(false);
 
-  // buyer stats
   const [buyerCounts, setBuyerCounts] = useState({ bookings: 0, orders: 0, trips: 0 });
 
-  // purchases tab (buyer & seller)
   const [purchasesTab, setPurchasesTab] = useState("HOTEL");
-
-  // recent mode toggles
   const [buyerShowAllPurchases, setBuyerShowAllPurchases] = useState(false);
   const [buyerShowAllTrips, setBuyerShowAllTrips] = useState(false);
 
-  // seller state
   const [serviceTab, setServiceTab] = useState("GUIDE");
   const [inboxTab, setInboxTab] = useState("GUIDE");
 
@@ -446,7 +398,6 @@ export default function Profile() {
   const [myTransportLoading, setMyTransportLoading] = useState(false);
   const [transportApprovalStatus, setTransportApprovalStatus] = useState("UNKNOWN");
 
-  // modals
   const [editHotelOpen, setEditHotelOpen] = useState(false);
   const [editingHotel, setEditingHotel] = useState(null);
 
@@ -456,7 +407,6 @@ export default function Profile() {
   const [tpOpen, setTpOpen] = useState(false);
   const [tpEditing, setTpEditing] = useState(null);
 
-  // -------- Buyer stats --------
   const fetchBuyerStats = async () => {
     try {
       const [h, g, o, t] = await Promise.all([
@@ -476,7 +426,6 @@ export default function Profile() {
     }
   };
 
-  // -------- Seller fetches --------
   const fetchApplications = async () => {
     if (!user) return;
     setAppsLoading(true);
@@ -538,7 +487,6 @@ export default function Profile() {
 
   const anyRefreshingSeller = appsLoading || myHotelsLoading || myGuidesLoading || myTransportLoading;
 
-  // reset compact toggles when tab/view changes
   useEffect(() => {
     setBuyerShowAllPurchases(false);
   }, [purchasesTab, view]);
@@ -547,7 +495,6 @@ export default function Profile() {
     if (view !== "TRIPS") setBuyerShowAllTrips(false);
   }, [view]);
 
-  // init
   useEffect(() => {
     if (loading) return;
 
@@ -580,7 +527,6 @@ export default function Profile() {
     }
   };
 
-  // seller computed
   const myActiveGuides = useMemo(() => myGuides.filter((g) => g?.isActive === true), [myGuides]);
   const myInactiveGuides = useMemo(() => myGuides.filter((g) => g?.isActive !== true), [myGuides]);
 
@@ -634,7 +580,6 @@ export default function Profile() {
     return [...list].sort((a, b) => new Date(b?.createdAt || 0) - new Date(a?.createdAt || 0));
   }, [apps, appsByType, appType, appStatus, appQuery]);
 
-  // seller actions
   const withdraw = async (app) => {
     const ok = confirm("Remove this rejected application?");
     if (!ok) return;
@@ -737,10 +682,11 @@ export default function Profile() {
   if (!user) return null;
   if (!view) return null;
 
-  const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || "User")}&background=7c3aed&color=fff&size=128`;
-  const memberSince = user?.createdAt ? new Date(user.createdAt).toLocaleDateString("en-US", { month: "long", year: "numeric" }) : "—";
+  const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || "User")}&background=111111&color=ffffff&size=128`;
+  const memberSince = user?.createdAt
+    ? new Date(user.createdAt).toLocaleDateString("en-US", { month: "long", year: "numeric" })
+    : "—";
 
-  // -------- Buyer Panels --------
   const renderAccountPanel = () => (
     <Panel
       title="Account Information"
@@ -750,20 +696,25 @@ export default function Profile() {
         </button>
       }
     >
-      <form id="profileAccountForm" onSubmit={save} style={{ display: "grid", gap: 16 }}>
-        <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #f1f5f9", paddingBottom: 10 }}>
-          <span style={{ color: "#64748b", fontWeight: 800 }}>Full Name</span>
-          <input style={{ border: "none", textAlign: "right", fontWeight: 800, width: "60%" }} value={form.name} onChange={onChange("name")} />
+      <form id="profileAccountForm" onSubmit={save} style={{ display: "grid", gap: 2 }}>
+        <div className="profileInlineRow">
+          <span className="profileInlineLabel">Full Name</span>
+          <input className="profileInlineInput" value={form.name} onChange={onChange("name")} />
         </div>
 
-        <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #f1f5f9", paddingBottom: 10 }}>
-          <span style={{ color: "#64748b", fontWeight: 800 }}>Email Address</span>
-          <span style={{ fontWeight: 800 }}>{user?.email}</span>
+        <div className="profileInlineRow">
+          <span className="profileInlineLabel">Email Address</span>
+          <span className="profileInlineValue">{user?.email}</span>
         </div>
 
-        <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #f1f5f9", paddingBottom: 10 }}>
-          <span style={{ color: "#64748b", fontWeight: 800 }}>Phone Number</span>
-          <input style={{ border: "none", textAlign: "right", fontWeight: 800, width: "60%" }} value={form.phone} onChange={onChange("phone")} placeholder="03xxxxxxxxx" />
+        <div className="profileInlineRow" style={{ borderBottom: 0, paddingBottom: 0 }}>
+          <span className="profileInlineLabel">Phone Number</span>
+          <input
+            className="profileInlineInput"
+            value={form.phone}
+            onChange={onChange("phone")}
+            placeholder="03xxxxxxxxx"
+          />
         </div>
       </form>
     </Panel>
@@ -777,9 +728,7 @@ export default function Profile() {
           <button className="btn" type="button" onClick={() => setBuyerShowAllPurchases((p) => !p)}>
             {buyerShowAllPurchases ? "Show Less" : "View All"}
           </button>
-          <Link className="btn" to="/local-products">
-            Shop Products
-          </Link>
+          <Link className="btn" to="/local-products">Shop Products</Link>
         </div>
       }
     >
@@ -787,33 +736,15 @@ export default function Profile() {
 
       <div style={{ marginTop: 12 }}>
         {purchasesTab === "HOTEL" ? (
-          <MyHotelBookingsSection
-            hideHeader
-            compact
-            limit={buyerShowAllPurchases ? undefined : 3}
-            headerLabel="Recent Hotel Bookings"
-            onViewAll={() => setBuyerShowAllPurchases(true)}
-          />
+          <MyHotelBookingsSection hideHeader compact limit={buyerShowAllPurchases ? undefined : 3} headerLabel="Recent Hotel Bookings" onViewAll={() => setBuyerShowAllPurchases(true)} />
         ) : null}
 
         {purchasesTab === "GUIDE" ? (
-          <MyGuideBookingsSection
-            hideHeader
-            compact
-            limit={buyerShowAllPurchases ? undefined : 3}
-            headerLabel="Recent Guide Bookings"
-            onViewAll={() => setBuyerShowAllPurchases(true)}
-          />
+          <MyGuideBookingsSection hideHeader compact limit={buyerShowAllPurchases ? undefined : 3} headerLabel="Recent Guide Bookings" onViewAll={() => setBuyerShowAllPurchases(true)} />
         ) : null}
 
         {purchasesTab === "ORDERS" ? (
-          <MyOrdersSection
-            hideHeader
-            compact
-            limit={buyerShowAllPurchases ? undefined : 3}
-            headerLabel="Recent Orders"
-            onViewAll={() => setBuyerShowAllPurchases(true)}
-          />
+          <MyOrdersSection hideHeader compact limit={buyerShowAllPurchases ? undefined : 3} headerLabel="Recent Orders" onViewAll={() => setBuyerShowAllPurchases(true)} />
         ) : null}
       </div>
     </Panel>
@@ -839,7 +770,6 @@ export default function Profile() {
     return null;
   };
 
-  // -------- Seller Panels --------
   const renderSellerInbox = () => (
     <Panel title="Bookings Received">
       <SegmentedTabs
@@ -850,7 +780,9 @@ export default function Profile() {
         activeKey={inboxTab}
         onChange={setInboxTab}
       />
-      <div style={{ marginTop: 12 }}>{inboxTab === "GUIDE" ? <MyGuideBookingsReceivedSection /> : <MyHotelBookingsReceivedSection />}</div>
+      <div style={{ marginTop: 12 }}>
+        {inboxTab === "GUIDE" ? <MyGuideBookingsReceivedSection /> : <MyHotelBookingsReceivedSection />}
+      </div>
     </Panel>
   );
 
@@ -882,22 +814,19 @@ export default function Profile() {
           <button className="btn" type="button" onClick={refreshAllSeller} disabled={anyRefreshingSeller}>
             {anyRefreshingSeller ? "Refreshing..." : "Refresh"}
           </button>
-          <Link className="btn" to="/register-service">
-            Register a Service
-          </Link>
+          <Link className="btn" to="/register-service">Register a Service</Link>
         </div>
       }
     >
-      {/* search */}
       <div
         style={{
           display: "flex",
           gap: 10,
           alignItems: "center",
-          border: "1px solid rgba(15,23,42,0.10)",
-          borderRadius: 14,
+          border: "1px solid var(--hairline)",
+          borderRadius: 12,
           padding: "10px 12px",
-          background: "rgba(15,23,42,0.02)",
+          background: "var(--soft)",
         }}
       >
         <IconSearch />
@@ -905,7 +834,7 @@ export default function Profile() {
           value={appQuery}
           onChange={(e) => setAppQuery(e.target.value)}
           placeholder="Search (service type, status, admin note...)"
-          style={{ border: "none", outline: "none", background: "transparent", width: "100%", fontSize: 14, fontWeight: 700, color: "#0f172a" }}
+          style={{ border: "none", outline: "none", background: "transparent", width: "100%", fontSize: 14, fontWeight: 700, color: "var(--ink)" }}
         />
         {appQuery ? (
           <button className="btn" type="button" onClick={() => setAppQuery("")} style={{ padding: "6px 10px" }}>
@@ -914,7 +843,6 @@ export default function Profile() {
         ) : null}
       </div>
 
-      {/* status */}
       <div style={{ marginTop: 12, display: "flex", gap: 10, flexWrap: "wrap" }}>
         <StatusFilterPill label="All" value={statusCounts.ALL} active={appStatus === "ALL"} onClick={() => setAppStatus("ALL")} tone="neutral" />
         <StatusFilterPill label="Approved" value={statusCounts.APPROVED} active={appStatus === "APPROVED"} onClick={() => setAppStatus("APPROVED")} tone="green" />
@@ -922,7 +850,6 @@ export default function Profile() {
         <StatusFilterPill label="Rejected" value={statusCounts.REJECTED} active={appStatus === "REJECTED"} onClick={() => setAppStatus("REJECTED")} tone="red" />
       </div>
 
-      {/* type */}
       <div style={{ marginTop: 12 }}>
         <SegmentedTabs
           tabs={APP_TYPE_TABS.map((t) => ({
@@ -938,7 +865,7 @@ export default function Profile() {
         {appsLoading ? <div className="p">Loading applications...</div> : null}
 
         {!appsLoading && filteredApps.length === 0 ? (
-          <div className="card" style={{ boxShadow: "none", border: "1px dashed rgba(15,23,42,0.18)", background: "rgba(15,23,42,0.02)" }}>
+          <div className="card" style={{ boxShadow: "none", border: "1px dashed #cfcfcf", background: "var(--canvas)" }}>
             <div className="cardBody" style={{ padding: 16 }}>
               <div style={{ fontWeight: 1000 }}>No applications found</div>
               <div className="p" style={{ marginTop: 6 }}>Try changing filters or register a service.</div>
@@ -952,7 +879,6 @@ export default function Profile() {
         {!appsLoading && filteredApps.length > 0 ? (
           <div style={{ overflowX: "auto" }}>
             <div style={{ minWidth: 860, display: "grid", gap: 10 }}>
-              {/* header */}
               <div
                 style={{
                   display: "grid",
@@ -960,11 +886,11 @@ export default function Profile() {
                   gap: 10,
                   padding: "10px 12px",
                   borderRadius: 12,
-                  background: "rgba(15,23,42,0.03)",
-                  border: "1px solid rgba(15,23,42,0.08)",
+                  background: "var(--soft)",
+                  border: "1px solid var(--hairline)",
                   fontSize: 12,
                   fontWeight: 900,
-                  color: "#475569",
+                  color: "var(--muted)",
                 }}
               >
                 <div>Service</div>
@@ -979,7 +905,7 @@ export default function Profile() {
                 const isRejected = statusUpper === "REJECTED";
 
                 return (
-                  <div key={a._id} className="card" style={{ boxShadow: "none", border: "1px solid rgba(15,23,42,0.08)", borderRadius: 16 }}>
+                  <div key={a._id} className="card" style={{ boxShadow: "none" }}>
                     <div className="cardBody" style={{ display: "grid", gridTemplateColumns: "1.2fr 0.6fr 1.4fr 0.8fr 0.6fr", gap: 10, alignItems: "center" }}>
                       <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
                         <ServiceTypeIcon type={a.serviceType} />
@@ -1006,7 +932,7 @@ export default function Profile() {
                             Withdraw
                           </button>
                         ) : (
-                          <span className="p" style={{ margin: 0, fontSize: 12, color: "#64748b" }}>—</span>
+                          <span className="p" style={{ margin: 0, fontSize: 12, color: "var(--muted)" }}>—</span>
                         )}
                       </div>
                     </div>
@@ -1044,10 +970,7 @@ export default function Profile() {
               g={g}
               mode="active"
               onViewTo={`/guides/${g._id}`}
-              onEdit={() => {
-                setEditingGuide(g);
-                setEditGuideOpen(true);
-              }}
+              onEdit={() => { setEditingGuide(g); setEditGuideOpen(true); }}
               onDeactivate={() => deactivateGuide(g)}
               onActivate={() => activateGuide(g)}
             />
@@ -1062,10 +985,7 @@ export default function Profile() {
                     g={g}
                     mode="inactive"
                     onViewTo={`/guides/${g._id}`}
-                    onEdit={() => {
-                      setEditingGuide(g);
-                      setEditGuideOpen(true);
-                    }}
+                    onEdit={() => { setEditingGuide(g); setEditGuideOpen(true); }}
                     onDeactivate={() => deactivateGuide(g)}
                     onActivate={() => activateGuide(g)}
                   />
@@ -1086,10 +1006,7 @@ export default function Profile() {
               h={h}
               mode="active"
               onViewTo={`/hotels/${h._id}`}
-              onEdit={() => {
-                setEditingHotel(h);
-                setEditHotelOpen(true);
-              }}
+              onEdit={() => { setEditingHotel(h); setEditHotelOpen(true); }}
               onDeactivate={() => deactivateHotel(h)}
               onActivate={() => activateHotel(h)}
             />
@@ -1104,10 +1021,7 @@ export default function Profile() {
                     h={h}
                     mode="inactive"
                     onViewTo={`/hotels/${h._id}`}
-                    onEdit={() => {
-                      setEditingHotel(h);
-                      setEditHotelOpen(true);
-                    }}
+                    onEdit={() => { setEditingHotel(h); setEditHotelOpen(true); }}
                     onDeactivate={() => deactivateHotel(h)}
                     onActivate={() => activateHotel(h)}
                   />
@@ -1164,10 +1078,7 @@ export default function Profile() {
               key={r._id}
               r={r}
               mode="active"
-              onEdit={() => {
-                setTpEditing(r);
-                setTpOpen(true);
-              }}
+              onEdit={() => { setTpEditing(r); setTpOpen(true); }}
               onDeactivate={() => deactivateTransport(r)}
               onActivate={() => activateTransport(r)}
             />
@@ -1182,10 +1093,7 @@ export default function Profile() {
                     key={r._id}
                     r={r}
                     mode="inactive"
-                    onEdit={() => {
-                      setTpEditing(r);
-                      setTpOpen(true);
-                    }}
+                    onEdit={() => { setTpEditing(r); setTpOpen(true); }}
                     onDeactivate={() => deactivateTransport(r)}
                     onActivate={() => activateTransport(r)}
                   />
@@ -1244,78 +1152,96 @@ export default function Profile() {
   };
 
   const HeaderSummary = () => (
-    <div className="card" style={{ border: "1px solid rgba(15,23,42,0.08)", background: "#fff", borderRadius: 16, boxShadow: "none" }}>
-      <div className="cardBody" style={{ display: "flex", gap: 18, alignItems: "center", flexWrap: "wrap", justifyContent: "space-between" }}>
-        <div style={{ display: "flex", gap: 14, alignItems: "center" }}>
-          <div style={{ width: 86, height: 86, borderRadius: "50%", overflow: "hidden", background: "#f3f4f6", border: "4px solid #fff", boxShadow: "0 4px 10px rgba(0,0,0,0.06)" }}>
-            <img src={avatarUrl} alt="Avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+    <div className="card">
+      <div className="cardBody">
+        <div className="profileHeader">
+          <div className="profileIdentity">
+            <div className="profileAvatarWrap">
+              <img src={avatarUrl} alt="Avatar" />
+            </div>
+
+            <div>
+              <div className="profileNameRow">
+                <h2 className="profileName">{user?.name}</h2>
+                <span className={`profilePill ${isSeller ? "dark" : ""}`}>
+                  {isSeller ? "Seller" : "Verified"}
+                </span>
+              </div>
+
+              <div className="profileMeta">
+                {user?.email} {user?.phone ? `• ${user.phone}` : ""}
+              </div>
+
+              <div className="profileSince">Member since {memberSince}</div>
+            </div>
           </div>
 
-          <div>
-            <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
-              <h2 style={{ margin: 0, fontSize: 22, fontWeight: 950 }}>{user?.name}</h2>
-              <span style={{ fontSize: 12, padding: "4px 10px", borderRadius: 999, background: isSeller ? "#e0f2fe" : "#ede9fe", color: isSeller ? "#0284c7" : "#7c3aed", fontWeight: 900 }}>
-                {isSeller ? "Seller" : "Verified User"}
-              </span>
+          {!isSeller ? (
+            <div className="profileStats">
+              <div className="profileStat">
+                <div className="profileStatValue">{buyerCounts.bookings}</div>
+                <div className="profileStatLabel">Bookings</div>
+              </div>
+              <div className="profileStat">
+                <div className="profileStatValue">{buyerCounts.orders}</div>
+                <div className="profileStatLabel">Orders</div>
+              </div>
+              <div className="profileStat">
+                <div className="profileStatValue">{buyerCounts.trips}</div>
+                <div className="profileStatLabel">Trip Plans</div>
+              </div>
+              <button className="btn" type="button" onClick={fetchBuyerStats}>Refresh</button>
             </div>
-
-            <div className="p" style={{ fontSize: 13, margin: "6px 0 0", color: "#64748b" }}>
-              {user?.email} • {user?.phone || "—"}
+          ) : (
+            <div className="profileStats">
+              <div className="profileStat">
+                <div className="profileStatValue">{myActiveGuides.length}</div>
+                <div className="profileStatLabel">Guides</div>
+              </div>
+              <div className="profileStat">
+                <div className="profileStatValue">{myActiveHotels.length}</div>
+                <div className="profileStatLabel">Hotels</div>
+              </div>
+              <div className="profileStat">
+                <div className="profileStatValue">{myActiveTransport.length}</div>
+                <div className="profileStatLabel">Routes</div>
+              </div>
+              <div className="profileStat">
+                <div className="profileStatValue">{apps.length}</div>
+                <div className="profileStatLabel">Apps</div>
+              </div>
             </div>
-
-            <div className="p" style={{ fontSize: 12, margin: "4px 0 0", color: "#94a3b8" }}>
-              Member since {memberSince}
-            </div>
-          </div>
+          )}
         </div>
-
-        {!isSeller ? (
-          <div style={{ display: "flex", gap: 18, textAlign: "center", alignItems: "center" }}>
-            <div><div style={{ fontSize: 20, fontWeight: 950 }}>{buyerCounts.bookings}</div><div style={{ fontSize: 12, color: "#64748b" }}>Bookings</div></div>
-            <div><div style={{ fontSize: 20, fontWeight: 950 }}>{buyerCounts.orders}</div><div style={{ fontSize: 12, color: "#64748b" }}>Orders</div></div>
-            <div><div style={{ fontSize: 20, fontWeight: 950 }}>{buyerCounts.trips}</div><div style={{ fontSize: 12, color: "#64748b" }}>Trip Plans</div></div>
-            <button className="btn" type="button" onClick={fetchBuyerStats}>Refresh</button>
-          </div>
-        ) : (
-          <div style={{ display: "flex", gap: 18, textAlign: "center" }}>
-            <div><div style={{ fontSize: 20, fontWeight: 950 }}>{myActiveGuides.length}</div><div style={{ fontSize: 12, color: "#64748b" }}>Guides</div></div>
-            <div><div style={{ fontSize: 20, fontWeight: 950 }}>{myActiveHotels.length}</div><div style={{ fontSize: 12, color: "#64748b" }}>Hotels</div></div>
-            <div><div style={{ fontSize: 20, fontWeight: 950 }}>{myActiveTransport.length}</div><div style={{ fontSize: 12, color: "#64748b" }}>Routes</div></div>
-            <div><div style={{ fontSize: 20, fontWeight: 950 }}>{apps.length}</div><div style={{ fontSize: 12, color: "#64748b" }}>Apps</div></div>
-          </div>
-        )}
       </div>
     </div>
   );
 
   return (
-    <div style={{ maxWidth: 1200, margin: "20px auto", padding: "0 20px", display: "grid", gap: 16 }}>
+    <div className="profilePage">
       <HeaderSummary />
 
-      {/* Quick cards single horizontal line */}
       {!isSeller ? (
-        <div style={{ display: "flex", gap: 12, flexWrap: "nowrap", overflowX: "auto", paddingBottom: 6, WebkitOverflowScrolling: "touch" }}>
-          <QuickCard iconBg="#eef2ff" icon={<IconUser />} label="Account" active={view === "ACCOUNT"} onClick={() => setView("ACCOUNT")} />
-          <QuickCard iconBg="#f5f3ff" icon={<IconCalendar />} label="Bookings / Orders" active={view === "PURCHASES"} onClick={() => setView("PURCHASES")} />
-          <QuickCard iconBg="#eff6ff" icon={<IconPlane />} label="Trip Plans" active={view === "TRIPS"} onClick={() => setView("TRIPS")} />
-          <QuickCard iconBg="#fdf2f8" icon={<IconShop />} label="Go Shopping" asLinkTo="/local-products" />
+        <div className="profileQuickRail">
+          <QuickCard icon={<IconUser />} label="Account" active={view === "ACCOUNT"} onClick={() => setView("ACCOUNT")} />
+          <QuickCard icon={<IconCalendar />} label="Bookings / Orders" active={view === "PURCHASES"} onClick={() => setView("PURCHASES")} />
+          <QuickCard icon={<IconPlane />} label="Trip Plans" active={view === "TRIPS"} onClick={() => setView("TRIPS")} />
+          <QuickCard icon={<IconShop />} label="Go Shopping" asLinkTo="/local-products" />
         </div>
       ) : (
-        <div style={{ display: "flex", gap: 12, flexWrap: "nowrap", overflowX: "auto", paddingBottom: 6, WebkitOverflowScrolling: "touch" }}>
-          <QuickCard iconBg="#eef2ff" icon={<IconUser />} label="Account" active={view === "ACCOUNT"} onClick={() => setView("ACCOUNT")} />
-          <QuickCard iconBg="#f5f3ff" icon={<IconCalendar />} label="My Services" active={view === "SERVICES"} onClick={() => setView("SERVICES")} />
-          <QuickCard iconBg="#e0f2fe" icon={<IconInbox />} label="Bookings Received" active={view === "INBOX"} onClick={() => setView("INBOX")} />
-          <QuickCard iconBg="#fffbeb" icon={<IconBag />} label="My Applications" active={view === "APPLICATIONS"} onClick={() => setView("APPLICATIONS")} />
-          <QuickCard iconBg="#eff6ff" icon={<IconBag color="#0ea5e9" />} label="Bookings / Orders" active={view === "PURCHASES"} onClick={() => setView("PURCHASES")} />
-          <QuickCard iconBg="#ecfdf5" icon={<IconPlane color="#10b981" />} label="Trip Plans" active={view === "TRIPS"} onClick={() => setView("TRIPS")} />
-          <QuickCard iconBg="#fdf2f8" icon={<IconShop />} label="Register Service" asLinkTo="/register-service" />
+        <div className="profileQuickRail">
+          <QuickCard icon={<IconUser />} label="Account" active={view === "ACCOUNT"} onClick={() => setView("ACCOUNT")} />
+          <QuickCard icon={<IconCalendar />} label="My Services" active={view === "SERVICES"} onClick={() => setView("SERVICES")} />
+          <QuickCard icon={<IconInbox />} label="Bookings Received" active={view === "INBOX"} onClick={() => setView("INBOX")} />
+          <QuickCard icon={<IconBag />} label="My Applications" active={view === "APPLICATIONS"} onClick={() => setView("APPLICATIONS")} />
+          <QuickCard icon={<IconBag />} label="Bookings / Orders" active={view === "PURCHASES"} onClick={() => setView("PURCHASES")} />
+          <QuickCard icon={<IconPlane />} label="Trip Plans" active={view === "TRIPS"} onClick={() => setView("TRIPS")} />
+          <QuickCard icon={<IconShop />} label="Register Service" asLinkTo="/register-service" />
         </div>
       )}
 
-      {/* active panel */}
       <div>{!isSeller ? renderBuyerPanel() : renderSellerPanel()}</div>
 
-      {/* seller modals */}
       {isSeller ? (
         <>
           <MyHotelEditModal open={editHotelOpen} onClose={() => setEditHotelOpen(false)} hotel={editingHotel} onSaved={fetchMyHotels} />
