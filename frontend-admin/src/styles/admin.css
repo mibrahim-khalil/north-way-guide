@@ -913,3 +913,83 @@ label{
 .dashGrid2 > .aCard{
   background: var(--soft);
 }
+
+/* ===================== SOFT BOXES + HOVER (GLOBAL) ===================== */
+
+/* Sidebar surface slightly grey */
+.adminSidebar{
+  background: var(--soft);
+}
+
+/* Panels/cards slightly grey so they don't look like only border lines */
+.aCard{
+  background: var(--soft);
+}
+
+/* Keep table area readable on white */
+.saTableWrap{
+  background: var(--soft);
+}
+.saTable,
+.saTable tbody td{
+  background: var(--canvas);
+}
+
+/* Nice hover (small) for clickable/boxy items */
+.adminNavLink,
+.kpiCard,
+.pendingItem,
+.rowItem,
+.saDocRow{
+  transition: background 0.18s ease, border-color 0.18s ease, transform 0.06s ease, box-shadow 0.18s ease;
+}
+
+/* Sidebar hover */
+.adminNavLink:hover{
+  background: linear-gradient(90deg, #ffffff 0%, #f5f5f5 100%);
+  border-color: rgba(17,17,17,0.28);
+  transform: translateY(-1px);
+}
+
+/* Active stays black */
+.adminNavLink.active{
+  background: var(--ink);
+  border-color: var(--ink);
+  transform: none;
+}
+
+/* Dashboard KPI hover */
+.kpiCard:hover{
+  background: linear-gradient(90deg, #f5f5f5 0%, #ededed 100%);
+  border-color: rgba(17,17,17,0.28);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+}
+
+/* Small box hover */
+.pendingItem:hover,
+.rowItem:hover,
+.saDocRow:hover{
+  background: linear-gradient(90deg, #f5f5f5 0%, #ededed 100%);
+  border-color: rgba(17,17,17,0.22);
+}
+
+/* Service Applications row hover */
+.saTable tbody tr:hover td{
+  background: rgba(17,17,17,0.03);
+}
+
+/* Pending count pill in sidebar (Nike-like) */
+.adminNavCount{
+  margin-left: auto;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: var(--r-pill);
+  background: var(--ink);
+  color: var(--canvas);
+  border: 1px solid var(--ink);
+  font-size: 12px;
+  font-weight: 900;
+  display:inline-flex;
+  align-items:center;
+}
