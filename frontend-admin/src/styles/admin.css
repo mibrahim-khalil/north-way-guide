@@ -1,93 +1,79 @@
-/* frontend-admin/src/styles/admin.css */
-
-/* =========================================================
-   NIKE-LIKE TOKENS (and backward-compatible aliases)
-   ========================================================= */
 :root{
-  /* Nike palette */
-  --ink: #111111;
-  --on-ink: #ffffff;
-  --canvas: #ffffff;
-  --soft: #f5f5f5;
+  /* === SAME AS PUBLIC theme.css === */
+  --ink:#111111;
+  --canvas:#ffffff;
+  --soft:#f5f5f5;
 
-  --charcoal: #39393b;
-  --ash: #4b4b4d;
-  --mute: #707072;
-  --stone: #9e9ea0;
+  --text: var(--ink);
+  --muted:#707072;
 
-  --hairline: #cacacb;
-  --hairlineSoft: #e5e5e5;
-
-  --sale: #d30005;
-  --success: #007d48;
-  --info: #1151ff;
-
-  --r-none: 0px;
-  --r-sm: 18px;
-  --r-md: 24px;
-  --r-lg: 30px;
-  --r-full: 9999px;
-
-  /* 8px grid */
-  --sp-1: 4px;
-  --sp-2: 8px;
-  --sp-3: 12px;
-  --sp-4: 16px;
-  --sp-5: 18px;
-  --sp-6: 24px;
-  --sp-7: 30px;
-
-  /* Backward-compatible admin aliases used in your pages */
-  --bg-gradient: var(--canvas);              /* previously used as body bg */
   --heading: var(--ink);
-  --text: var(--charcoal);
-  --muted: var(--mute);
 
+  --hairline:#e5e5e5;
+
+  --sale:#d30005;
+  --success:#007d48;
+
+  --container: 1440px;
+
+  --r-0: 0px;
+  --r-12: 12px;
+  --r-24: 24px;
+  --r-pill: 9999px;
+
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+
+  --font-ui: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  --font-display: "Bebas Neue", "Anton", Impact, var(--font-ui);
+
+  --btn-radius: var(--r-pill);
+  --btn-shadow: 2px 2px 4px rgba(0,0,0,0.25);
+  --btn-shadow-hover: 3px 3px 8px rgba(0,0,0,0.22);
+
+  /* === Admin compatibility aliases (so old code doesn't break) === */
+  --bg-gradient: var(--canvas);
   --card: var(--canvas);
   --card2: var(--soft);
   --border: var(--hairline);
-
-  /* your old accent vars (now neutral nike-like) */
   --accent: var(--ink);
   --accentSoft: rgba(17,17,17,0.06);
-
   --danger: var(--sale);
-  --warn: #f59e0b;
   --ok: var(--success);
-
-  --shadow: none; /* Nike: no elevation */
+  --shadow: none;
 }
 
-/* =========================================================
-   BASE
-   ========================================================= */
-*{ box-sizing: border-box; }
-html, body{ height: 100%; }
+*{ box-sizing:border-box; }
+html, body{ height:100%; }
+
 body{
-  margin: 0;
+  margin:0;
+  font-family: var(--font-ui);
+  color: var(--text);
   background: var(--canvas);
-  color: var(--ink);
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
 }
 
-a{ color: inherit; text-decoration: none; }
-button, input, select, textarea{ font: inherit; }
-img{ max-width: 100%; display: block; }
+a{ color:inherit; text-decoration:none; }
+img{ max-width:100%; display:block; }
 
 /* =========================================================
-   SHELL / LAYOUT
+   ADMIN SHELL (layout)
    ========================================================= */
 .adminShell{
-  display: grid;
-  grid-template-columns: 280px 1fr;
+  display:grid;
+  grid-template-columns: 300px 1fr;
   min-height: 100vh;
 }
 
 .adminSidebar{
   background: var(--canvas);
   border-right: 1px solid var(--hairline);
-  padding: var(--sp-5);
+  padding: var(--s-4);
   position: sticky;
   top: 0;
   height: 100vh;
@@ -95,18 +81,20 @@ img{ max-width: 100%; display: block; }
 }
 
 .adminMain{
-  display: flex;
+  display:flex;
   flex-direction: column;
   min-width: 0;
   background: var(--canvas);
 }
 
+/* Topbar stays full width, but content aligns with page width */
 .adminTopbar{
   height: 64px;
   display:flex;
   align-items:center;
   justify-content: space-between;
-  padding: 0 var(--sp-6);
+  gap: var(--s-3);
+  padding: 0 var(--s-5);
   border-bottom: 1px solid var(--hairline);
   background: var(--canvas);
   position: sticky;
@@ -122,15 +110,15 @@ img{ max-width: 100%; display: block; }
 }
 
 .adminTopTitle{
-  font-weight: 900;
+  font-weight: 800;
   color: var(--ink);
   font-size: 16px;
 }
 
 .adminTopSub{
   font-size: 12px;
-  color: var(--mute);
-  font-weight: 800;
+  color: var(--muted);
+  font-weight: 700;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -142,32 +130,30 @@ img{ max-width: 100%; display: block; }
   gap: 10px;
 }
 
+/* IMPORTANT: match public container rhythm */
 .adminContent{
-  padding: var(--sp-6);
+  width: min(var(--container), calc(100% - 48px));
+  margin-inline: auto;
+  padding: var(--s-5) 0;
 }
 
-.adminPage{
-  max-width: 1200px;
-}
-
-/* Responsive shell */
 @media (max-width: 1000px){
   .adminShell{ grid-template-columns: 1fr; }
   .adminSidebar{ position: relative; height: auto; }
+  .adminContent{ width: min(var(--container), calc(100% - 32px)); }
 }
 
 /* =========================================================
-   BRAND (Sidebar header)
+   SIDEBAR BRAND
    ========================================================= */
 .adminBrand{
   display:flex;
   align-items:center;
   gap: 12px;
   padding: 12px;
-  border-radius: var(--r-md);
-  background: var(--soft);
+  border-radius: var(--r-24);
+  background: var(--canvas);
   border: 1px solid var(--hairline);
-  box-shadow: none;
 }
 
 .adminLogoImg{
@@ -175,42 +161,41 @@ img{ max-width: 100%; display: block; }
   height: 44px;
   object-fit: contain;
   padding: 8px;
-  border-radius: 16px;
-
-  /* your logo is white -> give it black stage like Nike */
-  background: var(--ink);
+  border-radius: var(--r-pill);
+  background: var(--ink);      /* your logo is white */
   border: 1px solid var(--ink);
 }
 
 .adminBrandTitle{
-  font-weight: 1000;
+  font-weight: 900;
   letter-spacing:.2px;
   color: var(--ink);
 }
 
 .adminBrandSub{
-  color: var(--mute);
+  color: var(--muted);
   font-size: 12px;
-  font-weight: 800;
+  font-weight: 700;
   margin-top: 2px;
 }
 
+/* Nav Title */
 .adminNavTitle{
   margin-top: 14px;
   margin-bottom: 8px;
-  font-weight: 1000;
-  color: var(--mute);
+  font-weight: 800;
+  color: var(--muted);
   font-size: 12px;
   letter-spacing: .8px;
   text-transform: uppercase;
 }
 
 /* =========================================================
-   SIDEBAR NAV (Nike-like: flat, hairlines, active invert)
+   SIDEBAR NAV (Nike-like: flat + hairline + ink active)
    ========================================================= */
 .adminNav{
   display:grid;
-  gap: 8px;
+  gap: 10px;
 }
 
 .adminNavLink{
@@ -218,46 +203,43 @@ img{ max-width: 100%; display: block; }
   align-items:center;
   gap: 10px;
   padding: 12px 12px;
-  border-radius: 16px;
+  border-radius: var(--r-24);
   border: 1px solid var(--hairline);
   background: var(--canvas);
   text-decoration: none;
-  position: relative;
 }
 
 .adminNavIcon{
   width: 34px;
   height: 34px;
-  border-radius: var(--r-full);
+  border-radius: var(--r-pill);
   display:flex;
   align-items:center;
   justify-content:center;
   background: var(--soft);
   border: 1px solid var(--hairline);
   color: var(--ink);
-  font-weight: 1000;
+  font-weight: 900;
   flex: 0 0 auto;
 }
 
 .adminNavText{
   flex: 1;
   color: var(--ink);
-  font-weight: 900;
-  opacity: .92;
+  font-weight: 800;
   min-width: 0;
 }
 
 .adminNavDot{
   width: 10px;
   height: 10px;
-  border-radius: var(--r-full);
+  border-radius: var(--r-pill);
   background: var(--hairline);
   flex: 0 0 auto;
 }
 
-/* No hover lift (Nike = flat) */
 .adminNavLink:hover{
-  border-color: var(--ink);
+  border-color: rgba(17,17,17,0.35);
 }
 
 .adminNavLink.active{
@@ -265,58 +247,113 @@ img{ max-width: 100%; display: block; }
   border-color: var(--ink);
 }
 
-.adminNavLink.active .adminNavText{
-  color: var(--on-ink);
-  opacity: 1;
-}
-
+.adminNavLink.active .adminNavText{ color: var(--canvas); }
 .adminNavLink.active .adminNavIcon{
   background: rgba(255,255,255,0.12);
   border-color: rgba(255,255,255,0.18);
-  color: var(--on-ink);
+  color: var(--canvas);
 }
+.adminNavLink.active .adminNavDot{ background: var(--canvas); }
 
-.adminNavLink.active .adminNavDot{
-  background: var(--on-ink);
+/* Optional: pending count pill (if you use it) */
+.adminNavCount{
+  margin-left: auto;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: var(--r-pill);
+  background: var(--ink);
+  color: var(--canvas);
+  border: 1px solid var(--ink);
+  font-size: 12px;
+  font-weight: 900;
+  display:inline-flex;
+  align-items:center;
 }
 
 .adminSidebarFooter{
   margin-top: 14px;
   padding-top: 14px;
-  border-top: 1px solid var(--hairlineSoft);
+  border-top: 1px solid var(--hairline);
 }
-.adminHint{ color: var(--mute); font-size: 12px; font-weight: 900; }
+.adminHint{ color: var(--muted); font-size: 12px; font-weight: 700; }
 
 /* Helpers */
-.adminMuted{ color: var(--mute); font-weight: 800; }
+.adminMuted{ color: var(--muted); font-weight: 700; }
 
 /* =========================================================
-   CARDS / BUTTONS (keep your existing class names)
+   CORE SURFACES (Admin)
    ========================================================= */
 .aCard{
   background: var(--canvas);
   border: 1px solid var(--hairline);
-  border-radius: var(--r-md);
+  border-radius: var(--r-24);   /* panels feel like public pills system */
   box-shadow: none;
 }
 
-.aBtn{
-  appearance: none;
+.card{
+  background: var(--canvas);
   border: 1px solid var(--hairline);
+  border-radius: var(--r-0);
+  box-shadow: none;
+  overflow:hidden;
+}
+
+.cardBody{ padding: var(--s-5); }
+
+/* =========================================================
+   BUTTONS (match public .btn behavior exactly)
+   ========================================================= */
+.aBtn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap: 10px;
+
+  height: 44px;
+  padding: 0 22px;
+
+  border: 1px solid transparent;
+  border-radius: var(--btn-radius);
+
   background: var(--soft);
   color: var(--ink);
-  padding: 12px 18px;
-  border-radius: var(--r-full);
-  cursor: pointer;
-  font-weight: 900;
-  min-height: 44px;
+
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 14px;
   line-height: 1;
+
+  cursor:pointer;
+  user-select:none;
+
+  box-shadow: var(--btn-shadow);
+  transition: background 0.18s ease, box-shadow 0.18s ease, transform 0.06s ease;
+}
+
+.aBtn:hover{
+  background: linear-gradient(90deg, #f5f5f5 0%, #e9e9e9 100%);
+  box-shadow: var(--btn-shadow-hover);
+}
+
+.aBtn:active{
+  transform: translateY(3px);
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.22);
+}
+
+.aBtn:focus-visible{
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(17,17,17,0.12), var(--btn-shadow);
 }
 
 .aBtn.primary{
   background: var(--ink);
-  color: var(--on-ink);
+  color: var(--canvas);
   border-color: var(--ink);
+}
+
+.aBtn.primary:hover{
+  background: linear-gradient(90deg, #111111 0%, #2b2b2b 100%);
+  box-shadow: var(--btn-shadow-hover);
 }
 
 .aBtn.danger{
@@ -326,76 +363,105 @@ img{ max-width: 100%; display: block; }
 }
 
 .aBtn:disabled{
-  opacity: .55;
+  opacity: 0.55;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
-
-/* Pills */
-.pill{
-  display:inline-flex;
-  padding: 6px 10px;
-  border-radius: var(--r-full);
-  font-weight: 1000;
-  font-size: 12px;
-  border: 1px solid var(--hairline);
-  background: var(--soft);
-  color: var(--ink);
-}
-.pill.warn{ background: rgba(245,158,11,0.10); border-color: rgba(245,158,11,0.25); color: #92400e; }
-.pill.ok{ background: rgba(0,125,72,0.12); border-color: rgba(0,125,72,0.25); color: #065f46; }
 
 /* =========================================================
-   INPUTS (your existing classes)
+   INPUTS (match public inputs)
    ========================================================= */
 .srInput, .stInput, .smInput,
-.vmInput, .vpmInput{
+.vmInput, .smInput, .vpmInput{
   width: 100%;
-  padding: 12px 14px;
-  border-radius: var(--r-md);
+  height: 44px;
+  padding: 0 14px;
+  border-radius: var(--r-12);
   border: 1px solid var(--hairline);
   background: var(--canvas);
   color: var(--ink);
   outline: none;
-  font-weight: 800;
   font-size: 14px;
-  transition: border-color .15s ease, background .15s ease;
+  font-weight: 600;
 }
 
 .srInput:focus, .stInput:focus, .smInput:focus,
 .vmInput:focus, .vpmInput:focus{
   border-color: var(--ink);
-  background: #fff;
+  box-shadow: 0 0 0 4px rgba(17,17,17,0.08);
 }
 
-select.vmInput,
 select.smInput,
-select.vpmInput {
+select.vmInput,
+select.vpmInput{
   appearance: none;
   -webkit-appearance: none;
+  -moz-appearance: none;
+
+  padding-right: 42px;
+
   background-image:
-    linear-gradient(45deg, transparent 50%, rgba(17,17,17,0.55) 50%),
-    linear-gradient(135deg, rgba(17,17,17,0.55) 50%, transparent 50%);
-  background-position: calc(100% - 18px) calc(50% - 3px), calc(100% - 12px) calc(50% - 3px);
-  background-size: 6px 6px, 6px 6px;
+    linear-gradient(45deg, transparent 50%, var(--ink) 50%),
+    linear-gradient(135deg, var(--ink) 50%, transparent 50%);
+  background-position:
+    calc(100% - 18px) 50%,
+    calc(100% - 12px) 50%;
+  background-size:
+    6px 6px,
+    6px 6px;
   background-repeat: no-repeat;
-  padding-right: 34px;
+}
+
+label{
+  display:block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 6px;
 }
 
 /* =========================================================
-   LOGIN (flat)
+   PILLS (status)
+   ========================================================= */
+.pill{
+  display:inline-flex;
+  align-items:center;
+  height: 28px;
+  padding: 0 12px;
+  border-radius: var(--r-pill);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink);
+  background: var(--soft);
+  border: 1px solid var(--hairline);
+}
+.pill.ok{
+  background: rgba(0,125,72,0.10);
+  border-color: rgba(0,125,72,0.25);
+  color: #065f46;
+}
+.pill.warn{
+  background: rgba(211,0,5,0.08);
+  border-color: rgba(211,0,5,0.25);
+  color: var(--sale);
+}
+
+/* =========================================================
+   LOGIN (flat + centered)
    ========================================================= */
 .adminAuth{
   min-height: 100vh;
   display:grid;
   place-items: center;
-  padding: 18px;
+  padding: var(--s-5);
   background: var(--canvas);
 }
 
 .adminAuthCard{
   width: min(440px, 100%);
-  padding: 18px;
-  border-radius: var(--r-md);
+  padding: var(--s-5);
+  border-radius: var(--r-24);
   border: 1px solid var(--hairline);
   background: var(--canvas);
   box-shadow: none;
@@ -403,47 +469,40 @@ select.vpmInput {
 
 .adminAuthForm{
   display:grid;
-  gap: 12px;
-  margin-top: 14px;
-}
-
-.adminAuthForm label{
-  display:block;
-  color: var(--mute);
-  font-weight: 900;
-  font-size: 12px;
-  margin-bottom: 6px;
+  gap: var(--s-3);
+  margin-top: var(--s-4);
 }
 
 .adminAuthForm input{
   width:100%;
-  padding: 12px 14px;
-  border-radius: var(--r-md);
+  height: 44px;
+  padding: 0 14px;
+  border-radius: var(--r-12);
   border: 1px solid var(--hairline);
   background: var(--canvas);
   color: var(--ink);
   outline:none;
-  font-weight: 800;
+  font-size: 14px;
 }
 
 .adminAuthForm input:focus{
   border-color: var(--ink);
+  box-shadow: 0 0 0 4px rgba(17,17,17,0.08);
 }
 
 .adminError{
   margin-top: 10px;
   padding: 10px 12px;
-  border-radius: var(--r-md);
+  border-radius: var(--r-12);
   border: 1px solid rgba(211,0,5,0.25);
-  background: rgba(211,0,5,0.08);
+  background: rgba(211,0,5,0.06);
   color: var(--sale);
-  font-weight: 900;
+  font-weight: 700;
   font-size: 13px;
 }
 
 /* =========================================================
-   SERVICE APPLICATIONS (Nike table + modal)
-   (We move these from inline <style> to global CSS)
+   SERVICE APPLICATIONS table + modal (if you use these classes)
    ========================================================= */
 .saTop{
   display:flex;
@@ -464,13 +523,14 @@ select.vpmInput {
 
 .saTableWrap{
   overflow-x: auto;
-  border-radius: var(--r-md);
+  border-radius: var(--r-24);
   border: 1px solid var(--hairline);
   background: var(--canvas);
+  overflow: hidden;
 }
 
 .saTable{
-  width: 100%;
+  width:100%;
   min-width: 1100px;
   border-collapse: collapse;
   table-layout: fixed;
@@ -481,47 +541,42 @@ select.vpmInput {
   text-align:left;
   padding: 14px 14px;
   font-size: 12px;
-  font-weight: 1000;
-  letter-spacing: .8px;
-  text-transform: uppercase;
-  color: var(--mute);
+  font-weight: 700;
+  color: var(--muted);
   background: var(--soft);
   border-bottom: 1px solid var(--hairline);
   position: sticky;
   top: 0;
   z-index: 2;
   white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: .8px;
 }
 
 .saTable tbody td{
   padding: 14px 14px;
   vertical-align: top;
-  border-bottom: 1px solid var(--hairlineSoft);
+  border-bottom: 1px solid var(--hairline);
   background: var(--canvas);
 }
-
-.saTable tbody tr:last-child td{
-  border-bottom: none;
-}
+.saTable tbody tr:last-child td{ border-bottom: none; }
 
 .saUserName{
-  font-weight: 1000;
+  font-weight: 800;
   color: var(--ink);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
 .saUserEmail{
   font-size: 12px;
-  color: var(--mute);
-  font-weight: 800;
+  color: var(--muted);
+  font-weight: 600;
   margin-top: 4px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
 .saActions{
   display:flex;
   gap: 8px;
@@ -532,14 +587,13 @@ select.vpmInput {
   .saActions{ justify-content: flex-start; }
 }
 
-/* Modal (flat nike) */
+/* Modal */
 .saOverlay{
   position: fixed;
   inset: 0;
   background: rgba(17,17,17,0.45);
   z-index: 9998;
 }
-
 .saModal{
   position: fixed;
   left: 50%;
@@ -551,11 +605,10 @@ select.vpmInput {
   z-index: 9999;
   background: var(--canvas);
   border: 1px solid var(--hairline);
-  border-radius: var(--r-md);
+  border-radius: var(--r-24);
   box-shadow: none;
   padding: 14px;
 }
-
 .saModalTop{
   display:flex;
   justify-content: space-between;
@@ -563,32 +616,28 @@ select.vpmInput {
   gap: 12px;
   margin-bottom: 12px;
 }
-
 .saModalTitle{
-  font-weight: 1000;
+  font-weight: 800;
   font-size: 18px;
   color: var(--ink);
 }
-
 .saModalSub{
-  font-weight: 900;
+  font-weight: 600;
   font-size: 12px;
-  color: var(--mute);
+  color: var(--muted);
   margin-top: 4px;
 }
-
 .saPre{
   margin: 0;
   padding: 12px;
-  border-radius: var(--r-md);
+  border-radius: var(--r-12);
   background: var(--soft);
   border: 1px solid var(--hairline);
   overflow: auto;
   font-size: 12px;
-  font-weight: 800;
+  font-weight: 600;
   line-height: 1.4;
 }
-
 .saDocRow{
   display:flex;
   justify-content: space-between;
@@ -596,197 +645,43 @@ select.vpmInput {
   align-items: center;
   border: 1px solid var(--hairline);
   padding: 10px 12px;
-  border-radius: var(--r-md);
+  border-radius: var(--r-12);
   background: var(--canvas);
 }
-
 .saDocName{
-  font-weight: 1000;
+  font-weight: 800;
   font-size: 13px;
   color: var(--ink);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
 .saDocMeta{
-  font-weight: 800;
+  font-weight: 600;
   font-size: 12px;
   margin-top: 3px;
-  color: var(--mute);
+  color: var(--muted);
 }
 
-/* =========================================================
-   DASHBOARD (Nike-like: flat, hairlines, pills)
-   ========================================================= */
-.dashWrap{
-  display: grid;
-  gap: 12px;
-}
-
-.dashTop{
-  display:flex;
-  justify-content: space-between;
-  align-items: end;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.dashGrid2{
-  display:grid;
-  grid-template-columns: 1.2fr .8fr;
-  gap: 12px;
-}
-@media (max-width: 1100px){
-  .dashGrid2{ grid-template-columns: 1fr; }
-}
-
-.dashKpiGrid{
-  display:grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-}
-@media (max-width: 950px){
-  .dashKpiGrid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-@media (max-width: 650px){
-  .dashKpiGrid{ grid-template-columns: 1fr; }
-}
-
-.kpiCard{
-  display:flex;
-  align-items:center;
-  gap: 12px;
-  padding: 14px;
-  text-decoration: none;
-  color: inherit;
-  border-radius: 16px;
-  position: relative;
-  overflow: hidden;
-}
-.kpiCard:hover{
-  border-color: var(--ink);
-}
-
-.kpiIcon{
-  width: 42px;
-  height: 42px;
-  border-radius: var(--r-full);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size: 18px;
-  background: var(--soft);
-  border: 1px solid var(--hairline);
-  flex-shrink: 0;
-}
-
-.kpiLabel{
-  font-weight: 1000;
-  color: var(--ink);
-  font-size: 13px;
-}
-.kpiValue{
-  font-weight: 1100;
-  color: var(--ink);
-  font-size: 20px;
-  margin-top: 2px;
-}
-.kpiSub{
-  font-weight: 900;
-  color: var(--mute);
-  font-size: 12px;
-  margin-top: 4px;
-}
-.kpiArrow{
-  margin-left:auto;
-  font-weight: 1100;
-  color: var(--mute);
-}
-
-.kpiWarn{
-  border-color: rgba(211,0,5,0.35) !important;
-  background: rgba(211,0,5,0.04) !important;
-}
-
-.pendingGrid{
-  display:grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  margin-top: 12px;
-}
-@media (max-width: 650px){
-  .pendingGrid{ grid-template-columns: 1fr; }
-}
-
-.pendingItem{
-  padding: 12px;
-  border-radius: 16px;
-  border: 1px solid var(--hairline);
-  background: var(--canvas);
-  display:flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-}
-.pendingItem.pendingWarn{
-  border-color: rgba(211,0,5,0.35);
-  background: rgba(211,0,5,0.04);
-}
-
-.pendingLabel{
-  font-weight: 1000;
-  color: var(--ink);
-  font-size: 13px;
-}
-.pendingValue{
-  font-weight: 1100;
-  font-size: 18px;
-  color: var(--ink);
-}
-
-.pendingLink{
-  font-weight: 1000;
-  color: var(--ink);
-  text-decoration: underline; /* Nike-like link behavior */
-  margin-left: auto;
-  white-space: nowrap;
-}
-
-.rowList{
-  display:grid;
-  gap: 10px;
-  margin-top: 12px;
-}
-
-.rowItem{
-  display:flex;
-  justify-content: space-between;
-  align-items:center;
-  gap: 10px;
-  padding: 12px;
-  border-radius: 16px;
-  border: 1px solid var(--hairline);
-  background: var(--canvas);
-}
-
-.rowTitle{
-  font-weight: 1000;
-  color: var(--ink);
-}
-.rowVal{
-  font-weight: 1100;
-  color: var(--ink);
-}
-
-/* simple inline error block for dashboard */
+/* Dashboard helpers (if you use these classNames) */
+.dashWrap{ display:grid; gap: 12px; }
+.dashTop{ display:flex; justify-content: space-between; align-items: end; gap: 10px; flex-wrap: wrap; }
 .dashError{
   margin-top: 10px;
   padding: 10px 12px;
-  border-radius: var(--r-md);
+  border-radius: var(--r-12);
   border: 1px solid rgba(211,0,5,0.25);
   background: rgba(211,0,5,0.06);
   color: var(--sale);
-  font-weight: 900;
+  font-weight: 700;
   font-size: 13px;
+}
+/* === Make admin panels sharp like public cards === */
+.aCard,
+.saTableWrap{
+  border-radius: var(--r-0) !important;
+}
+/* optional: sharp modal too */
+.saModal{
+  border-radius: var(--r-0) !important;
 }
