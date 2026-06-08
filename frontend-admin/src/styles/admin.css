@@ -1206,3 +1206,210 @@ textarea.setInput{
 .aCard{
   background: var(--soft) !important;
 }
+
+/* ======================================================================
+   ADMIN UI UNIFIER (Nike-like) — paste at END of admin.css
+   ====================================================================== */
+
+/* Soft page boxes (so not only border lines) */
+.card{
+  background: var(--soft) !important;
+  border: 1px solid var(--hairline) !important;
+  border-radius: var(--r-0) !important;
+  box-shadow: none !important;
+}
+
+@media (hover: hover) and (pointer: fine){
+  .card:hover{
+    border-color: rgba(17,17,17,0.20) !important;
+    box-shadow: 0 14px 34px rgba(0,0,0,0.06) !important;
+    transform: translateY(-1px);
+    transition: box-shadow 0.18s ease, border-color 0.18s ease, transform 0.06s ease;
+  }
+}
+
+/* Sidebar: soft surface + hover */
+.adminSidebar{ background: var(--soft) !important; }
+.adminNavLink{
+  background: rgba(255,255,255,0.92) !important;
+  border-color: var(--hairline) !important;
+  transition: background 0.18s ease, border-color 0.18s ease, transform 0.06s ease;
+}
+@media (hover: hover) and (pointer: fine){
+  .adminNavLink:hover{
+    background: linear-gradient(90deg, #ffffff 0%, #f5f5f5 100%) !important;
+    border-color: rgba(17,17,17,0.24) !important;
+    transform: translateY(-1px);
+  }
+}
+.adminNavLink.active{ transform: none !important; }
+
+/* Pending count pill */
+.adminNavCount{
+  margin-left: auto;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: var(--r-pill);
+  background: var(--ink);
+  color: var(--canvas);
+  border: 1px solid var(--ink);
+  font-size: 12px;
+  font-weight: 900;
+  display:inline-flex;
+  align-items:center;
+}
+
+/* Inputs used everywhere in your pages */
+.hmInput,
+.setInput{
+  width: 100% !important;
+  height: 44px !important;
+  padding: 0 14px !important;
+  border-radius: var(--r-12) !important;
+  border: 1px solid var(--hairline) !important;
+  background: var(--canvas) !important;
+  color: var(--ink) !important;
+  outline: none !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+}
+textarea.hmInput,
+textarea.setInput{
+  height: auto !important;
+  padding: 12px 14px !important;
+}
+.hmInput:focus,
+.setInput:focus{
+  border-color: var(--ink) !important;
+  box-shadow: 0 0 0 4px rgba(17,17,17,0.08) !important;
+}
+
+/* Table shells consistent (Events/Guides/Spots/Vendors/Orders/Reports/Reviews/Weather/Bookings/Products) */
+.evTableOuter,
+.evTableWrap,
+.hbTableOuter,
+.saTableWrap{
+  border: 1px solid var(--hairline) !important;
+  border-radius: var(--r-0) !important;
+  background: var(--canvas) !important;
+  overflow: hidden !important;
+}
+
+/* Header + cells override page inline styles */
+.evTable thead th,
+.hbTable thead th,
+.saTable thead th{
+  background: var(--soft) !important;
+  color: var(--muted) !important;
+  border-bottom: 1px solid var(--hairline) !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: .8px !important;
+  white-space: nowrap !important;
+}
+.evTable tbody td,
+.hbTable tbody td,
+.saTable tbody td{
+  background: var(--canvas) !important;
+  border-bottom: 1px solid var(--hairline) !important;
+}
+
+/* Neutral row hover (no purple) */
+@media (hover: hover) and (pointer: fine){
+  .evTable tbody tr:hover td,
+  .hbTable tbody tr:hover td,
+  .saTable tbody tr:hover td{
+    background: rgba(17,17,17,0.03) !important;
+  }
+}
+
+/* Kebab button */
+.kebabBtn{
+  border-radius: var(--r-pill) !important;
+  border: 1px solid var(--hairline) !important;
+  background: var(--soft) !important;
+  color: var(--ink) !important;
+}
+@media (hover: hover) and (pointer: fine){
+  .kebabBtn:hover{
+    background: linear-gradient(90deg, #f5f5f5 0%, #ededed 100%) !important;
+    border-color: rgba(17,17,17,0.22) !important;
+  }
+}
+
+/* Details panels (Orders/Bookings/Reviews) */
+.detailsPanel{
+  border: 1px solid var(--hairline) !important;
+  border-radius: var(--r-12) !important;
+  background: var(--canvas) !important;
+}
+.itemRow{
+  border: 1px solid var(--hairline) !important;
+  border-radius: var(--r-12) !important;
+  background: var(--soft) !important;
+}
+
+/* Links: black underline */
+.evLink{
+  color: var(--ink) !important;
+  text-decoration: underline !important;
+  text-underline-offset: 4px !important;
+}
+
+/* Badges consistency */
+.evBadge,
+.hbBadge,
+.payChip{
+  border: 1px solid var(--hairline) !important;
+  background: var(--soft) !important;
+  color: var(--ink) !important;
+}
+.evBadge.ok,
+.hbBadge.ok,
+.payChip.ok{
+  background: rgba(0,125,72,0.10) !important;
+  border-color: rgba(0,125,72,0.22) !important;
+  color: #065f46 !important;
+}
+.evBadge.no,
+.hbBadge.danger,
+.payChip.danger{
+  background: rgba(211,0,5,0.06) !important;
+  border-color: rgba(211,0,5,0.22) !important;
+  color: var(--sale) !important;
+}
+.payChip.warn,
+.hbBadge.warn{
+  background: rgba(245,158,11,0.12) !important;
+  border-color: rgba(245,158,11,0.25) !important;
+  color: #92400e !important;
+}
+.payChip.neutral,
+.hbBadge.neutral{
+  background: rgba(148,163,184,0.14) !important;
+  border-color: rgba(148,163,184,0.22) !important;
+  color: #1e293b !important;
+}
+
+/* Add missing danger variant for .pill */
+.pill.danger{
+  background: rgba(211,0,5,0.06) !important;
+  border-color: rgba(211,0,5,0.22) !important;
+  color: var(--sale) !important;
+}
+
+/* ManageHotels actions: force one horizontal line */
+.evActions{
+  display: flex !important;
+  justify-content: flex-end !important;
+  gap: 10px !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+}
+.evActions .aBtn{ white-space: nowrap !important; }
+@media (max-width: 700px){
+  .evActions{ flex-wrap: wrap !important; justify-content: flex-start !important; }
+}
+
+/* aCard soft surface (where used) */
+.aCard{ background: var(--soft) !important; }
