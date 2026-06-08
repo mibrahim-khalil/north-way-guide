@@ -250,6 +250,7 @@
   width: min(360px, 60%);
 }
 
+/* ✅ MOBILE */
 @media (max-width: 600px){
   .profilePage{
     padding: 0 14px;
@@ -285,19 +286,19 @@
     width: 100%;
     text-align: left;
   }
-}
-@media (max-width: 600px){
+
+  /* ✅ Segmented tabs: 2 in first row, 3rd goes to next row (not stretched) */
   .profileSeg{
     width: 100%;
-    display: flex;
-    flex-wrap: nowrap;      /* stop 2-line wrap */
-    overflow-x: auto;       /* allow scroll instead */
-    -webkit-overflow-scrolling: touch;
-    justify-content: flex-start;
+    display: grid;
+    grid-template-columns: max-content max-content;
+    gap: 8px;
+    justify-content: start;
+    flex-wrap: unset;
+    border-radius: 16px;
   }
 
   .profileSegBtn{
-    flex: 0 0 auto;
     white-space: nowrap;
   }
 }
