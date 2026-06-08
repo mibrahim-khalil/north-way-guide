@@ -182,14 +182,12 @@ export default function Dashboard() {
 
   return (
     <div className="dashWrap">
-      {/* Top */}
       <div className="dashTop">
         <div>
           <h2 style={{ margin: 0 }}>Admin Dashboard</h2>
           <div className="adminMuted" style={{ marginTop: 6 }}>
             Live overview of listings, approvals and orders.
           </div>
-
           {pageError ? <div className="dashError">{pageError}</div> : null}
         </div>
 
@@ -198,14 +196,9 @@ export default function Dashboard() {
         </button>
       </div>
 
-      {/* KPIs */}
       <div className="dashKpiGrid">
         {kpis.map((k) => (
-          <Link
-            key={k.label}
-            to={k.to}
-            className={`aCard kpiCard ${k.warn ? "kpiWarn" : ""}`}
-          >
+          <Link key={k.label} to={k.to} className={`aCard kpiCard ${k.warn ? "kpiWarn" : ""}`}>
             <div className="kpiIcon" aria-hidden>{k.icon}</div>
 
             <div style={{ minWidth: 0 }}>
@@ -219,9 +212,7 @@ export default function Dashboard() {
         ))}
       </div>
 
-      {/* Main grid */}
       <div className="dashGrid2">
-        {/* Quick Actions */}
         <div className="aCard" style={{ padding: 16 }}>
           <div style={{ display: "flex", justifyContent: "space-between", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
             <h3 style={{ margin: 0 }}>Quick Actions</h3>
@@ -256,7 +247,6 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Orders */}
         <div className="aCard" style={{ padding: 16 }}>
           <div style={{ display: "flex", justifyContent: "space-between", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
             <h3 style={{ margin: 0 }}>Orders (Info)</h3>
