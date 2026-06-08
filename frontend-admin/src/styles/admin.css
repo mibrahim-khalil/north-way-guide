@@ -750,3 +750,16 @@ label{
 .adminAuthTitle{
   margin: 0;
 }
+
+.adminAuthTitle{
+  text-align: center;
+}
+
+.adminAuthCard .adminMuted{
+  text-align: center;
+  margin-top: 6px;
+}
+
+.adminAuthForm{
+  text-align: left;
+}
