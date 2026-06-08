@@ -6,7 +6,7 @@ export default function AdminLogin() {
   const navigate = useNavigate();
   const { login, logout } = useAdminAuth();
 
-  const [email, setEmail] = useState("");     
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -20,9 +20,8 @@ export default function AdminLogin() {
       const user = await login(email, password);
 
       if (user.role !== "ADMIN") {
-        await logout(); 
+        await logout();
         setError("You are not an admin.");
-        setSubmitting(false);
         return;
       }
 
@@ -37,27 +36,41 @@ export default function AdminLogin() {
   return (
     <div className="adminAuth">
       <div className="adminAuthCard">
-        <h2 style={{ margin: 0 }}>Admin Login</h2>
-        <p className="adminMuted">Login using real backend (MongoDB Atlas).</p>
+        <h2 style={{ margin: 0, color: "var(--ink)", fontWeight: 1000 }}>Admin Login</h2>
+        <p className="adminMuted" style={{ marginTop: 6 }}>
+          Sign in to manage applications, listings, and orders.
+        </p>
 
-        {error && <div className="adminError">{error}</div>}
+        {error ? <div className="adminError">{error}</div> : null}
 
         <form onSubmit={submit} className="adminAuthForm">
           <div>
-            <label>Email</label>
-            <input value={email} onChange={(e) => setEmail(e.target.value)} />
+            <label htmlFor="adminEmail">Email</label>
+            <input
+              id="adminEmail"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              autoComplete="email"
+              placeholder="admin@example.com"
+              required
+            />
           </div>
 
           <div>
-            <label>Password</label>
-            <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" />
+            <label htmlFor="adminPassword">Password</label>
+            <input
+              id="adminPassword"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              autoComplete="current-password"
+              placeholder="••••••••"
+              required
+            />
           </div>
 
-          <button
-            className="aBtn primary"
-            style={{ width: "100%", padding: "12px 14px" }}
-            disabled={submitting}
-          >
+          <button className="aBtn primary" type="submit" disabled={submitting} style={{ width: "100%" }}>
             {submitting ? "Logging in..." : "Login"}
           </button>
         </form>
