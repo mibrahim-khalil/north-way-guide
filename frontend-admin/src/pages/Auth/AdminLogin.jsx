@@ -39,20 +39,17 @@ export default function AdminLogin() {
     <div
       className="adminAuth adminAuthBg"
       style={{
-        backgroundImage: `linear-gradient(rgba(255,255,255,0.78), rgba(255,255,255,0.78)), url(${bg})`,
+        backgroundImage: `linear-gradient(rgba(255,255,255,0.75), rgba(255,255,255,0.75)), url(${bg})`,
       }}
     >
       <div className="adminAuthCard">
-        <div className="adminAuthLogoRow">
-          <div className="adminAuthLogoStage">
-            <img className="adminAuthLogoImg" src={logo} alt="North Way Guide" />
-          </div>
+        <div className="adminAuthHead">
+          <img className="adminAuthLogoBig" src={logo} alt="North Way Guide" />
+          <h2 className="adminAuthTitle">Admin Login</h2>
+          <p className="adminAuthSubtitle">
+            Sign in to manage applications, listings, and orders.
+          </p>
         </div>
-
-        <h2 className="adminAuthTitle">Admin Login</h2>
-        <p className="adminMuted adminAuthSubtitle">
-          Sign in to manage applications, listings, and orders.
-        </p>
 
         {error ? <div className="adminError">{error}</div> : null}
 
