@@ -124,10 +124,6 @@
   cursor:pointer;
 }
 
-.profileQuickCard.active{
-  border-color: var(--ink);
-}
-
 .profileQuickBody{
   padding: 14px 10px;
   text-align:center;
@@ -151,6 +147,21 @@
   font-size: 13px;
   color: var(--ink);
   white-space: nowrap;
+}
+
+.profileQuickCard.active{
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.profileQuickCard.active .profileQuickLabel{
+  color: var(--canvas);
+}
+
+.profileQuickCard.active .profileQuickIcon{
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.18);
+  color: var(--canvas);
 }
 
 .profileSeg{
@@ -187,6 +198,21 @@
   color: var(--ink);
 }
 
+.profilePanelHead{
+  display:flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.profilePanelContent{
+  margin-top: 12px;
+  max-height: 70vh;
+  overflow: auto;
+  padding-right: 6px;
+}
+
 .profileInlineRow{
   display:flex;
   justify-content: space-between;
@@ -209,6 +235,7 @@
   color: var(--ink);
   font-size: 14px;
   text-align: right;
+  word-break: break-word;
 }
 
 .profileInlineInput{
@@ -224,13 +251,36 @@
 }
 
 @media (max-width: 600px){
+  .profilePage{
+    padding: 0 14px;
+  }
+
+  .profilePanelContent{
+    max-height: none;
+    overflow: visible;
+    padding-right: 0;
+  }
+
+  .profileQuickRail{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: visible;
+    padding-bottom: 0;
+  }
+
+  .profileQuickCard{
+    min-width: 0;
+  }
+
   .profileInlineRow{
     flex-direction: column;
     align-items: stretch;
   }
+
   .profileInlineValue{
     text-align: left;
   }
+
   .profileInlineInput{
     width: 100%;
     text-align: left;
