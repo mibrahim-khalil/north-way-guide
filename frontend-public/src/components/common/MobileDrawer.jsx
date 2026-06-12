@@ -11,9 +11,11 @@ const navItems = [
   { to: "/hotels", label: "Hotels" },
   { to: "/guides", label: "Guides" },
   { to: "/transport", label: "Transport" },
+  { to: "/events", label: "Events" },
+  { to: "/weather", label: "Weather" },
   { to: "/local-products", label: "Local Products" },
   { to: "/about", label: "About" },
-];
+]
 
 function SearchIcon() {
   return (
