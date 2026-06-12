@@ -23,7 +23,7 @@ export default function AdminLogin() {
 
       if (user.role !== "ADMIN") {
         await logout();
-        setError("You are not an admin.");
+        setError("You are not an admin.");0
         return;
       }
 
