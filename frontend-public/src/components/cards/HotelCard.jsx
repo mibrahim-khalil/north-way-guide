@@ -9,6 +9,7 @@ export default function HotelCard({ hotel }) {
 
   const ratingAvg = hotel?.ratingAvg ?? hotel?.averageRating ?? hotel?.rating ?? 0;
   const ratingCount = hotel?.ratingCount ?? 0;
+
   const ratingText =
     ratingCount > 0
       ? `${Number(ratingAvg).toFixed(1)} (${ratingCount})`
@@ -21,15 +22,28 @@ export default function HotelCard({ hotel }) {
 
   const id = hotel?.id || hotel?._id;
 
+  // Fallback placeholder image (make sure this file exists in /public/images/)
+  const fallback = "/images/home1.png";
+
   return (
     <>
       <div className="card nkCard">
         <div className="nkMedia">
           {image && imgOk ? (
-            <img src={image} alt={hotel?.name} className="nkImg" onError={() => setImgOk(false)} />
+            <img
+              src={image}
+              alt={hotel?.name || "Hotel"}
+              className="nkImg"
+              onError={(e) => {
+                setImgOk(false);
+                // fallback image instead of blank placeholder
+                e.currentTarget.src = fallback;
+              }}
+            />
           ) : (
-            <div className="nkImgPlaceholder" />
+            <img src={fallback} alt="Hotel placeholder" className="nkImg" />
           )}
+
           <span className="nkChip nkChip--onImage">★ {ratingText}</span>
         </div>
 
@@ -41,8 +55,12 @@ export default function HotelCard({ hotel }) {
           </div>
 
           <div className="nkActions">
-            <button className="btn primary" onClick={() => setOpen(true)}>Book Now</button>
-            <Link className="btn ghost" to={`/hotels/${id}`}>More Info</Link>
+            <button className="btn primary" type="button" onClick={() => setOpen(true)}>
+              Book Now
+            </button>
+            <Link className="btn ghost" to={`/hotels/${id}`}>
+              More Info
+            </Link>
           </div>
         </div>
       </div>

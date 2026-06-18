@@ -10,6 +10,22 @@ import fs from "fs";
 
 const router = Router();
 
+function normalizeImages(payload = {}) {
+  const p = payload || {};
+
+  // preferred: images array
+  if (Array.isArray(p.images)) {
+    const cleaned = p.images.map((x) => String(x || "").trim()).filter(Boolean);
+    if (cleaned.length) return cleaned;
+  }
+
+  // fallback: older / alternate fields
+  const single = p.imageUrl || p.image || p.photoUrl || p.coverImage || "";
+
+  if (typeof single === "string" && single.trim()) return [single.trim()];
+
+  return [];
+}
 
 router.get("/applications/summary", requireAuth, requireAdmin, async (req, res) => {
   const byType = await ServiceApplication.aggregate([
@@ -21,7 +37,6 @@ router.get("/applications/summary", requireAuth, requireAdmin, async (req, res) 
   const totalPending = byType.reduce((sum, x) => sum + x.count, 0);
   res.json({ totalPending, byType });
 });
-
 
 router.get("/applications", requireAuth, requireAdmin, async (req, res) => {
   const { status, serviceType } = req.query;
@@ -37,7 +52,6 @@ router.get("/applications", requireAuth, requireAdmin, async (req, res) => {
   res.json({ applications });
 });
 
-
 router.get("/applications/:id/documents/:docId", requireAuth, requireAdmin, async (req, res) => {
   const appDoc = await ServiceApplication.findById(req.params.id);
   if (!appDoc) return res.status(404).json({ message: "Application not found" });
@@ -50,7 +64,6 @@ router.get("/applications/:id/documents/:docId", requireAuth, requireAdmin, asyn
 
   res.download(filePath, doc.originalName);
 });
-
 
 router.patch("/applications/:id", requireAuth, requireAdmin, async (req, res) => {
   try {
@@ -65,9 +78,7 @@ router.patch("/applications/:id", requireAuth, requireAdmin, async (req, res) =>
     const p = appDoc.payload || {};
     let createdEntity = null;
 
-   
     if (status === "APPROVED") {
-     
       if (appDoc.serviceType === "GUIDE") {
         if (!p.name || !p.baseCity) {
           return res.status(400).json({ message: "Guide payload must include name and baseCity." });
@@ -82,7 +93,7 @@ router.patch("/applications/:id", requireAuth, requireAdmin, async (req, res) =>
           languages: Array.isArray(p.languages) ? p.languages : [],
           specialties: Array.isArray(p.specialties) ? p.specialties : [],
           pricePerDay: Number(p.pricePerDay || 0),
-          images: Array.isArray(p.images) ? p.images : [],
+          images: normalizeImages(p),
           isActive: true,
         };
 
@@ -121,7 +132,7 @@ router.patch("/applications/:id", requireAuth, requireAdmin, async (req, res) =>
           address: p.address || "",
           description: p.description || "",
           mapsUrl: p.mapsUrl || "",
-          images: Array.isArray(p.images) ? p.images : [],
+          images: normalizeImages(p),
           amenities: Array.isArray(p.amenities) ? p.amenities : [],
           rooms,
           priceFrom,
@@ -200,7 +211,6 @@ router.patch("/applications/:id", requireAuth, requireAdmin, async (req, res) =>
         appDoc.createdEntityId = upserted[0]?._id || null;
       }
     }
-
 
     if (status === "REJECTED") {
       if (appDoc.createdEntityType === "GUIDE" && appDoc.createdEntityId) {

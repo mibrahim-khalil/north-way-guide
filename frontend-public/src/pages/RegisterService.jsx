@@ -112,7 +112,8 @@ export default function RegisterService() {
         : [],
       images: hotel.imageUrl ? [hotel.imageUrl] : [],
       rooms: hotel.rooms || [],
-      pricePerNight: computedPriceFrom,
+      // ✅ Correct key for your Hotel model
+      priceFrom: computedPriceFrom,
     };
   }, [hotel, isHotel, computedPriceFrom]);
 
@@ -217,14 +218,14 @@ export default function RegisterService() {
   }, [tp, isTransport]);
 
   // -------------------------
-  // Vendor registration (✅ added googleMapUrl)
+  // Vendor registration
   // -------------------------
   const [vendor, setVendor] = useState({
     shopName: "",
     city: "",
     phone: "",
     address: "",
-    googleMapUrl: "", // ✅ NEW
+    googleMapUrl: "",
   });
 
   const [vendorApp, setVendorApp] = useState(null);
@@ -283,6 +284,11 @@ export default function RegisterService() {
         }
         if (!Array.isArray(hotelPayload.rooms) || hotelPayload.rooms.length < 1) {
           toast("Add at least 1 room category", 2000);
+          return;
+        }
+        // ✅ Require at least 1 image so hotel cards always show an image after approval
+        if (!Array.isArray(hotelPayload.images) || hotelPayload.images.length < 1) {
+          toast("Upload at least 1 hotel image", 2000);
           return;
         }
 
@@ -344,7 +350,7 @@ export default function RegisterService() {
             city: vendor.city,
             phone: vendor.phone,
             address: vendor.address,
-            googleMapUrl: vendor.googleMapUrl, // ✅ NEW
+            googleMapUrl: vendor.googleMapUrl,
           },
           documents: [],
         });
