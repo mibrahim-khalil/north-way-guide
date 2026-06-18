@@ -18,7 +18,16 @@ import MyOrdersSection from "../components/profile/MyOrdersSection";
 import MyTripPlansSection from "../components/profile/MyTripPlansSection";
 
 const IconCalendar = ({ color = "currentColor" }) => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2.4"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
     <line x1="16" y1="2" x2="16" y2="6" />
     <line x1="8" y1="2" x2="8" y2="6" />
@@ -27,7 +36,16 @@ const IconCalendar = ({ color = "currentColor" }) => (
 );
 
 const IconBag = ({ color = "currentColor" }) => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2.4"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
     <line x1="3" y1="6" x2="21" y2="6" />
     <path d="M16 10a4 4 0 0 1-8 0" />
@@ -35,14 +53,32 @@ const IconBag = ({ color = "currentColor" }) => (
 );
 
 const IconPlane = ({ color = "currentColor" }) => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2.4"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <path d="m22 2-7 20-4-9-9-4Z" />
     <path d="M22 2 11 13" />
   </svg>
 );
 
 const IconShop = ({ color = "currentColor" }) => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2.4"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <path d="M20.2 7.8H3.8l-1.3 3.3c-.5 1.4.4 2.9 1.9 2.9h.1c1.2 0 2.2-1 2.2-2.2V11" />
     <path d="M21.5 11.1c-.5-1.4-1.9-2.2-3.3-2.2h-1.4V7.8" />
     <rect x="3" y="14" width="18" height="7" rx="1" />
@@ -50,21 +86,48 @@ const IconShop = ({ color = "currentColor" }) => (
 );
 
 const IconUser = ({ color = "currentColor" }) => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2.4"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <path d="M20 21a8 8 0 0 0-16 0" />
     <circle cx="12" cy="7" r="4" />
   </svg>
 );
 
 const IconInbox = ({ color = "currentColor" }) => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2.4"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <path d="M22 12h-6l-2 3h-4l-2-3H2" />
     <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11Z" />
   </svg>
 );
 
 const IconSearch = ({ color = "currentColor" }) => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2.4"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <circle cx="11" cy="11" r="8" />
     <path d="m21 21-4.3-4.3" />
   </svg>
@@ -155,7 +218,11 @@ function Panel({ title, right, children }) {
 
 function StatusPill({ status }) {
   const s = String(status || "PENDING").toUpperCase();
-  return <span style={{ padding: "4px 10px", borderRadius: 999, fontWeight: 900, fontSize: 12, ...chipStyle(s) }}>{s}</span>;
+  return (
+    <span style={{ padding: "4px 10px", borderRadius: 999, fontWeight: 900, fontSize: 12, ...chipStyle(s) }}>
+      {s}
+    </span>
+  );
 }
 
 function StatusFilterPill({ label, value, active, onClick, tone }) {
@@ -174,7 +241,8 @@ function StatusFilterPill({ label, value, active, onClick, tone }) {
       style={{
         borderRadius: 999,
         padding: "8px 12px",
-        border: `1px solid ${active ? "var(--ink)" : t.bd}`,
+        border: "1px solid",
+        borderColor: active ? "var(--ink)" : t.bd,
         background: active ? "var(--ink)" : t.bg,
         color: active ? "var(--canvas)" : t.fg,
         fontWeight: 900,
@@ -229,12 +297,39 @@ function GuideRow({ g, onViewTo, onEdit, onDeactivate, onActivate, mode }) {
 
   return (
     <div className="card" style={{ boxShadow: "none" }}>
-      <div className="cardBody" style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
+      <div
+        className="cardBody"
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          gap: 12,
+          flexWrap: "wrap",
+          alignItems: "center",
+        }}
+      >
         <div style={{ display: "flex", gap: 12, alignItems: "center", minWidth: 260 }}>
           {thumb ? (
-            <img src={thumb} alt={g?.name} style={{ width: 56, height: 56, borderRadius: 12, objectFit: "cover", border: "1px solid var(--hairline)" }} />
+            <img
+              src={thumb}
+              alt={g?.name}
+              style={{
+                width: 56,
+                height: 56,
+                borderRadius: 12,
+                objectFit: "cover",
+                border: "1px solid var(--hairline)",
+              }}
+            />
           ) : (
-            <div style={{ width: 56, height: 56, borderRadius: 12, background: "var(--soft)", border: "1px solid var(--hairline)" }} />
+            <div
+              style={{
+                width: 56,
+                height: 56,
+                borderRadius: 12,
+                background: "var(--soft)",
+                border: "1px solid var(--hairline)",
+              }}
+            />
           )}
 
           <div>
@@ -253,18 +348,34 @@ function GuideRow({ g, onViewTo, onEdit, onDeactivate, onActivate, mode }) {
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
           {mode === "active" ? (
             <>
-              <Link className="btn" to={onViewTo}>View</Link>
-              <button className="btn primary" type="button" onClick={onEdit}>Edit</button>
-              <button className="btn" type="button" onClick={onDeactivate} style={{ background: "#ef4444", borderColor: "#ef4444", color: "#fff" }}>
+              <Link className="btn" to={onViewTo}>
+                View
+              </Link>
+              <button className="btn primary" type="button" onClick={onEdit}>
+                Edit
+              </button>
+              <button
+                className="btn"
+                type="button"
+                onClick={onDeactivate}
+                style={{ background: "#ef4444", borderColor: "#ef4444", color: "#fff" }}
+              >
                 Deactivate
               </button>
             </>
           ) : (
             <>
-              <button className="btn" type="button" onClick={onActivate} style={{ background: "rgb(16,185,129)", borderColor: "rgb(16,185,129)", color: "#fff" }}>
+              <button
+                className="btn"
+                type="button"
+                onClick={onActivate}
+                style={{ background: "rgb(16,185,129)", borderColor: "rgb(16,185,129)", color: "#fff" }}
+              >
                 Activate
               </button>
-              <button className="btn primary" type="button" onClick={onEdit}>Edit</button>
+              <button className="btn primary" type="button" onClick={onEdit}>
+                Edit
+              </button>
             </>
           )}
         </div>
@@ -278,12 +389,39 @@ function HotelRow({ h, mode, onViewTo, onEdit, onDeactivate, onActivate }) {
 
   return (
     <div className="card" style={{ boxShadow: "none" }}>
-      <div className="cardBody" style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
+      <div
+        className="cardBody"
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          gap: 12,
+          flexWrap: "wrap",
+          alignItems: "center",
+        }}
+      >
         <div style={{ display: "flex", gap: 12, alignItems: "center", minWidth: 260 }}>
           {thumb ? (
-            <img src={thumb} alt={h?.name} style={{ width: 56, height: 56, borderRadius: 12, objectFit: "cover", border: "1px solid var(--hairline)" }} />
+            <img
+              src={thumb}
+              alt={h?.name}
+              style={{
+                width: 56,
+                height: 56,
+                borderRadius: 12,
+                objectFit: "cover",
+                border: "1px solid var(--hairline)",
+              }}
+            />
           ) : (
-            <div style={{ width: 56, height: 56, borderRadius: 12, background: "var(--soft)", border: "1px solid var(--hairline)" }} />
+            <div
+              style={{
+                width: 56,
+                height: 56,
+                borderRadius: 12,
+                background: "var(--soft)",
+                border: "1px solid var(--hairline)",
+              }}
+            />
           )}
 
           <div>
@@ -302,18 +440,34 @@ function HotelRow({ h, mode, onViewTo, onEdit, onDeactivate, onActivate }) {
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
           {mode === "active" ? (
             <>
-              <Link className="btn" to={onViewTo}>View</Link>
-              <button className="btn primary" type="button" onClick={onEdit}>Edit</button>
-              <button className="btn" type="button" onClick={onDeactivate} style={{ background: "#ef4444", borderColor: "#ef4444", color: "#fff" }}>
+              <Link className="btn" to={onViewTo}>
+                View
+              </Link>
+              <button className="btn primary" type="button" onClick={onEdit}>
+                Edit
+              </button>
+              <button
+                className="btn"
+                type="button"
+                onClick={onDeactivate}
+                style={{ background: "#ef4444", borderColor: "#ef4444", color: "#fff" }}
+              >
                 Deactivate
               </button>
             </>
           ) : (
             <>
-              <button className="btn" type="button" onClick={onActivate} style={{ background: "rgb(16,185,129)", borderColor: "rgb(16,185,129)", color: "#fff" }}>
+              <button
+                className="btn"
+                type="button"
+                onClick={onActivate}
+                style={{ background: "rgb(16,185,129)", borderColor: "rgb(16,185,129)", color: "#fff" }}
+              >
                 Activate
               </button>
-              <button className="btn primary" type="button" onClick={onEdit}>Edit</button>
+              <button className="btn primary" type="button" onClick={onEdit}>
+                Edit
+              </button>
             </>
           )}
         </div>
@@ -325,11 +479,20 @@ function HotelRow({ h, mode, onViewTo, onEdit, onDeactivate, onActivate }) {
 function TransportRow({ r, mode, onEdit, onDeactivate, onActivate }) {
   return (
     <div className="card" style={{ boxShadow: "none" }}>
-      <div className="cardBody" style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
+      <div
+        className="cardBody"
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          gap: 12,
+          flexWrap: "wrap",
+          alignItems: "center",
+        }}
+      >
         <div>
-          <div style={{ fontWeight: 1000 }}>{r.providerName || "—"}</div>
+          <div style={{ fontWeight: 1000 }}>{r?.providerName || "—"}</div>
           <div className="p" style={{ fontSize: 13, margin: 0 }}>
-            {r.from} → {r.to} • {r.type} • PKR <b>{r.type === "Flight" ? "—" : r.fare || 0}</b>
+            {r?.from} → {r?.to} • {r?.type} • PKR <b>{r?.type === "Flight" ? "—" : r?.fare || 0}</b>
           </div>
           {mode === "inactive" ? (
             <div className="p" style={{ fontSize: 12, marginTop: 6 }}>
@@ -339,7 +502,9 @@ function TransportRow({ r, mode, onEdit, onDeactivate, onActivate }) {
         </div>
 
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          <button className="btn primary" type="button" onClick={onEdit}>Edit</button>
+          <button className="btn primary" type="button" onClick={onEdit}>
+            Edit
+          </button>
           <button
             className="btn"
             type="button"
@@ -582,7 +747,7 @@ export default function Profile() {
   }, [apps, appsByType, appType, appStatus, appQuery]);
 
   const withdraw = async (app) => {
-    const ok = confirm("Remove this rejected application?");
+    const ok = window.confirm("Remove this rejected application?");
     if (!ok) return;
     try {
       await api.delete(`/applications/${app._id}`);
@@ -594,7 +759,7 @@ export default function Profile() {
   };
 
   const deactivateGuide = async (g) => {
-    const ok = confirm(`Deactivate "${g?.name}"? It will be hidden from public.`);
+    const ok = window.confirm(`Deactivate "${g?.name}"? It will be hidden from public.`);
     if (!ok) return;
     try {
       await api.patch(`/my/guides/${g._id}/deactivate`);
@@ -606,7 +771,7 @@ export default function Profile() {
   };
 
   const activateGuide = async (g) => {
-    const ok = confirm(`Activate "${g?.name}"? It will be visible publicly.`);
+    const ok = window.confirm(`Activate "${g?.name}"? It will be visible publicly.`);
     if (!ok) return;
     try {
       await api.patch(`/my/guides/${g._id}/activate`);
@@ -618,7 +783,7 @@ export default function Profile() {
   };
 
   const deactivateHotel = async (h) => {
-    const ok = confirm(`Deactivate "${h?.name}"? It will be hidden from public.`);
+    const ok = window.confirm(`Deactivate "${h?.name}"? It will be hidden from public.`);
     if (!ok) return;
     try {
       await api.patch(`/my/hotels/${h._id}/deactivate`);
@@ -630,7 +795,7 @@ export default function Profile() {
   };
 
   const activateHotel = async (h) => {
-    const ok = confirm(`Activate "${h?.name}"? It will be visible publicly.`);
+    const ok = window.confirm(`Activate "${h?.name}"? It will be visible publicly.`);
     if (!ok) return;
     try {
       await api.patch(`/my/hotels/${h._id}/activate`);
@@ -642,7 +807,7 @@ export default function Profile() {
   };
 
   const deactivateTransport = async (r) => {
-    const ok = confirm(`Deactivate route "${r.from} → ${r.to}"?`);
+    const ok = window.confirm(`Deactivate route "${r?.from} → ${r?.to}"?`);
     if (!ok) return;
     try {
       await api.patch(`/my/transport/${r._id}/deactivate`);
@@ -654,7 +819,7 @@ export default function Profile() {
   };
 
   const activateTransport = async (r) => {
-    const ok = confirm(`Activate route "${r.from} → ${r.to}"?`);
+    const ok = window.confirm(`Activate route "${r?.from} → ${r?.to}"?`);
     if (!ok) return;
     try {
       await api.patch(`/my/transport/${r._id}/activate`);
@@ -683,7 +848,10 @@ export default function Profile() {
   if (!user) return null;
   if (!view) return null;
 
-  const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || "User")}&background=111111&color=ffffff&size=128`;
+  const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(
+    user?.name || "User"
+  )}&background=111111&color=ffffff&size=128`;
+
   const memberSince = user?.createdAt
     ? new Date(user.createdAt).toLocaleDateString("en-US", { month: "long", year: "numeric" })
     : "—";
@@ -757,7 +925,9 @@ export default function Profile() {
           <button className="btn" type="button" onClick={() => setBuyerShowAllPurchases((p) => !p)}>
             {buyerShowAllPurchases ? "Show Less" : "View All"}
           </button>
-          <Link className="btn" to="/local-products">Shop Products</Link>
+          <Link className="btn" to="/local-products">
+            Shop Products
+          </Link>
         </div>
       }
     >
@@ -765,15 +935,33 @@ export default function Profile() {
 
       <div style={{ marginTop: 12 }}>
         {purchasesTab === "HOTEL" ? (
-          <MyHotelBookingsSection hideHeader compact limit={buyerShowAllPurchases ? undefined : 3} headerLabel="Recent Hotel Bookings" onViewAll={() => setBuyerShowAllPurchases(true)} />
+          <MyHotelBookingsSection
+            hideHeader
+            compact
+            limit={buyerShowAllPurchases ? undefined : 3}
+            headerLabel="Recent Hotel Bookings"
+            onViewAll={() => setBuyerShowAllPurchases(true)}
+          />
         ) : null}
 
         {purchasesTab === "GUIDE" ? (
-          <MyGuideBookingsSection hideHeader compact limit={buyerShowAllPurchases ? undefined : 3} headerLabel="Recent Guide Bookings" onViewAll={() => setBuyerShowAllPurchases(true)} />
+          <MyGuideBookingsSection
+            hideHeader
+            compact
+            limit={buyerShowAllPurchases ? undefined : 3}
+            headerLabel="Recent Guide Bookings"
+            onViewAll={() => setBuyerShowAllPurchases(true)}
+          />
         ) : null}
 
         {purchasesTab === "ORDERS" ? (
-          <MyOrdersSection hideHeader compact limit={buyerShowAllPurchases ? undefined : 3} headerLabel="Recent Orders" onViewAll={() => setBuyerShowAllPurchases(true)} />
+          <MyOrdersSection
+            hideHeader
+            compact
+            limit={buyerShowAllPurchases ? undefined : 3}
+            headerLabel="Recent Orders"
+            onViewAll={() => setBuyerShowAllPurchases(true)}
+          />
         ) : null}
       </div>
     </Panel>
@@ -788,7 +976,13 @@ export default function Profile() {
         </button>
       }
     >
-      <MyTripPlansSection hideHeader compact limit={buyerShowAllTrips ? undefined : 3} headerLabel="Recent Trip Plans" onViewAll={() => setBuyerShowAllTrips(true)} />
+      <MyTripPlansSection
+        hideHeader
+        compact
+        limit={buyerShowAllTrips ? undefined : 3}
+        headerLabel="Recent Trip Plans"
+        onViewAll={() => setBuyerShowAllTrips(true)}
+      />
     </Panel>
   );
 
@@ -809,9 +1003,7 @@ export default function Profile() {
         activeKey={inboxTab}
         onChange={setInboxTab}
       />
-      <div style={{ marginTop: 12 }}>
-        {inboxTab === "GUIDE" ? <MyGuideBookingsReceivedSection /> : <MyHotelBookingsReceivedSection />}
-      </div>
+      <div style={{ marginTop: 12 }}>{inboxTab === "GUIDE" ? <MyGuideBookingsReceivedSection /> : <MyHotelBookingsReceivedSection />}</div>
     </Panel>
   );
 
@@ -820,9 +1012,15 @@ export default function Profile() {
       title="Bookings / Orders"
       right={
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          <Link className="btn" to="/hotels">Book a Hotel</Link>
-          <Link className="btn" to="/guides">Hire a Guide</Link>
-          <Link className="btn" to="/local-products">Shop Products</Link>
+          <Link className="btn" to="/hotels">
+            Book a Hotel
+          </Link>
+          <Link className="btn" to="/guides">
+            Hire a Guide
+          </Link>
+          <Link className="btn" to="/local-products">
+            Shop Products
+          </Link>
         </div>
       }
     >
@@ -843,7 +1041,9 @@ export default function Profile() {
           <button className="btn" type="button" onClick={refreshAllSeller} disabled={anyRefreshingSeller}>
             {anyRefreshingSeller ? "Refreshing..." : "Refresh"}
           </button>
-          <Link className="btn" to="/register-service">Register a Service</Link>
+          <Link className="btn" to="/register-service">
+            Register a Service
+          </Link>
         </div>
       }
     >
@@ -863,7 +1063,15 @@ export default function Profile() {
           value={appQuery}
           onChange={(e) => setAppQuery(e.target.value)}
           placeholder="Search (service type, status, admin note...)"
-          style={{ border: "none", outline: "none", background: "transparent", width: "100%", fontSize: 14, fontWeight: 700, color: "var(--ink)" }}
+          style={{
+            border: "none",
+            outline: "none",
+            background: "transparent",
+            width: "100%",
+            fontSize: 14,
+            fontWeight: 700,
+            color: "var(--ink)",
+          }}
         />
         {appQuery ? (
           <button className="btn" type="button" onClick={() => setAppQuery("")} style={{ padding: "6px 10px" }}>
@@ -897,9 +1105,13 @@ export default function Profile() {
           <div className="card" style={{ boxShadow: "none", border: "1px dashed #cfcfcf", background: "var(--canvas)" }}>
             <div className="cardBody" style={{ padding: 16 }}>
               <div style={{ fontWeight: 1000 }}>No applications found</div>
-              <div className="p" style={{ marginTop: 6 }}>Try changing filters or register a service.</div>
+              <div className="p" style={{ marginTop: 6 }}>
+                Try changing filters or register a service.
+              </div>
               <div style={{ marginTop: 10 }}>
-                <Link className="btn primary" to="/register-service">Register a Service</Link>
+                <Link className="btn primary" to="/register-service">
+                  Register a Service
+                </Link>
               </div>
             </div>
           </div>
@@ -935,20 +1147,36 @@ export default function Profile() {
 
                 return (
                   <div key={a._id} className="card" style={{ boxShadow: "none" }}>
-                    <div className="cardBody" style={{ display: "grid", gridTemplateColumns: "1.2fr 0.6fr 1.4fr 0.8fr 0.6fr", gap: 10, alignItems: "center" }}>
+                    <div
+                      className="cardBody"
+                      style={{
+                        display: "grid",
+                        gridTemplateColumns: "1.2fr 0.6fr 1.4fr 0.8fr 0.6fr",
+                        gap: 10,
+                        alignItems: "center",
+                      }}
+                    >
                       <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
                         <ServiceTypeIcon type={a.serviceType} />
                         <div>
                           <div style={{ fontWeight: 1000 }}>{a.serviceType}</div>
-                          <div className="p" style={{ fontSize: 12, marginTop: 4 }}>ID: {String(a._id).slice(-6).toUpperCase()}</div>
+                          <div className="p" style={{ fontSize: 12, marginTop: 4 }}>
+                            ID: {String(a._id).slice(-6).toUpperCase()}
+                          </div>
                         </div>
                       </div>
 
-                      <div><StatusPill status={statusUpper} /></div>
+                      <div>
+                        <StatusPill status={statusUpper} />
+                      </div>
 
-                      <div className="p" style={{ margin: 0 }}>{a.adminNote ? a.adminNote : "—"}</div>
+                      <div className="p" style={{ margin: 0 }}>
+                        {a.adminNote ? a.adminNote : "—"}
+                      </div>
 
-                      <div className="p" style={{ margin: 0, fontSize: 12 }}>{a.createdAt ? new Date(a.createdAt).toLocaleString() : "—"}</div>
+                      <div className="p" style={{ margin: 0, fontSize: 12 }}>
+                        {a.createdAt ? new Date(a.createdAt).toLocaleString() : "—"}
+                      </div>
 
                       <div style={{ textAlign: "right" }}>
                         {isRejected ? (
@@ -961,7 +1189,9 @@ export default function Profile() {
                             Withdraw
                           </button>
                         ) : (
-                          <span className="p" style={{ margin: 0, fontSize: 12, color: "var(--muted)" }}>—</span>
+                          <span className="p" style={{ margin: 0, fontSize: 12, color: "var(--muted)" }}>
+                            —
+                          </span>
                         )}
                       </div>
                     </div>
@@ -975,21 +1205,187 @@ export default function Profile() {
     </Panel>
   );
 
+  // ✅ FIXED: REAL My Services list (with Edit buttons + active/inactive)
   const renderSellerServices = () => (
     <Panel
-      title="My Services (Approved Only)"
+      title="My Services (Approved)"
       right={
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          <button className="btn" type="button" onClick={() => setView("INBOX")}>Bookings Received</button>
+          <button className="btn" type="button" onClick={() => setView("INBOX")}>
+            Bookings Received
+          </button>
           <button className="btn" type="button" onClick={refreshAllSeller} disabled={anyRefreshingSeller}>
             {anyRefreshingSeller ? "Refreshing..." : "Refresh"}
           </button>
+          <Link className="btn" to="/register-service">
+            Register Service
+          </Link>
         </div>
       }
     >
       <SegmentedTabs tabs={SERVICE_TABS} activeKey={serviceTab} onChange={setServiceTab} />
-      <div style={{ marginTop: 12 }}>
-        <div className="p">Your seller services UI remains unchanged here.</div>
+
+      <div style={{ marginTop: 12, display: "grid", gap: 10 }}>
+        {serviceTab === "GUIDE" ? (
+          <>
+            {myGuidesLoading ? <div className="p">Loading guides...</div> : null}
+
+            {!myGuidesLoading && myActiveGuides.length === 0 && myInactiveGuides.length === 0 ? (
+              <div className="p">No guides yet.</div>
+            ) : null}
+
+            {myActiveGuides.map((g) => (
+              <GuideRow
+                key={g._id}
+                g={g}
+                mode="active"
+                onViewTo={`/guides/${g._id}`}
+                onEdit={() => {
+                  setEditingGuide(g);
+                  setEditGuideOpen(true);
+                }}
+                onDeactivate={() => deactivateGuide(g)}
+              />
+            ))}
+
+            {myInactiveGuides.length ? (
+              <div className="p" style={{ marginTop: 6, fontWeight: 900 }}>
+                Inactive
+              </div>
+            ) : null}
+
+            {myInactiveGuides.map((g) => (
+              <GuideRow
+                key={g._id}
+                g={g}
+                mode="inactive"
+                onViewTo={`/guides/${g._id}`}
+                onEdit={() => {
+                  setEditingGuide(g);
+                  setEditGuideOpen(true);
+                }}
+                onActivate={() => activateGuide(g)}
+              />
+            ))}
+          </>
+        ) : null}
+
+        {serviceTab === "HOTEL" ? (
+          <>
+            {myHotelsLoading ? <div className="p">Loading hotels...</div> : null}
+
+            {!myHotelsLoading && myActiveHotels.length === 0 && myInactiveHotels.length === 0 ? (
+              <div className="p">No hotels yet.</div>
+            ) : null}
+
+            {myActiveHotels.map((h) => (
+              <HotelRow
+                key={h._id}
+                h={h}
+                mode="active"
+                onViewTo={`/hotels/${h._id}`}
+                onEdit={() => {
+                  setEditingHotel(h);
+                  setEditHotelOpen(true);
+                }}
+                onDeactivate={() => deactivateHotel(h)}
+              />
+            ))}
+
+            {myInactiveHotels.length ? (
+              <div className="p" style={{ marginTop: 6, fontWeight: 900 }}>
+                Inactive
+              </div>
+            ) : null}
+
+            {myInactiveHotels.map((h) => (
+              <HotelRow
+                key={h._id}
+                h={h}
+                mode="inactive"
+                onViewTo={`/hotels/${h._id}`}
+                onEdit={() => {
+                  setEditingHotel(h);
+                  setEditHotelOpen(true);
+                }}
+                onActivate={() => activateHotel(h)}
+              />
+            ))}
+          </>
+        ) : null}
+
+        {serviceTab === "TRANSPORT" ? (
+          <>
+            {myTransportLoading ? <div className="p">Loading transport...</div> : null}
+
+            {!transportApproved ? <div className="p">Transport is not approved yet.</div> : null}
+
+            {!myTransportLoading && myActiveTransport.length === 0 && myInactiveTransport.length === 0 ? (
+              <div className="p">No transport routes yet.</div>
+            ) : null}
+
+            {myActiveTransport.map((r) => (
+              <TransportRow
+                key={r._id}
+                r={r}
+                mode="active"
+                onEdit={() => {
+                  setTpEditing(r);
+                  setTpOpen(true);
+                }}
+                onDeactivate={() => deactivateTransport(r)}
+              />
+            ))}
+
+            {myInactiveTransport.length ? (
+              <div className="p" style={{ marginTop: 6, fontWeight: 900 }}>
+                Inactive
+              </div>
+            ) : null}
+
+            {myInactiveTransport.map((r) => (
+              <TransportRow
+                key={r._id}
+                r={r}
+                mode="inactive"
+                onEdit={() => {
+                  setTpEditing(r);
+                  setTpOpen(true);
+                }}
+                onActivate={() => activateTransport(r)}
+              />
+            ))}
+
+            <div style={{ marginTop: 8 }}>
+              <button
+                className="btn primary"
+                type="button"
+                onClick={() => {
+                  setTpEditing(null);
+                  setTpOpen(true);
+                }}
+              >
+                Add New Route
+              </button>
+            </div>
+          </>
+        ) : null}
+
+        {serviceTab === "PRODUCT_VENDOR" ? (
+          <div className="p">
+            {myVendorApprovedApp ? (
+              <>
+                Vendor application is <b>APPROVED</b>. Your vendor/shop editing depends on your vendor module page/route.
+                Tell me the vendor edit route (example: <code>/my/vendor</code> or <code>/vendor/dashboard</code>) and I’ll
+                add an “Edit Shop” button here.
+              </>
+            ) : (
+              <>
+                No approved vendor/shop yet. Submit from <Link to="/register-service">Register Service</Link>.
+              </>
+            )}
+          </div>
+        ) : null}
       </div>
     </Panel>
   );
@@ -1022,9 +1418,7 @@ export default function Profile() {
             <div>
               <div className="profileNameRow">
                 <h2 className="profileName">{user?.name}</h2>
-                <span className={`profilePill ${isSeller ? "dark" : ""}`}>
-                  {isSeller ? "Seller" : "Verified"}
-                </span>
+                <span className={`profilePill ${isSeller ? "dark" : ""}`}>{isSeller ? "Seller" : "Verified"}</span>
               </div>
 
               <div className="profileMeta">
@@ -1049,7 +1443,9 @@ export default function Profile() {
                 <div className="profileStatValue">{buyerCounts.trips}</div>
                 <div className="profileStatLabel">Trip Plans</div>
               </div>
-              <button className="btn" type="button" onClick={fetchBuyerStats}>Refresh</button>
+              <button className="btn" type="button" onClick={fetchBuyerStats}>
+                Refresh
+              </button>
             </div>
           ) : (
             <div className="profileStats">
@@ -1083,17 +1479,42 @@ export default function Profile() {
       {!isSeller ? (
         <div className="profileQuickRail">
           <QuickCard icon={<IconUser />} label="Account" active={view === "ACCOUNT"} onClick={() => setView("ACCOUNT")} />
-          <QuickCard icon={<IconCalendar />} label="Bookings / Orders" active={view === "PURCHASES"} onClick={() => setView("PURCHASES")} />
+          <QuickCard
+            icon={<IconCalendar />}
+            label="Bookings / Orders"
+            active={view === "PURCHASES"}
+            onClick={() => setView("PURCHASES")}
+          />
           <QuickCard icon={<IconPlane />} label="Trip Plans" active={view === "TRIPS"} onClick={() => setView("TRIPS")} />
           <QuickCard icon={<IconShop />} label="Go Shopping" asLinkTo="/local-products" />
         </div>
       ) : (
         <div className="profileQuickRail">
           <QuickCard icon={<IconUser />} label="Account" active={view === "ACCOUNT"} onClick={() => setView("ACCOUNT")} />
-          <QuickCard icon={<IconCalendar />} label="My Services" active={view === "SERVICES"} onClick={() => setView("SERVICES")} />
-          <QuickCard icon={<IconInbox />} label="Bookings Received" active={view === "INBOX"} onClick={() => setView("INBOX")} />
-          <QuickCard icon={<IconBag />} label="My Applications" active={view === "APPLICATIONS"} onClick={() => setView("APPLICATIONS")} />
-          <QuickCard icon={<IconBag />} label="Bookings / Orders" active={view === "PURCHASES"} onClick={() => setView("PURCHASES")} />
+          <QuickCard
+            icon={<IconCalendar />}
+            label="My Services"
+            active={view === "SERVICES"}
+            onClick={() => setView("SERVICES")}
+          />
+          <QuickCard
+            icon={<IconInbox />}
+            label="Bookings Received"
+            active={view === "INBOX"}
+            onClick={() => setView("INBOX")}
+          />
+          <QuickCard
+            icon={<IconBag />}
+            label="My Applications"
+            active={view === "APPLICATIONS"}
+            onClick={() => setView("APPLICATIONS")}
+          />
+          <QuickCard
+            icon={<IconBag />}
+            label="Bookings / Orders"
+            active={view === "PURCHASES"}
+            onClick={() => setView("PURCHASES")}
+          />
           <QuickCard icon={<IconPlane />} label="Trip Plans" active={view === "TRIPS"} onClick={() => setView("TRIPS")} />
           <QuickCard icon={<IconShop />} label="Register Service" asLinkTo="/register-service" />
         </div>
@@ -1103,8 +1524,18 @@ export default function Profile() {
 
       {isSeller ? (
         <>
-          <MyHotelEditModal open={editHotelOpen} onClose={() => setEditHotelOpen(false)} hotel={editingHotel} onSaved={fetchMyHotels} />
-          <MyGuideEditModal open={editGuideOpen} onClose={() => setEditGuideOpen(false)} guide={editingGuide} onSaved={fetchMyGuides} />
+          <MyHotelEditModal
+            open={editHotelOpen}
+            onClose={() => setEditHotelOpen(false)}
+            hotel={editingHotel}
+            onSaved={fetchMyHotels}
+          />
+          <MyGuideEditModal
+            open={editGuideOpen}
+            onClose={() => setEditGuideOpen(false)}
+            guide={editingGuide}
+            onSaved={fetchMyGuides}
+          />
           <MyTransportRouteModal
             open={tpOpen}
             onClose={() => {
