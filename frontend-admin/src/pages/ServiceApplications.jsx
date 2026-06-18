@@ -1,61 +1,150 @@
 import { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import { api } from "../utils/api";
 
-const SERVICE_TYPES = ["ALL", "HOTEL", "GUIDE", "TRANSPORT", "PRODUCT_VENDOR"];
-const STATUSES = ["ALL", "PENDING", "APPROVED", "REJECTED"];
+const SERVICE_OPTS = [
+  { value: "all", label: "All" },
+  { value: "HOTEL", label: "Hotel" },
+  { value: "GUIDE", label: "Guide" },
+  { value: "TRANSPORT", label: "Transport" },
+  { value: "PRODUCT_VENDOR", label: "Vendor / Shop" },
+];
 
-function pillStyle(status) {
-  const s = String(status || "").toUpperCase();
-  if (s === "APPROVED") return { background: "rgba(16,185,129,0.14)", color: "rgb(6,95,70)", border: "1px solid rgba(16,185,129,0.25)" };
-  if (s === "REJECTED") return { background: "rgba(239,68,68,0.12)", color: "rgb(127,29,29)", border: "1px solid rgba(239,68,68,0.25)" };
-  if (s === "PENDING") return { background: "rgba(59,130,246,0.12)", color: "rgb(30,64,175)", border: "1px solid rgba(59,130,246,0.25)" };
-  return { background: "rgba(100,116,139,0.10)", color: "rgb(51,65,85)", border: "1px solid rgba(100,116,139,0.22)" };
+const STATUS_OPTS = [
+  { value: "PENDING", label: "Pending" },
+  { value: "APPROVED", label: "Approved" },
+  { value: "REJECTED", label: "Rejected" },
+  { value: "all", label: "All" },
+];
+
+function pickItems(data) {
+  if (!data) return [];
+  if (Array.isArray(data)) return data;
+  if (Array.isArray(data.applications)) return data.applications;
+  if (Array.isArray(data.items)) return data.items;
+  if (Array.isArray(data?.data?.applications)) return data.data.applications;
+  return [];
 }
 
-function StatusPill({ status }) {
-  const s = String(status || "PENDING").toUpperCase();
+function clamp(n, min, max) {
+  return Math.max(min, Math.min(max, n));
+}
+
+function KebabIcon() {
   return (
-    <span
-      style={{
-        display: "inline-flex",
-        alignItems: "center",
-        padding: "6px 10px",
-        borderRadius: 999,
-        fontWeight: 900,
-        fontSize: 12,
-        ...pillStyle(s),
-      }}
-    >
-      {s}
-    </span>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M12 6.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM12 13.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM12 20.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"
+        fill="currentColor"
+      />
+    </svg>
   );
 }
 
-function safeJson(x) {
-  try {
-    return JSON.stringify(x, null, 2);
-  } catch {
-    return String(x);
-  }
+function ActionsMenu({ open, anchorRect, onClose, items }) {
+  useEffect(() => {
+    if (!open) return;
+
+    const onKey = (e) => e.key === "Escape" && onClose();
+    const onClickAway = () => onClose();
+    const onScroll = () => onClose();
+    const onResize = () => onClose();
+
+    window.addEventListener("keydown", onKey);
+    window.addEventListener("click", onClickAway);
+    window.addEventListener("scroll", onScroll, true);
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("click", onClickAway);
+      window.removeEventListener("scroll", onScroll, true);
+      window.removeEventListener("resize", onResize);
+    };
+  }, [open, onClose]);
+
+  if (!open || !anchorRect) return null;
+
+  const width = 260;
+  const gap = 8;
+  const left = clamp(anchorRect.right - width, 10, window.innerWidth - width - 10);
+  const top = clamp(anchorRect.bottom + gap, 10, window.innerHeight - 10);
+
+  return createPortal(
+    <div
+      onClick={(e) => e.stopPropagation()}
+      style={{
+        position: "fixed",
+        top,
+        left,
+        width,
+        background: "rgba(255,255,255,0.97)",
+        border: "1px solid rgba(15,23,42,0.10)",
+        borderRadius: 14,
+        boxShadow: "0 24px 70px rgba(0,0,0,0.28)",
+        overflow: "hidden",
+        zIndex: 99999,
+        backdropFilter: "blur(12px)",
+      }}
+    >
+      {items.map((it, idx) => (
+        <button
+          key={idx}
+          type="button"
+          disabled={it.disabled}
+          onClick={() => {
+            if (it.disabled) return;
+            it.onClick?.();
+            onClose();
+          }}
+          style={{
+            width: "100%",
+            textAlign: "left",
+            padding: "10px 12px",
+            border: "none",
+            background: "transparent",
+            cursor: it.disabled ? "not-allowed" : "pointer",
+            fontWeight: 900,
+            fontSize: 13,
+            color: it.danger ? "#b91c1c" : "#0f172a",
+            opacity: it.disabled ? 0.55 : 1,
+            borderBottom: idx === items.length - 1 ? "none" : "1px solid rgba(15,23,42,0.06)",
+          }}
+          title={it.title || ""}
+        >
+          {it.label}
+        </button>
+      ))}
+    </div>,
+    document.body
+  );
 }
 
-function previewText(app) {
+function pillClass(status) {
+  const s = String(status || "").toUpperCase();
+  if (s === "APPROVED") return "ok";
+  if (s === "PENDING") return "warn";
+  if (s === "REJECTED") return "bad";
+  return "";
+}
+
+function formatPreview(app) {
   const t = String(app?.serviceType || "").toUpperCase();
   const p = app?.payload || {};
 
   if (t === "HOTEL") {
-    const rooms = Array.isArray(p?.rooms) ? p.rooms.length : 0;
-    const imgs = Array.isArray(p?.images) ? p.images.length : 0;
+    const rooms = Array.isArray(p.rooms) ? p.rooms.length : 0;
+    const imgs = Array.isArray(p.images) ? p.images.length : 0;
     return `${p?.name || "Hotel"} (${p?.city || "—"}) • rooms: ${rooms} • images: ${imgs}`;
   }
 
   if (t === "GUIDE") {
-    const imgs = Array.isArray(p?.images) ? p.images.length : 0;
-    return `${p?.name || "Guide"} (${p?.baseCity || "—"}) • images: ${imgs}`;
+    const docs = (app?.documents || []).length;
+    return `${p?.name || "Guide"} (${p?.baseCity || "—"}) • docs: ${docs}`;
   }
 
   if (t === "TRANSPORT") {
-    const routes = Array.isArray(p?.routes) ? p.routes.length : 0;
+    const routes = Array.isArray(p.routes) ? p.routes.length : 0;
     return `${p?.providerName || "Transport"} • routes: ${routes}`;
   }
 
@@ -66,9 +155,18 @@ function previewText(app) {
   return "—";
 }
 
-function Modal({ open, title, onClose, children, right }) {
+function safeJson(x) {
+  try {
+    return JSON.stringify(x, null, 2);
+  } catch {
+    return String(x);
+  }
+}
+
+function Modal({ open, title, onClose, children }) {
   if (!open) return null;
-  return (
+
+  return createPortal(
     <div
       role="dialog"
       aria-modal="true"
@@ -83,7 +181,7 @@ function Modal({ open, title, onClose, children, right }) {
         alignItems: "center",
         justifyContent: "center",
         padding: 16,
-        zIndex: 9999,
+        zIndex: 99999,
       }}
     >
       <div
@@ -96,43 +194,52 @@ function Modal({ open, title, onClose, children, right }) {
         }}
       >
         <div className="cardBody">
-          <div style={{ display: "flex", justifyContent: "space-between", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
             <h3 style={{ margin: 0 }}>{title}</h3>
-            <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-              {right}
-              <button className="btn" type="button" onClick={onClose}>Close</button>
-            </div>
+            <button className="aBtn" type="button" onClick={onClose}>
+              Close
+            </button>
           </div>
           <div style={{ marginTop: 12 }}>{children}</div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 
 export default function ServiceApplications() {
-  const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [err, setErr] = useState("");
 
-  const [serviceType, setServiceType] = useState("ALL");
-  const [status, setStatus] = useState("PENDING");
+  // filters
   const [q, setQ] = useState("");
+  const [serviceType, setServiceType] = useState("all");
+  const [status, setStatus] = useState("PENDING");
 
-  const [viewing, setViewing] = useState(null); // app
+  // modal
+  const [open, setOpen] = useState(false);
+  const [viewing, setViewing] = useState(null);
   const [adminNote, setAdminNote] = useState("");
 
+  // kebab menu
+  const [menuFor, setMenuFor] = useState(null);
+  const [menuRect, setMenuRect] = useState(null);
+
   const fetchAll = async () => {
+    setErr("");
     setLoading(true);
     try {
       const params = {};
-      if (serviceType !== "ALL") params.serviceType = serviceType;
-      if (status !== "ALL") params.status = status;
+      if (serviceType !== "all") params.serviceType = serviceType;
+      if (status !== "all") params.status = status;
 
       const res = await api.get("/admin/applications", { params });
-      setItems(res.data?.applications || []);
+      setRows(pickItems(res.data));
     } catch (e) {
-      console.error(e);
-      setItems([]);
+      setRows([]);
+      setErr(e?.response?.data?.message || e.message || "Failed to load applications");
     } finally {
       setLoading(false);
     }
@@ -141,36 +248,69 @@ export default function ServiceApplications() {
   useEffect(() => {
     fetchAll();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [serviceType, status]);
+  }, []);
 
-  const filtered = useMemo(() => {
-    const query = String(q || "").trim().toLowerCase();
-    if (!query) return items;
+  const items = useMemo(() => {
+    const query = q.trim().toLowerCase();
+    let arr = [...rows];
 
-    return items.filter((a) => {
-      const u = a?.userId || {};
-      const p = a?.payload || {};
+    // local search (server already filtered by serviceType/status)
+    if (query) {
+      arr = arr.filter((a) => {
+        const u = a?.userId || {};
+        const p = a?.payload || {};
+        const blob = `${a?.serviceType || ""} ${a?.status || ""} ${a?.adminNote || ""} ${u?.name || ""} ${u?.email || ""} ${u?.phone || ""} ${safeJson(p)}`.toLowerCase();
+        return blob.includes(query);
+      });
+    }
 
-      const blob = [
-        a?.serviceType,
-        a?.status,
-        a?.adminNote,
-        u?.name,
-        u?.email,
-        u?.phone,
-        p?.name,
-        p?.city,
-        p?.baseCity,
-        p?.providerName,
-        p?.shopName,
-      ]
-        .filter(Boolean)
-        .join(" ")
-        .toLowerCase();
+    // sort newest first
+    arr.sort((A, B) => (new Date(B?.createdAt || 0).getTime() || 0) - (new Date(A?.createdAt || 0).getTime() || 0));
 
-      return blob.includes(query);
-    });
-  }, [items, q]);
+    return arr;
+  }, [rows, q]);
+
+  const openView = (app) => {
+    setViewing(app);
+    setAdminNote(app?.adminNote || "");
+    setOpen(true);
+  };
+
+  const closeView = () => {
+    setOpen(false);
+    setViewing(null);
+    setAdminNote("");
+  };
+
+  const openMenu = (id, btnEl) => {
+    if (!btnEl) return;
+    setMenuFor(id);
+    setMenuRect(btnEl.getBoundingClientRect());
+  };
+
+  const closeMenu = () => {
+    setMenuFor(null);
+    setMenuRect(null);
+  };
+
+  const patchStatus = async (app, nextStatus) => {
+    const id = app?._id;
+    if (!id) return;
+
+    const ok = window.confirm(`Set status to ${nextStatus}?`);
+    if (!ok) return;
+
+    try {
+      await api.patch(`/admin/applications/${id}`, {
+        status: nextStatus,
+        adminNote: adminNote || "",
+      });
+      closeView();
+      await fetchAll();
+    } catch (e) {
+      alert(e?.response?.data?.message || e.message || "Failed to update application");
+    }
+  };
 
   const downloadDoc = async (appId, doc) => {
     try {
@@ -194,252 +334,395 @@ export default function ServiceApplications() {
     }
   };
 
-  const patchStatus = async (app, nextStatus) => {
-    const id = app?._id;
-    if (!id) return;
-
-    const ok = window.confirm(`Set status to ${nextStatus}?`);
-    if (!ok) return;
-
+  const onApplyFilters = async () => {
+    // fetch from server with filters
+    setErr("");
+    setLoading(true);
     try {
-      await api.patch(`/admin/applications/${id}`, { status: nextStatus, adminNote: adminNote || "" });
-      setViewing(null);
-      setAdminNote("");
-      await fetchAll();
+      const params = {};
+      if (serviceType !== "all") params.serviceType = serviceType;
+      if (status !== "all") params.status = status;
+
+      const res = await api.get("/admin/applications", { params });
+      setRows(pickItems(res.data));
     } catch (e) {
-      alert(e?.response?.data?.message || "Failed to update application");
+      setRows([]);
+      setErr(e?.response?.data?.message || e.message || "Failed to load applications");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div style={{ display: "grid", gap: 14 }}>
+    <div style={{ display: "grid", gap: 12 }}>
       <style>{`
-        .saToolbar{
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 12px;
-          align-items: end;
-        }
-        @media (max-width: 900px){
-          .saToolbar{ grid-template-columns: 1fr; }
-        }
-        .saTopRow{
-          display:flex;
-          justify-content: space-between;
-          align-items: flex-start;
-          gap: 12px;
-          flex-wrap: wrap;
-        }
-        .saTableWrap{
-          overflow-x:auto;
-          border: 1px solid rgba(15,23,42,0.08);
+        .apTableOuter{
           border-radius: 16px;
-          background: #fff;
+          border: 1px solid rgba(15,23,42,0.10);
+          background: rgba(255,255,255,0.55);
+          overflow: hidden;
         }
-        table.saTable{
-          width: 100%;
-          min-width: 980px;
-          border-collapse: collapse;
-          font-size: 14px;
+        .apTableScroll{ overflow-x:auto; }
+        .apTable{
+          width:100%;
+          border-collapse: separate;
+          border-spacing: 0;
+          table-layout: fixed;
+          font-size: 13px;
+          min-width: 1180px;
         }
-        .saTable th{
-          text-align: left;
-          padding: 12px;
-          background: rgba(15,23,42,0.04);
-          color: rgba(15,23,42,0.65);
+        .apTable thead th{
+          text-align:left;
+          padding: 12px 12px;
+          font-size: 12px;
           font-weight: 1000;
-          border-bottom: 1px solid rgba(15,23,42,0.08);
+          color: rgba(15,23,42,0.82);
+          background: rgba(255,255,255,0.75);
+          border-bottom: 1px solid rgba(15,23,42,0.10);
+          position: sticky;
+          top: 0;
+          z-index: 2;
         }
-        .saTable td{
-          padding: 12px;
+        .apTable tbody td{
+          padding: 12px 12px;
+          vertical-align: top;
           border-bottom: 1px solid rgba(15,23,42,0.08);
-          vertical-align: middle;
+          background: rgba(255,255,255,0.40);
         }
-        .saUserName{ font-weight: 1000; }
-        .saSub{ font-size: 12px; color: rgba(15,23,42,0.65); font-weight: 800; margin-top: 4px; }
-        .saActions{ display:flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
+        .apTable tbody tr:hover td{
+          background: rgba(109,40,217,0.06);
+        }
+        .apTable tbody tr:last-child td{ border-bottom:none; }
+
+        .apTitle{
+          font-weight: 1000;
+          color: var(--heading);
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .apSub{
+          margin-top: 4px;
+          font-size: 12px;
+          font-weight: 800;
+          color: var(--muted);
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .pillX{
+          display:inline-flex;
+          align-items:center;
+          padding: 6px 10px;
+          border-radius: 999px;
+          font-size: 12px;
+          font-weight: 1000;
+          border: 1px solid rgba(15,23,42,0.10);
+          background: rgba(255,255,255,0.65);
+          color: rgba(15,23,42,0.80);
+          white-space: nowrap;
+        }
+        .pillX.ok{
+          border-color: rgba(16,185,129,0.25);
+          background: rgba(16,185,129,0.12);
+          color: rgba(5,150,105,0.95);
+        }
+        .pillX.warn{
+          border-color: rgba(245,158,11,0.25);
+          background: rgba(245,158,11,0.12);
+          color: rgba(180,83,9,0.95);
+        }
+        .pillX.bad{
+          border-color: rgba(239,68,68,0.25);
+          background: rgba(239,68,68,0.12);
+          color: rgba(185,28,28,0.95);
+        }
+
+        .kebabBtn{
+          display:inline-flex;
+          align-items:center;
+          justify-content:center;
+          width: 40px;
+          height: 40px;
+          border-radius: 14px;
+          border: 1px solid rgba(15,23,42,0.12);
+          background: rgba(255,255,255,0.70);
+          cursor:pointer;
+        }
+        .kebabBtn:hover{
+          background: rgba(109,40,217,0.06);
+          border-color: rgba(109,40,217,0.18);
+        }
+
+        @media (max-width: 980px){
+          .apFiltersGrid{ grid-template-columns: 1fr; }
+        }
       `}</style>
 
-      <div className="saTopRow">
+      {/* Header */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "end",
+          gap: 10,
+          flexWrap: "wrap",
+        }}
+      >
         <div>
-          <h2 style={{ margin: "0 0 6px" }}>Service Applications</h2>
-          <p className="p" style={{ margin: 0 }}>
+          <h2 style={{ margin: 0 }}>Service Applications</h2>
+          <div style={{ opacity: 0.75, marginTop: 6 }}>
             Review pending applications and approve or reject listings.
-          </p>
+          </div>
+          {err ? (
+            <div style={{ color: "crimson", fontWeight: 900, marginTop: 8 }}>
+              {err}
+            </div>
+          ) : null}
         </div>
 
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-          <button className="btn" type="button" onClick={fetchAll} disabled={loading}>
-            {loading ? "Refreshing..." : "Refresh"}
+          <button className="aBtn" onClick={fetchAll} disabled={loading}>
+            {loading ? "Loading..." : "Refresh"}
           </button>
         </div>
       </div>
 
+      {/* Filters (same layout style as Events) */}
       <div className="card">
-        <div className="cardBody">
-          <div className="saToolbar">
+        <div className="cardBody" style={{ display: "grid", gap: 10 }}>
+          <div
+            className="apFiltersGrid"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1.6fr 1fr 1fr",
+              gap: 12,
+            }}
+          >
             <div>
-              <label>Service Type</label>
-              <select className="input" value={serviceType} onChange={(e) => setServiceType(e.target.value)}>
-                {SERVICE_TYPES.map((x) => (
-                  <option key={x} value={x}>{x}</option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label>Status</label>
-              <select className="input" value={status} onChange={(e) => setStatus(e.target.value)}>
-                {STATUSES.map((x) => (
-                  <option key={x} value={x}>{x}</option>
-                ))}
-              </select>
-            </div>
-
-            <div style={{ gridColumn: "1 / -1" }}>
-              <label>Search</label>
+              <div style={{ fontWeight: 900, marginBottom: 6, fontSize: 12, opacity: 0.85 }}>
+                Search
+              </div>
               <input
-                className="input"
+                className="hmInput"
+                placeholder="Search user, email, payload..."
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
-                placeholder="Search by user, email, service name, city, provider..."
               />
+            </div>
+
+            <div>
+              <div style={{ fontWeight: 900, marginBottom: 6, fontSize: 12, opacity: 0.85 }}>
+                Service Type
+              </div>
+              <select className="hmInput" value={serviceType} onChange={(e) => setServiceType(e.target.value)}>
+                {SERVICE_OPTS.map((o) => (
+                  <option key={o.value} value={o.value}>
+                    {o.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <div style={{ fontWeight: 900, marginBottom: 6, fontSize: 12, opacity: 0.85 }}>
+                Status
+              </div>
+              <select className="hmInput" value={status} onChange={(e) => setStatus(e.target.value)}>
+                {STATUS_OPTS.map((o) => (
+                  <option key={o.value} value={o.value}>
+                    {o.label}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
 
-          <div className="p" style={{ marginTop: 10, fontWeight: 900 }}>
-            Results: {filtered.length}
+          <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
+            <div style={{ fontWeight: 900, color: "var(--muted)" }}>
+              Results: {items.length}
+            </div>
+
+            <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+              <button className="aBtn primary" type="button" onClick={onApplyFilters} disabled={loading}>
+                Apply Filters
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="saTableWrap">
-        <table className="saTable">
-          <thead>
-            <tr>
-              <th style={{ width: 320 }}>User</th>
-              <th style={{ width: 120 }}>Service</th>
-              <th style={{ width: 140 }}>Status</th>
-              <th>Payload Preview</th>
-              <th style={{ width: 120 }}>Docs</th>
-              <th style={{ width: 180 }}>Submitted</th>
-              <th style={{ width: 220, textAlign: "right" }}>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.map((a) => {
-              const u = a?.userId || {};
-              const docsCount = (a?.documents || []).length;
-              const isPending = String(a?.status || "").toUpperCase() === "PENDING";
+      {/* Table */}
+      <div className="card">
+        <div className="cardBody">
+          {loading ? (
+            <div className="adminMuted">Loading...</div>
+          ) : (
+            <div className="apTableOuter">
+              <div className="apTableScroll">
+                <table className="apTable">
+                  <colgroup>
+                    <col style={{ width: "26%" }} />
+                    <col style={{ width: "10%" }} />
+                    <col style={{ width: "12%" }} />
+                    <col style={{ width: "28%" }} />
+                    <col style={{ width: "10%" }} />
+                    <col style={{ width: "14%" }} />
+                  </colgroup>
 
-              return (
-                <tr key={a._id}>
-                  <td>
-                    <div className="saUserName">{u?.name || "—"}</div>
-                    <div className="saSub">{u?.email || "—"} {u?.phone ? `• ${u.phone}` : ""}</div>
-                  </td>
+                  <thead>
+                    <tr>
+                      <th>User</th>
+                      <th>Service</th>
+                      <th>Status</th>
+                      <th>Payload Preview</th>
+                      <th>Docs</th>
+                      <th style={{ textAlign: "right" }}>Actions</th>
+                    </tr>
+                  </thead>
 
-                  <td style={{ fontWeight: 1000 }}>{String(a?.serviceType || "—").toUpperCase()}</td>
+                  <tbody>
+                    {items.map((a) => {
+                      const u = a?.userId || {};
+                      const docsCount = (a?.documents || []).length;
+                      const st = String(a?.status || "").toUpperCase();
+                      const pending = st === "PENDING";
 
-                  <td>
-                    <StatusPill status={a?.status} />
-                  </td>
+                      const menuItems = [
+                        { label: "View", onClick: () => openView(a) },
+                        {
+                          label: "Approve",
+                          disabled: !pending,
+                          onClick: () => {
+                            setViewing(a);
+                            setAdminNote(a?.adminNote || "");
+                            setOpen(true);
+                            // approve from modal or directly:
+                            setTimeout(() => patchStatus(a, "APPROVED"), 0);
+                          },
+                        },
+                        {
+                          label: "Reject",
+                          danger: true,
+                          disabled: !pending,
+                          onClick: () => {
+                            setViewing(a);
+                            setAdminNote(a?.adminNote || "");
+                            setOpen(true);
+                            setTimeout(() => patchStatus(a, "REJECTED"), 0);
+                          },
+                        },
+                      ];
 
-                  <td style={{ color: "rgba(15,23,42,0.75)", fontWeight: 800 }}>
-                    {previewText(a)}
-                    {a?.adminNote ? <div className="saSub"><b>Admin note:</b> {a.adminNote}</div> : null}
-                  </td>
+                      return (
+                        <tr key={a._id}>
+                          <td>
+                            <div className="apTitle" title={u?.name || "—"}>{u?.name || "—"}</div>
+                            <div className="apSub" title={`${u?.email || "—"} ${u?.phone || ""}`}>
+                              {u?.email || "—"} {u?.phone ? `• ${u.phone}` : ""}
+                            </div>
+                          </td>
 
-                  <td style={{ fontWeight: 900 }}>
-                    {docsCount > 0 ? `${docsCount} file(s)` : "—"}
-                  </td>
+                          <td style={{ fontWeight: 1000 }}>{String(a?.serviceType || "—").toUpperCase()}</td>
 
-                  <td className="saSub">
-                    {a?.createdAt ? new Date(a.createdAt).toLocaleString() : "—"}
-                  </td>
+                          <td>
+                            <span className={`pillX ${pillClass(a?.status)}`}>{String(a?.status || "—").toUpperCase()}</span>
+                          </td>
 
-                  <td>
-                    <div className="saActions">
-                      <button
-                        className="btn"
-                        type="button"
-                        onClick={() => {
-                          setViewing(a);
-                          setAdminNote(a?.adminNote || "");
-                        }}
-                      >
-                        View
-                      </button>
+                          <td>
+                            <div className="apTitle" title={formatPreview(a)} style={{ fontWeight: 900 }}>
+                              {formatPreview(a)}
+                            </div>
+                            {a?.adminNote ? (
+                              <div className="apSub" title={a.adminNote}>
+                                <b>Admin note:</b> {a.adminNote}
+                              </div>
+                            ) : (
+                              <div className="apSub">—</div>
+                            )}
+                          </td>
 
-                      {isPending ? (
-                        <>
-                          <button className="btn primary" type="button" onClick={() => patchStatus(a, "APPROVED")}>
-                            Approve
-                          </button>
-                          <button
-                            className="btn"
-                            type="button"
-                            style={{ background: "#ef4444", borderColor: "#ef4444", color: "#fff" }}
-                            onClick={() => patchStatus(a, "REJECTED")}
-                          >
-                            Reject
-                          </button>
-                        </>
-                      ) : (
-                        <span className="saSub" style={{ alignSelf: "center" }}>—</span>
-                      )}
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
+                          <td style={{ fontWeight: 900, color: "rgba(100,116,139,0.95)" }}>
+                            {docsCount > 0 ? `${docsCount} file(s)` : "—"}
+                          </td>
 
-            {!loading && filtered.length === 0 ? (
-              <tr>
-                <td colSpan={7} style={{ padding: 18 }}>
-                  <div className="p" style={{ margin: 0 }}>No applications found.</div>
-                </td>
-              </tr>
-            ) : null}
-          </tbody>
-        </table>
+                          <td style={{ textAlign: "right" }}>
+                            <button
+                              type="button"
+                              className="kebabBtn"
+                              title="Actions"
+                              onMouseDown={(ev) => ev.stopPropagation()}
+                              onClick={(ev) => {
+                                ev.stopPropagation();
+                                if (menuFor === a._id) return closeMenu();
+                                openMenu(a._id, ev.currentTarget);
+                              }}
+                            >
+                              <KebabIcon />
+                            </button>
+
+                            <ActionsMenu
+                              open={menuFor === a._id}
+                              anchorRect={menuFor === a._id ? menuRect : null}
+                              onClose={closeMenu}
+                              items={menuItems}
+                            />
+                          </td>
+                        </tr>
+                      );
+                    })}
+
+                    {!loading && items.length === 0 ? (
+                      <tr>
+                        <td colSpan={6} style={{ padding: 18, color: "var(--muted)", fontWeight: 900 }}>
+                          No applications found.
+                        </td>
+                      </tr>
+                    ) : null}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
+      {/* View Modal */}
       <Modal
-        open={!!viewing}
-        title={viewing ? `Application • ${String(viewing.serviceType || "").toUpperCase()} • ${String(viewing.status || "").toUpperCase()}` : ""}
-        onClose={() => setViewing(null)}
-        right={
-          viewing && String(viewing?.status || "").toUpperCase() === "PENDING" ? (
-            <>
-              <button className="btn primary" type="button" onClick={() => patchStatus(viewing, "APPROVED")}>
-                Approve
-              </button>
-              <button
-                className="btn"
-                type="button"
-                style={{ background: "#ef4444", borderColor: "#ef4444", color: "#fff" }}
-                onClick={() => patchStatus(viewing, "REJECTED")}
-              >
-                Reject
-              </button>
-            </>
-          ) : null
+        open={open}
+        title={
+          viewing
+            ? `Application • ${String(viewing.serviceType || "").toUpperCase()} • ${String(viewing.status || "").toUpperCase()}`
+            : "Application"
         }
+        onClose={closeView}
       >
-        {viewing ? (
+        {!viewing ? null : (
           <div style={{ display: "grid", gap: 12 }}>
-            <div>
-              <label>Admin Note (optional)</label>
-              <textarea
-                className="input"
-                rows={3}
-                value={adminNote}
-                onChange={(e) => setAdminNote(e.target.value)}
-                placeholder="Reason or internal note..."
-              />
-              <div className="saSub">
-                Tip: Add a short reason if rejecting, so the seller knows what to fix.
+            <div className="card" style={{ boxShadow: "none" }}>
+              <div className="cardBody" style={{ display: "grid", gap: 8 }}>
+                <div style={{ fontWeight: 1000 }}>Admin Note</div>
+                <textarea
+                  className="hmInput"
+                  rows={3}
+                  value={adminNote}
+                  onChange={(e) => setAdminNote(e.target.value)}
+                  placeholder="Optional note / rejection reason..."
+                />
+
+                {String(viewing?.status || "").toUpperCase() === "PENDING" ? (
+                  <div style={{ display: "flex", gap: 10, flexWrap: "wrap", justifyContent: "flex-end" }}>
+                    <button className="aBtn" type="button" onClick={() => patchStatus(viewing, "REJECTED")} style={{ background: "#ef4444", borderColor: "#ef4444", color: "#fff" }}>
+                      Reject
+                    </button>
+                    <button className="aBtn primary" type="button" onClick={() => patchStatus(viewing, "APPROVED")}>
+                      Approve
+                    </button>
+                  </div>
+                ) : (
+                  <div className="apSub">No actions (already {String(viewing.status || "").toLowerCase()}).</div>
+                )}
               </div>
             </div>
 
@@ -467,7 +750,7 @@ export default function ServiceApplications() {
               <div className="cardBody">
                 <div style={{ fontWeight: 1000, marginBottom: 8 }}>Documents</div>
                 {(viewing.documents || []).length === 0 ? (
-                  <div className="p">No documents.</div>
+                  <div className="adminMuted">No documents.</div>
                 ) : (
                   <div style={{ display: "grid", gap: 10 }}>
                     {(viewing.documents || []).map((d) => (
@@ -482,15 +765,16 @@ export default function ServiceApplications() {
                           padding: 12,
                           borderRadius: 14,
                           border: "1px solid rgba(15,23,42,0.08)",
+                          background: "rgba(255,255,255,0.65)",
                         }}
                       >
                         <div>
                           <div style={{ fontWeight: 1000 }}>{d.originalName || d.filename}</div>
-                          <div className="saSub">
+                          <div className="apSub">
                             {(d.mimeType || "file")} • {Math.round((d.size || 0) / 1024)} KB
                           </div>
                         </div>
-                        <button className="btn" type="button" onClick={() => downloadDoc(viewing._id, d)}>
+                        <button className="aBtn" type="button" onClick={() => downloadDoc(viewing._id, d)}>
                           Download
                         </button>
                       </div>
@@ -500,7 +784,7 @@ export default function ServiceApplications() {
               </div>
             </div>
           </div>
-        ) : null}
+        )}
       </Modal>
     </div>
   );
