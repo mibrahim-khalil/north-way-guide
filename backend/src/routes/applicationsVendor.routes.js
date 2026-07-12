@@ -12,11 +12,11 @@ function pickVendorPayload(payload = {}) {
     city: String(p.city || "").trim(),
     phone: String(p.phone || "").trim(),
     address: String(p.address || "").trim(),
-    googleMapUrl: String(p.googleMapUrl || "").trim(), 
+    googleMapUrl: String(p.googleMapUrl || "").trim(),
   };
 }
 
-
+// Get latest vendor application (any status)
 router.get("/vendor/me", requireAuth, async (req, res) => {
   const userId = req.auth.userId;
 
@@ -28,7 +28,7 @@ router.get("/vendor/me", requireAuth, async (req, res) => {
   res.json({ item: item || null });
 });
 
-
+// Create vendor application
 router.post("/vendor", requireAuth, requireVerifiedEmail, async (req, res) => {
   const userId = req.auth.userId;
   const { payload = {}, documents = [] } = req.body || {};
@@ -63,7 +63,10 @@ router.post("/vendor", requireAuth, requireVerifiedEmail, async (req, res) => {
   res.json({ item: app });
 });
 
-
+// ✅ UPDATE vendor application payload
+// NEW BEHAVIOR:
+// - If APPROVED: allow updating payload and KEEP status APPROVED
+// - If PENDING/REJECTED: update payload and set status back to PENDING (resubmission flow)
 router.put("/vendor/me", requireAuth, requireVerifiedEmail, async (req, res) => {
   const userId = req.auth.userId;
   const { payload = {}, documents } = req.body || {};
@@ -75,21 +78,22 @@ router.put("/vendor/me", requireAuth, requireVerifiedEmail, async (req, res) => 
 
   if (!app) return res.status(404).json({ message: "Vendor application not found" });
 
-  if (app.status === "APPROVED") {
-    return res.status(400).json({ message: "Already approved. No need to update application." });
-  }
-
   const cleanPayload = pickVendorPayload(payload);
 
   if (!cleanPayload.shopName || !cleanPayload.city) {
     return res.status(400).json({ message: "shopName and city are required" });
   }
 
+  const wasApproved = app.status === "APPROVED";
+
   app.payload = cleanPayload;
   if (documents !== undefined) app.documents = documents;
 
-  app.status = "PENDING";
-  app.adminNote = "";
+  // Only reset to PENDING if not approved yet
+  if (!wasApproved) {
+    app.status = "PENDING";
+    app.adminNote = "";
+  }
 
   await app.save();
   res.json({ item: app });
