@@ -8,6 +8,7 @@ import "./Profile.css";
 import MyHotelEditModal from "../components/forms/MyHotelEditModal";
 import MyGuideEditModal from "../components/forms/MyGuideEditModal";
 import MyTransportRouteModal from "../components/forms/myTransportRouteModal";
+import MyVendorEditModal from "../components/forms/MyVendorEditModal";
 
 import MyHotelBookingsSection from "../components/profile/MyHotelBookingsSection";
 import MyHotelBookingsReceivedSection from "../components/profile/MyHotelBookingsReceivedSection";
@@ -531,7 +532,6 @@ export default function Profile() {
   const isSeller = String(user?.accountType || "").toUpperCase() === "SELLER";
 
   const [view, setView] = useState(null);
-
   const [editingAccount, setEditingAccount] = useState(false);
 
   const [form, setForm] = useState({ name: "", email: "", phone: "" });
@@ -562,6 +562,11 @@ export default function Profile() {
   const [myTransport, setMyTransport] = useState([]);
   const [myTransportLoading, setMyTransportLoading] = useState(false);
   const [transportApprovalStatus, setTransportApprovalStatus] = useState("UNKNOWN");
+
+  // Vendor App State
+  const [myVendorApp, setMyVendorApp] = useState(null);
+  const [myVendorAppLoading, setMyVendorAppLoading] = useState(false);
+  const [editVendorOpen, setEditVendorOpen] = useState(false);
 
   const [editHotelOpen, setEditHotelOpen] = useState(false);
   const [editingHotel, setEditingHotel] = useState(null);
@@ -646,11 +651,36 @@ export default function Profile() {
     }
   };
 
-  const refreshAllSeller = async () => {
-    await Promise.allSettled([fetchApplications(), fetchMyHotels(), fetchMyGuides(), fetchMyTransport()]);
+  const fetchMyVendorApp = async () => {
+    if (!user) return;
+    setMyVendorAppLoading(true);
+    try {
+      const res = await api.get("/applications/vendor/me");
+      setMyVendorApp(res.data?.item || null);
+    } catch (err) {
+      if (err?.response?.status === 404) setMyVendorApp(null);
+      else toast(err?.response?.data?.message || "Failed to load vendor status", 2500);
+    } finally {
+      setMyVendorAppLoading(false);
+    }
   };
 
-  const anyRefreshingSeller = appsLoading || myHotelsLoading || myGuidesLoading || myTransportLoading;
+  const refreshAllSeller = async () => {
+    await Promise.allSettled([
+      fetchApplications(),
+      fetchMyHotels(),
+      fetchMyGuides(),
+      fetchMyTransport(),
+      fetchMyVendorApp(),
+    ]);
+  };
+
+  const anyRefreshingSeller =
+    appsLoading ||
+    myHotelsLoading ||
+    myGuidesLoading ||
+    myTransportLoading ||
+    myVendorAppLoading;
 
   useEffect(() => {
     setBuyerShowAllPurchases(false);
@@ -703,10 +733,6 @@ export default function Profile() {
   const myInactiveTransport = useMemo(() => myTransport.filter((r) => r?.isActive !== true), [myTransport]);
 
   const transportApproved = transportApprovalStatus === "APPROVED";
-
-  const myVendorApprovedApp = useMemo(() => {
-    return (apps || []).find((a) => a.serviceType === "PRODUCT_VENDOR" && a.status === "APPROVED") || null;
-  }, [apps]);
 
   const appsByType = useMemo(() => {
     const groups = { GUIDE: [], HOTEL: [], TRANSPORT: [], PRODUCT_VENDOR: [] };
@@ -1047,6 +1073,7 @@ export default function Profile() {
         </div>
       }
     >
+      {/* ... (applications UI remains unchanged) */}
       <div
         style={{
           display: "flex",
@@ -1205,7 +1232,6 @@ export default function Profile() {
     </Panel>
   );
 
-  // ✅ FIXED: REAL My Services list (with Edit buttons + active/inactive)
   const renderSellerServices = () => (
     <Panel
       title="My Services (Approved)"
@@ -1226,14 +1252,13 @@ export default function Profile() {
       <SegmentedTabs tabs={SERVICE_TABS} activeKey={serviceTab} onChange={setServiceTab} />
 
       <div style={{ marginTop: 12, display: "grid", gap: 10 }}>
+        {/* Guide, Hotel, Transport sections remain unchanged */}
         {serviceTab === "GUIDE" ? (
           <>
             {myGuidesLoading ? <div className="p">Loading guides...</div> : null}
-
             {!myGuidesLoading && myActiveGuides.length === 0 && myInactiveGuides.length === 0 ? (
               <div className="p">No guides yet.</div>
             ) : null}
-
             {myActiveGuides.map((g) => (
               <GuideRow
                 key={g._id}
@@ -1247,13 +1272,11 @@ export default function Profile() {
                 onDeactivate={() => deactivateGuide(g)}
               />
             ))}
-
             {myInactiveGuides.length ? (
               <div className="p" style={{ marginTop: 6, fontWeight: 900 }}>
                 Inactive
               </div>
             ) : null}
-
             {myInactiveGuides.map((g) => (
               <GuideRow
                 key={g._id}
@@ -1273,11 +1296,9 @@ export default function Profile() {
         {serviceTab === "HOTEL" ? (
           <>
             {myHotelsLoading ? <div className="p">Loading hotels...</div> : null}
-
             {!myHotelsLoading && myActiveHotels.length === 0 && myInactiveHotels.length === 0 ? (
               <div className="p">No hotels yet.</div>
             ) : null}
-
             {myActiveHotels.map((h) => (
               <HotelRow
                 key={h._id}
@@ -1291,13 +1312,11 @@ export default function Profile() {
                 onDeactivate={() => deactivateHotel(h)}
               />
             ))}
-
             {myInactiveHotels.length ? (
               <div className="p" style={{ marginTop: 6, fontWeight: 900 }}>
                 Inactive
               </div>
             ) : null}
-
             {myInactiveHotels.map((h) => (
               <HotelRow
                 key={h._id}
@@ -1317,9 +1336,7 @@ export default function Profile() {
         {serviceTab === "TRANSPORT" ? (
           <>
             {myTransportLoading ? <div className="p">Loading transport...</div> : null}
-
             {!transportApproved ? <div className="p">Transport is not approved yet.</div> : null}
-
             {!myTransportLoading && myActiveTransport.length === 0 && myInactiveTransport.length === 0 ? (
               <div className="p">No transport routes yet.</div>
             ) : null}
@@ -1371,18 +1388,73 @@ export default function Profile() {
           </>
         ) : null}
 
+        {/* ==================== UPDATED VENDOR TAB ==================== */}
         {serviceTab === "PRODUCT_VENDOR" ? (
-          <div className="p">
-            {myVendorApprovedApp ? (
-              <>
-                Vendor application is <b>APPROVED</b>. Your vendor/shop editing depends on your vendor module page/route.
-                Tell me the vendor edit route (example: <code>/my/vendor</code> or <code>/vendor/dashboard</code>) and I’ll
-                add an “Edit Shop” button here.
-              </>
+          <div style={{ display: "grid", gap: 10 }}>
+            {myVendorAppLoading ? <div className="p">Loading vendor/shop...</div> : null}
+
+            {!myVendorApp ? (
+              <div className="p">
+                No vendor application found yet. Submit from <Link to="/register-service">Register Service</Link>.
+              </div>
+            ) : String(myVendorApp.status || "").toUpperCase() !== "APPROVED" ? (
+              <div className="p">
+                Vendor application status: <b>{String(myVendorApp.status || "PENDING").toUpperCase()}</b>
+                {myVendorApp.adminNote ? (
+                  <div className="p" style={{ marginTop: 8 }}>
+                    <b>Admin note:</b> {myVendorApp.adminNote}
+                  </div>
+                ) : null}
+                <div style={{ marginTop: 10 }}>
+                  <Link className="btn" to="/register-service">
+                    Update Application
+                  </Link>
+                  <button className="btn" type="button" onClick={fetchMyVendorApp} style={{ marginLeft: 8 }}>
+                    Refresh
+                  </button>
+                </div>
+              </div>
             ) : (
-              <>
-                No approved vendor/shop yet. Submit from <Link to="/register-service">Register Service</Link>.
-              </>
+              <div className="card" style={{ boxShadow: "none" }}>
+                <div
+                  className="cardBody"
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    gap: 12,
+                    flexWrap: "wrap",
+                    alignItems: "center",
+                  }}
+                >
+                  <div>
+                    <div style={{ fontWeight: 1000 }}>{myVendorApp?.payload?.shopName || "My Shop"}</div>
+                    <div className="p" style={{ margin: 0, fontSize: 13 }}>
+                      {myVendorApp?.payload?.city || "—"} {myVendorApp?.payload?.phone ? `• ${myVendorApp.payload.phone}` : ""}
+                    </div>
+                    {myVendorApp?.payload?.address ? (
+                      <div className="p" style={{ margin: "6px 0 0", fontSize: 12 }}>
+                        {myVendorApp.payload.address}
+                      </div>
+                    ) : null}
+                  </div>
+
+                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                    <Link className="btn" to="/my-products">
+                      My Products
+                    </Link>
+                    <Link className="btn" to="/my-vendor-orders">
+                      My Vendor Orders
+                    </Link>
+                    <button
+                      className="btn primary"
+                      type="button"
+                      onClick={() => setEditVendorOpen(true)}
+                    >
+                      Edit Shop
+                    </button>
+                  </div>
+                </div>
+              </div>
             )}
           </div>
         ) : null}
@@ -1544,6 +1616,15 @@ export default function Profile() {
             }}
             initial={tpEditing}
             onSave={saveTransport}
+          />
+          <MyVendorEditModal
+            open={editVendorOpen}
+            onClose={() => setEditVendorOpen(false)}
+            vendorApp={myVendorApp}
+            onSaved={() => {
+              fetchMyVendorApp();
+              fetchApplications();
+            }}
           />
         </>
       ) : null}
