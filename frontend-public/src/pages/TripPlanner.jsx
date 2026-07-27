@@ -11,7 +11,6 @@ import "./TripPlanner.css";
 const startLocations = [
   "Islamabad",
   "Rawalpindi",
-  "Lahore",
   "Gilgit",
   "Skardu",
   "Hunza",
