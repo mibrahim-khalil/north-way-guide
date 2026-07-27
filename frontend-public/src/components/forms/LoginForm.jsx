@@ -10,7 +10,7 @@ export default function LoginForm() {
   const { toast } = useToast();
   const { login } = useAuth();
 
-  // ✅ supports:
+  //  supports:
   // 1) /login?next=/support?report=1
   // 2) navigate("/login", { state: { from: "/..." } })
   const sp = new URLSearchParams(location.search);
@@ -31,13 +31,13 @@ export default function LoginForm() {
       await login(email, password);
       toast("Logged in successfully", 2000);
 
-      // ✅ go back to intended page (support report form)
+      // go back to intended page (support report form)
       navigate(redirectTo, { replace: true });
     } catch (err) {
       const msg = err?.response?.data?.message || "Login failed";
       toast(msg, 2500);
 
-      // ✅ keep next when redirecting to verify-email
+      // keep next when redirecting to verify-email
       if (err?.response?.status === 403 && email) {
         const qs = new URLSearchParams();
         qs.set("email", email);

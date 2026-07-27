@@ -111,7 +111,7 @@ export default function HotelDetails() {
       `}</style>
 
       <div className="card">
-        <ImageGallery images={galleryImages} alt={hotel.name} height={320} fit="cover" /> {/* ✅ fit="cover" */}
+        <ImageGallery images={galleryImages} alt={hotel.name} height={320} fit="cover" /> {/* fit="cover" */}
 
         <div className="cardBody">
           <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap", alignItems: "flex-start" }}>

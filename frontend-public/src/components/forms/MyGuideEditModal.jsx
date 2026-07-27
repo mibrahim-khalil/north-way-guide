@@ -276,7 +276,7 @@ export default function MyGuideEditModal({ open, onClose, guide, onSaved }) {
               <textarea className="mhInput" rows="3" value={form.bio} onChange={onChange("bio")} />
             </div>
 
-            {/* ✅ Availability blocks */}
+            {/* Availability blocks */}
             <div style={{ gridColumn: "1 / -1" }}>
               <div style={{ display: "flex", justifyContent: "space-between", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
                 <label style={{ margin: 0, fontWeight: 900 }}>Unavailable Date Ranges</label>

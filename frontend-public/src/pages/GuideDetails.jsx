@@ -109,7 +109,7 @@ export default function GuideDetails() {
       `}</style>
 
       <div className="card">
-        <ImageGallery images={galleryImages} alt={guide.name} height={320} fit="cover" /> {/* ✅ fit="cover" */}
+        <ImageGallery images={galleryImages} alt={guide.name} height={320} fit="cover" /> {/* fit="cover" */}
 
         <div className="cardBody">
           <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>

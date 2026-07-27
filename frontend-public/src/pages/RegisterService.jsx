@@ -17,7 +17,7 @@ export default function RegisterService() {
   const { toast } = useToast();
   const { user, loading } = useAuth();
 
-  // ✅ Restrict page to SELLER only
+  //  Restrict page to SELLER only
   useEffect(() => {
     if (loading) return;
 
@@ -112,7 +112,7 @@ export default function RegisterService() {
         : [],
       images: hotel.imageUrl ? [hotel.imageUrl] : [],
       rooms: hotel.rooms || [],
-      // ✅ Correct key for your Hotel model
+      // Correct key for your Hotel model
       priceFrom: computedPriceFrom,
     };
   }, [hotel, isHotel, computedPriceFrom]);
@@ -286,7 +286,7 @@ export default function RegisterService() {
           toast("Add at least 1 room category", 2000);
           return;
         }
-        // ✅ Require at least 1 image so hotel cards always show an image after approval
+        //  Require at least 1 image so hotel cards always show an image after approval
         if (!Array.isArray(hotelPayload.images) || hotelPayload.images.length < 1) {
           toast("Upload at least 1 hotel image", 2000);
           return;

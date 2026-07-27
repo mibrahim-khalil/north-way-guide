@@ -123,7 +123,7 @@ export default function HotelBookingModal({ open, onClose, hotel }) {
     return nights > 0 ? p * nights : 0;
   }, [selected, nights]);
 
-  // ✅ Check availability when dates/room changes
+  // Check availability when dates/room changes
   useEffect(() => {
     let alive = true;
 

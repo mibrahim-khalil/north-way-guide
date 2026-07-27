@@ -63,7 +63,7 @@ router.post("/vendor", requireAuth, requireVerifiedEmail, async (req, res) => {
   res.json({ item: app });
 });
 
-// ✅ UPDATE vendor application payload
+// UPDATE vendor application payload
 // NEW BEHAVIOR:
 // - If APPROVED: allow updating payload and KEEP status APPROVED
 // - If PENDING/REJECTED: update payload and set status back to PENDING (resubmission flow)

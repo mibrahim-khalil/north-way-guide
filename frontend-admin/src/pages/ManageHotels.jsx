@@ -153,7 +153,7 @@ export default function ManageHotels() {
 
   return (
     <div style={{ display: "grid", gap: 12 }}>
-      {/* ✅ EXACT SAME TABLE CSS used by ManageEvents */}
+      {/*  EXACT SAME TABLE CSS used by ManageEvents */}
       <style>{`
         .evTableWrap{
           overflow-x: auto;

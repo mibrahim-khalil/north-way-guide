@@ -7,7 +7,7 @@ export default function Events() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // ✅ one timer for all cards
+  // one timer for all cards
   const [nowMs, setNowMs] = useState(Date.now());
   useEffect(() => {
     const t = setInterval(() => setNowMs(Date.now()), 60 * 1000);

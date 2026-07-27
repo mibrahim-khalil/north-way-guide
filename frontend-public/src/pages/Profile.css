@@ -250,7 +250,7 @@
   width: min(360px, 60%);
 }
 
-/* ✅ MOBILE */
+/* MOBILE */
 @media (max-width: 600px){
   .profilePage{
     padding: 0 14px;
@@ -287,7 +287,7 @@
     text-align: left;
   }
 
-  /* ✅ Segmented tabs: 2 in first row, 3rd goes to next row (not stretched) */
+  /* Segmented tabs: 2 in first row, 3rd goes to next row (not stretched) */
   .profileSeg{
     width: 100%;
     display: grid;

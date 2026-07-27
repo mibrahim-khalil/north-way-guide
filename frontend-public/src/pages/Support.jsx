@@ -2,7 +2,7 @@ import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import ReportForm from "../components/forms/ReportForm";
 
-// ✅ IMPORTANT: load ReportForm styles even when form is CLOSED
+// IMPORTANT: load ReportForm styles even when form is CLOSED
 import "../components/forms/ReportForm.css";
 
 export default function Support() {
