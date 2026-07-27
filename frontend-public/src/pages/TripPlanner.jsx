@@ -671,7 +671,7 @@ export default function TripPlanner() {
             <div className="p">Generate to see plan.</div>
           ) : (
             <>
-              {/* ✅ CRAZY SUMMARY UI */}
+              {/* CRAZY SUMMARY UI */}
               {(() => {
                 const budget = Number(summary.budget || 0);
                 const total = Number(summary.estTotal || 0);
