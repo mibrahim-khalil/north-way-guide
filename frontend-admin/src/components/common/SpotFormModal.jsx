@@ -8,7 +8,7 @@ const emptySpot = {
   district: "",
   region: "UNKNOWN",
   tagsText: "",
-  imagesText: "", // ✅ NEW: comma/newline separated URLs
+  imagesText: "", // NEW: comma/newline separated URLs
   description: "",
   mapsUrl: "",
   status: "Published",
@@ -133,7 +133,7 @@ export default function SpotFormModal({ open, onClose, initialSpot, onSave }) {
     setSpot((p) => ({ ...p, imagesText: next.join(", ") }));
   };
 
-  // ✅ Upload multiple images
+  // Upload multiple images
   const uploadImages = async (files = []) => {
     const arr = Array.from(files || []);
     if (!arr.length) return;
@@ -186,7 +186,7 @@ export default function SpotFormModal({ open, onClose, initialSpot, onSave }) {
       description: spot.description || "",
       tags,
       tag: tags[0] || "",
-      images: imgs, // ✅ THIS is the multi-image array saved to Mongo
+      images: imgs, //  THIS is the multi-image array saved to Mongo
     };
 
     await onSave?.(payloadForManageSpots);
@@ -257,7 +257,7 @@ export default function SpotFormModal({ open, onClose, initialSpot, onSave }) {
               <div className="smHint">Card shows first tag only, details page shows all tags.</div>
             </div>
 
-            {/* ✅ MULTI-UPLOAD */}
+            {/* MULTI-UPLOAD */}
             <div style={{ gridColumn: "1 / -1" }}>
               <label>Upload Images (multiple) (optional)</label>
               <input
@@ -278,7 +278,7 @@ export default function SpotFormModal({ open, onClose, initialSpot, onSave }) {
               ) : null}
             </div>
 
-            {/* ✅ MULTI URL FIELD */}
+            {/* MULTI URL FIELD */}
             <div style={{ gridColumn: "1 / -1" }}>
               <label>Images URLs (comma or new line separated)</label>
               <textarea
@@ -291,7 +291,7 @@ export default function SpotFormModal({ open, onClose, initialSpot, onSave }) {
               <div className="smHint">First image becomes the main cover image.</div>
             </div>
 
-            {/* ✅ PREVIEW GRID */}
+            {/* PREVIEW GRID */}
             <div style={{ gridColumn: "1 / -1" }}>
               <label>Preview ({images.length})</label>
 
