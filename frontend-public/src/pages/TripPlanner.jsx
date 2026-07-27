@@ -585,15 +585,15 @@ export default function TripPlanner() {
             <div className="tpField tpCircuit">
               <label>Primary Circuit *</label>
               <select className="input" value={form.primaryCircuit} onChange={onChange("primaryCircuit")}>
-                <option value="SKARDU_SIDE">Skardu side (Shigar/Khaplu/Deosai/Astore)</option>
-                <option value="HUNZA_SIDE">Hunza side (Attabad/Passu/Khunjerab)</option>
+                <option value="SKARDU_SIDE">Baltistan Division</option>
+                <option value="HUNZA_SIDE">Gilgit Division</option>
               </select>
             </div>
 
             <div className="tpField tpTransport">
               <label>Transport Type *</label>
               <select className="input" value={form.transportType} onChange={onChange("transportType")}>
-                <option value="PUBLIC">Public Service (NATCO / buses)</option>
+                <option value="PUBLIC">Public Service ( e.g. buses )</option>
                 <option value="OWN">Own Vehicle</option>
               </select>
             </div>
@@ -601,8 +601,8 @@ export default function TripPlanner() {
             <div className="tpField tpScope">
               <label>Trip Scope *</label>
               <select className="input" value={form.scope} onChange={onChange("scope")}>
-                <option value="SINGLE">Single side only</option>
-                <option value="LOOP">Loop (Skardu + Hunza) if days/budget allow</option>
+                <option value="SINGLE">Single Side only</option>
+                <option value="LOOP">Loop ( Skardu + Hunza )</option>
               </select>
             </div>
 
