@@ -22,7 +22,7 @@ const startLocations = [
 
 const travelModes = [
   { key: "ROAD", label: "Road" },
-  
+  // { key: "AIR", label: "Air" },
 ];
 
 function money(n) {
