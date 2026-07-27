@@ -30,7 +30,7 @@ export default function Checkout() {
 
   const [placing, setPlacing] = useState(false);
 
-  // ✅ when backend splits into multiple vendor orders, we show them here
+  //  when backend splits into multiple vendor orders, we show them here
   const [createdOrders, setCreatedOrders] = useState([]); // array of ProductOrder docs
 
   const onChange = (k) => (e) => setForm((p) => ({ ...p, [k]: e.target.value }));
@@ -73,7 +73,7 @@ export default function Checkout() {
 
       clearCart();
 
-      // ✅ If only 1 order => send user directly to submit payment
+      //  If only 1 order => send user directly to submit payment
       if (list.length === 1) {
         const order = list[0];
         toast("Order placed. Please submit payment proof.", 3000);
@@ -81,7 +81,7 @@ export default function Checkout() {
         return;
       }
 
-      // ✅ Multiple orders created (split by vendor)
+      // Multiple orders created (split by vendor)
       setCreatedOrders(list);
       toast(`Your cart was split into ${list.length} vendor orders. Submit proof for each one.`, 3500);
     } catch (err) {
@@ -91,7 +91,7 @@ export default function Checkout() {
     }
   };
 
-  // ✅ After split: show the "submit proof for each order" panel
+  // After split: show the "submit proof for each order" panel
   if (createdOrders.length > 0) {
     return (
       <div className="card" style={{ maxWidth: 820, margin: "0 auto" }}>
