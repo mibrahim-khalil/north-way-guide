@@ -11,10 +11,8 @@ export default function MainLayout() {
   return (
     <>
       <Header />
-
       {/* Hero stays full-bleed editorial */}
       <HeroSlider {...hero} />
-
       {/* Main content: clean white canvas + consistent spacing */}
       <main className="nwMain">
         <div className="container">
