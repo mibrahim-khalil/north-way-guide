@@ -10,9 +10,7 @@ export default function RequireSeller() {
   if (!user) {
     return <Navigate to="/login" replace state={{ from: loc.pathname }} />;
   }
-
   const isSeller = String(user.accountType || "AVAILER").toUpperCase() === "SELLER";
   if (!isSeller) return <Navigate to="/profile" replace />;
-
   return <Outlet />;
 }
