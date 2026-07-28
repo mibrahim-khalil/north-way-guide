@@ -112,7 +112,7 @@ export default function SubmitPayment() {
           <div className="cardBody">
             <div style={{ fontWeight: 900, marginBottom: 6 }}>Payment Instructions</div>
             <div className="p" style={{ fontSize: 13, margin: 0 }}>
-              Add your real details here (bank account / Easypaisa / JazzCash / NayaPay number).
+              Easypasia - 03000000000
             </div>
             <div className="p" style={{ fontSize: 13, marginTop: 8 }}>
               After sending payment, upload screenshot and enter transaction/reference id.
