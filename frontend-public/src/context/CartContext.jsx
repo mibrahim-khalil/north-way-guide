@@ -10,7 +10,6 @@ function loadCart() {
     return [];
   }
 }
-
 function saveCart(items) {
   localStorage.setItem(KEY, JSON.stringify(items));
 }
@@ -22,7 +21,6 @@ export function CartProvider({ children }) {
     setItems(next);
     saveCart(next);
   };
-
   const addToCart = (product, qty = 1) => {
     const q = Math.max(1, Number(qty || 1));
     const found = items.find((i) => i.productId === product.id);
@@ -46,7 +44,6 @@ export function CartProvider({ children }) {
       ]);
     }
   };
-
   const updateQty = (productId, qty) => {
     const q = Math.max(1, Number(qty || 1));
     persist(items.map((i) => (i.productId === productId ? { ...i, quantity: q } : i)));
