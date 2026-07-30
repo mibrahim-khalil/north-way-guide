@@ -20,8 +20,6 @@ export function AdminAuthProvider({ children }) {
 
   const login = async (email, password) => {
     const res = await api.post("/auth/login", { email, password });
-
-    // Store JWT token so future requests can send Authorization: Bearer <token>
     if (res.data?.token) {
       localStorage.setItem("token", res.data.token);
     }
@@ -36,7 +34,7 @@ export function AdminAuthProvider({ children }) {
     try {
       await api.post("/auth/logout");
     } catch {
-      // ignore logout API error
+ 
     }
 
     setUser(null);
